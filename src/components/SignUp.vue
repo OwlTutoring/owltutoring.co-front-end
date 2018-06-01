@@ -2,8 +2,8 @@
   <div>
     <h1>Sign Up</h1>
     Email: <input>
-    Password: <input>
-    Confirm password: <input>
+    Password: <input type="password">
+    Confirm password: <input type="password">
     first name: <input>
     last name: <input>
     <router-link to="login">Login</router-link>

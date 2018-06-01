@@ -2,7 +2,7 @@
   <div>
     <h1>Login</h1>
     Email: <input id="email">
-    Password: <input id="password">
+    Password: <input type="password" id="password">
     <button v-on:click="login()">Login</button>
     <router-link to="signUp">Sign Up</router-link>
   </div>
