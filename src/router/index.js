@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Account from '@/components/Account'
 import Contact from '@/components/Contact'
 import Tutors from '@/components/Tutors'
+import Tutor from '@/components/Tutor'
 
 Vue.use(Router)
 
@@ -17,14 +18,13 @@ export default new Router({
     {
       path: '/Tutors/',
       name: 'Tutors',
-      props: false,
       component: Tutors,
-      children: [{
-        path: '/:id/',
-        name: 'Tutor',
-        props: true,
-        component: Tutor
-      }]
+    },
+    {
+      path: '/Tutor/:id/',
+      name: 'Tutor',
+      props: true,
+      component: Tutor
     },
     {
       path: '/contact',

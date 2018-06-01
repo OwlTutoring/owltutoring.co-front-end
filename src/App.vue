@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-link to="friends/1/2/3">Friends</router-link>
+    <h1>Owl Tutoring</h1>
+    <router-link to="Home">Home</router-link>
+    <router-link to="Tutors">Tutors</router-link>
     <router-link to="account">Account</router-link>
     <router-link to="contact">Contact</router-link>
     <router-view/>
