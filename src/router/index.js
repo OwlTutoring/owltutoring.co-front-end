@@ -5,6 +5,8 @@ import Account from '@/components/Account'
 import Contact from '@/components/Contact'
 import Tutors from '@/components/Tutors'
 import Tutor from '@/components/Tutor'
+import Login from '@/components/Login'
+import SignUp from '@/components/SignUp'
 
 Vue.use(Router)
 
@@ -21,12 +23,6 @@ export default new Router({
       component: Tutors,
     },
     {
-      path: '/Tutor/:id/',
-      name: 'Tutor',
-      props: true,
-      component: Tutor
-    },
-    {
       path: '/contact',
       name: 'Contact',
       component: Contact
@@ -35,6 +31,16 @@ export default new Router({
       path: '/account',
       name: 'Account',
       component: Account
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/signup',
+      name: 'SignUp',
+      component: SignUp
     }
   ]
 })

@@ -26,15 +26,15 @@ export default {
     }
   },
   computed: {
-    subjectList() {
+    subjectList: function() {
       return creatListString(this.tutor.subjects);
     },
-    levelsList() {
+    levelsList: function() {
       return creatListString(this.tutor.levels);
     }
   },
   methods: {
-    toggleMore() {
+    toggleMore: function() {
       console.log(this.expanded);
       if(this.expanded) {
         this.expanded = false;
