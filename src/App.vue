@@ -4,24 +4,32 @@
     <router-link to="Home">Home</router-link>
     <router-link to="Tutors">Tutors</router-link>
     <router-link to="contact">Contact</router-link>
-    <div v-if="loggedIn">
+    <div v-if="LoginStateStore.loggedIn">
       <router-link to="account">Account</router-link>
     </div>
     <div v-else>
       <router-link to="login">Login</router-link>
     </div>
     <router-view/>
+    <button v-on:click="logout()">logout</button>
   </div>
 </template>
 
 <script>
+import LoginStateStore from "./stores/LoginStateStore";
+
 export default {
   name: "app",
   data: function() {
     return {
-      loggedIn: false
+      LoginStateStore: LoginStateStore.data,
     };
-  }
+  },
+  methods: {
+    logout: function() {
+      LoginStateStore.methods.logout();
+    },
+  }, 
 };
 </script>
 

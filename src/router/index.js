@@ -7,6 +7,7 @@ import Tutors from '@/components/Tutors'
 import Tutor from '@/components/Tutor'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
+import Logout from '@/components/Logout'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
       path: '/signup',
       name: 'SignUp',
       component: SignUp
+    },
+    {
+      path: '/logout',
+      name: 'Logout',
+      component: Logout
     }
   ]
 })

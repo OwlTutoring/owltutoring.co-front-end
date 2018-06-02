@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import LoginStateStore from "../stores/LoginStateStore";
 import axios from "axios";
 export default {
   data: function() {
@@ -30,7 +31,7 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          localStorage.setItem('token', response.data.token);
+          LoginStateStore.methods.login(response.data.token);
         })
         .catch(function(e) {
           console.log(e);
