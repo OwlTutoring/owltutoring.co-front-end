@@ -13,11 +13,10 @@ const loginStateStore = {
             localStorage.setItem("token", token);
             loginStateStore.data.loggedIn = true;
             console.log("logged IN!");
+        },
+        refresh() {
+            loginStateStore.data.loggedIn = (localStorage.getItem("token") != null);
         }
-    },
-    created: function () {
-        console.log("loginstate created");
-        loginStateStore.data.loggedIn = (localStorage.getItem("token") != null);
     },
 };
 

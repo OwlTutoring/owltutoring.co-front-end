@@ -6,12 +6,14 @@
     <router-link to="contact">Contact</router-link>
     <div v-if="LoginStateStore.loggedIn">
       <router-link to="account">Account</router-link>
+      <router-link to="sessions">Sessions</router-link>
+      <button v-on:click="logout()">logout</button>
     </div>
     <div v-else>
       <router-link to="login">Login</router-link>
     </div>
     <router-view/>
-    <button v-on:click="logout()">logout</button>
+    
   </div>
 </template>
 
@@ -29,7 +31,10 @@ export default {
     logout: function() {
       LoginStateStore.methods.logout();
     },
-  }, 
+  },
+  created: function() {
+    LoginStateStore.methods.refresh();
+  }
 };
 </script>
 

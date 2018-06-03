@@ -1,9 +1,10 @@
 <template>
   <div>
     <h1>Login</h1>
-    Email: <input id="email">
-    Password: <input type="password" id="password">
-    <button v-on:click="login()">Login</button>
+    <h4 id="message"></h4>
+    Email: <input id="email"><br>
+    Password: <input type="password" id="password"><br>
+    <button v-on:click="login()">Login</button><br>
     <router-link to="signUp">Sign Up</router-link>
   </div>
 </template>
@@ -32,9 +33,11 @@ export default {
           // JSON responses are automatically parsed.
           console.log(response);
           LoginStateStore.methods.login(response.data.token);
+          document.getElementById("message").innerHTML = response.data.message;
         })
         .catch(function(e) {
           console.log(e);
+          document.getElementById("message").innerHTML = e.response.data.message;
           //this.errors.push(e)
         });
     }

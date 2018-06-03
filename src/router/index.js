@@ -7,7 +7,7 @@ import Tutors from '@/components/Tutors'
 import Tutor from '@/components/Tutor'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
-import Logout from '@/components/Logout'
+import Sessions from '@/components/Sessions'
 
 Vue.use(Router)
 
@@ -44,9 +44,9 @@ export default new Router({
       component: SignUp
     },
     {
-      path: '/logout',
-      name: 'Logout',
-      component: Logout
-    }
+      path: '/sessions',
+      name: 'sessions',
+      component: Sessions
+    },
   ]
 })
