@@ -4,17 +4,17 @@ const loginStateStore = {
         loggedIn: false,
     },
     methods: {
-        logout() {
+        logout: function() {
             localStorage.setItem("token", null);
             loginStateStore.data.loggedIn = false;
             console.log("logged OUT!");
         },
-        login(token) {
+        login: function(token) {
             localStorage.setItem("token", token);
             loginStateStore.data.loggedIn = true;
             console.log("logged IN!");
         },
-        refresh() {
+        refresh: function() {
             loginStateStore.data.loggedIn = (localStorage.getItem("token") != null);
         }
     },

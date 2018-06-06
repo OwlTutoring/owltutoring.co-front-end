@@ -1,9 +1,8 @@
 <template>
   <div>
     <h1>Sessions</h1>
-    <button>New Session</button>
+    <button @click="makeSession()">New Session</button>
     <div v-for="session, i in sessions"><Session :session="session" /></div>
-
   </div>
 </template>
 
@@ -34,6 +33,11 @@ export default {
         console.log(e);
         //this.errors.push(e)
       });
+  },
+  methods: {
+    makeSession: function() {
+      this.sessions.push({isnew:true,startTime: (new Date()).getTime(),});
+    }
   }
 };
 </script>
