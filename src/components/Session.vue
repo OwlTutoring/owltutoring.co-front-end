@@ -1,6 +1,7 @@
 <template>
   <div class = "session-container">
-    <div v-if="session.isnew">
+    {{!(editing)}}
+    <div v-if="!!editing">
       <div id="message">New Session</div>
       <input v-model="hour" id="hour">:<input v-model.lazy="minute" id="minute"> <select v-model="AMPM" id="AMPM">
       <option value="AM">AM</option>
@@ -8,17 +9,18 @@
       </select>
       <input v-model="calendar.selected" id="day">/<input v-model="calendar.month" id="month">/<input v-model="calendar.year" id="year">
       <div v-if="showCalander" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selected':day == calendar.selected }" class="calendar-day">{{day}}</div> </div>
-      <input id="length">hr(s)
+      <input v-model="length" id="length">hr(s)
       <select id="tutor">
       <option value="none">{{session.tutorName}}</option>
       <option value="Client">Eunice Yoon</option>
       <option value="Tutor">Sharon Song</option>
     </select>
+    <button @click="submit()">Submit</button>
     </div>
     <div v-else>
     <h2>{{dateTimeString}}</h2>
     {{session.name}}
-    <button>Edit</button>
+    <button v-on:click="changeToEdit()">Edit</button>
     </div>
     
   </div>
@@ -28,23 +30,30 @@
 export default {
   props: {
     session: {
-      type: Object
+      type: Object,
+      edit: false,
     },
   },
   name: "Session",
   data: function() {
     return {
-      expanded: false,
+      editing: false,
       showCalander: true,
       calendar: {
         selected: new Date().getDate(),
-        month: new Date().getMonth(),
+        month: new Date().getMonth() + 1,
         year: new Date().getFullYear(),
       },
       hour: 5,
       minuteVal: 0,
       AMPM: "PM",
+      length: 1,
     };
+  },
+  created: function() {
+    if(this.session.isnew) {
+      this.editing = true;
+    }
   },
   computed: {
     minute: {
@@ -104,6 +113,11 @@ export default {
     }
   },
   methods: {
+    changeToEdit: function() {
+      console.log(this.editing);
+      this.editing = true;
+      console.log(this.editing);
+    },
     toggleMore: function() {
       console.log(this.expanded);
       if (this.expanded) {
