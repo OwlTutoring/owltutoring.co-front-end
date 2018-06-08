@@ -1,6 +1,5 @@
 <template>
   <div class = "session-container">
-    {{!(editing)}}
     <div v-if="!!editing">
       <div id="message">New Session</div>
       <input v-model="hour" id="hour">:<input v-model.lazy="minute" id="minute"> <select v-model="AMPM" id="AMPM">
@@ -15,7 +14,13 @@
       <option value="Client">Eunice Yoon</option>
       <option value="Tutor">Sharon Song</option>
     </select>
-    <button @click="submit()">Submit</button>
+    <div v-if="session.isnew">
+      <button @click="scheduleLesson()">Schedule Lesson</button>
+    </div>
+    <div v-else>
+      <button @click="editLesson()">Save Changes</button>
+    </div>
+    <button @click="cancelEdit()">Cancel</button>
     </div>
     <div v-else>
     <h2>{{dateTimeString}}</h2>
@@ -40,12 +45,12 @@ export default {
       editing: false,
       showCalander: true,
       calendar: {
-        selected: new Date().getDate(),
-        month: new Date().getMonth() + 1,
-        year: new Date().getFullYear(),
+        selected: this.session.isnew ? new Date().getDate() + 1 : new Date(parseInt(this.session.startTime)).getDate() + 1,
+        month: this.session.isnew ? new Date().getMonth() + 1 : new Date(parseInt(this.session.startTime)).getMonth() + 1,
+        year: this.session.isnew ? new Date().getFullYear() : new Date(parseInt(this.session.startTime)).getFullYear(),
       },
-      hour: 5,
-      minuteVal: 0,
+      hour: this.session.isnew ? 5 : new Date(parseInt(this.session.startTime)).getHours(),
+      minuteVal: this.session.isnew ? 0 : new Date(parseInt(this.session.startTime)).getMinutes(),
       AMPM: "PM",
       length: 1,
     };
@@ -113,6 +118,33 @@ export default {
     }
   },
   methods: {
+    scheduleLesson: function() {
+      axios
+        .post(
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/createSession",
+          {
+            token: localStorage.getItem("token"),
+            clientID: 1,
+            tutorID: 1,
+            startTime: 1,
+            endTime: 1,
+            sessionLocation: 1,
+          }
+        )
+        .then(function(response) {
+          // JSON responses are automatically parsed.
+          console.log(response);
+          document.getElementById("message").innerHTML = response.data.message;
+        })
+        .catch(function(e) {
+          console.log(e);
+          document.getElementById("message").innerHTML = e.response.data.message;
+          //this.errors.push(e)
+        });
+    },
+    cancelEdit: function() {
+      this.editing = false;
+    },
     changeToEdit: function() {
       console.log(this.editing);
       this.editing = true;
