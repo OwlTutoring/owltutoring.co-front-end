@@ -2,17 +2,25 @@
   <div>
     <h1>Sign Up</h1>
     <h4 id="message"></h4>
-    <select id="accountType">
-      <option value="none">Select Account Type</option>
-      <option value="Client">Student</option>
+    <select v-model="accountType" id="accountType">
+      <option value="null">Select Account Type</option>
+      <option value="Client">Client</option>
       <option value="Tutor">Tutor</option>
     </select>
+    <div v-if="accountType == 'Client'">
+      Are you a parent? <input v-model="isParent" type="checkbox">
+    </div>
     first name: <input id="firstName">
     last name: <input id="lastName">
     Email: <input id="email">
     Phone Number: <input id="phone">
     Password: <input id="password" type="password">
     Confirm password: <input id="confirmPassword" type="password">
+    <div v-if="isParent && accountType == 'Client'">
+      Children Names:
+      <div v-for="(student, index) in students"><input id="student" v-model="students[index]"><button v-on:click="removeStudent(index)">-</button> </div>
+      <button v-on:click="addStudent()">Add Student</button>
+    </div>
     <button v-on:click="signUp()">SignUp</button>
     <router-link to="login">Login</router-link>
   </div>
@@ -22,9 +30,27 @@
 import axios from "axios";
 export default {
   data: function() {
-    return {};
+    return {
+      accountType: null,
+      isParent: false,
+      students: [""],
+    };
   },
   methods: {
+    getStudentInputs() {
+      var studentInput = [];
+      for(student in students) {
+        studentInput.push({S:student});
+      }
+      console.log(studentInput);
+      return studentInput;
+    },
+    removeStudent(index) {
+      this.students.splice(index, 1);
+    },
+    addStudent() {
+      this.students.push("");
+    },
     signUp: function() {
       if(document.getElementById("password").value != document.getElementById("confirmPassword").value) {
         document.getElementById("message").innerHTML = "Error, Passwords don't match";
