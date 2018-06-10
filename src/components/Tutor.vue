@@ -49,7 +49,7 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          _this.$router.push('Sessions');
+          _this.$router.push({ path: 'Sessions', query: { addNew: true }});
 
         })
         .catch(function(e) {

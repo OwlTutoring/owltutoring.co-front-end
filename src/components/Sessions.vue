@@ -18,6 +18,11 @@ export default {
       sessions: []
     };
   },
+  mounted: function() {
+    if(this.$route.query.addNew) {
+      this.makeSession();
+    }
+  },
   created: function() {
     var _this = this;
     axios
@@ -27,7 +32,7 @@ export default {
       .then(function(response) {
         // JSON responses are automatically parsed.
         console.log(response);
-        _this.sessions = response.data.sessions;
+        _this.sessions.concat(response.data.sessions);
       })
       .catch(function(e) {
         console.log(e);
