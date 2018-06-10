@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <h1>Owl Tutoring</h1>
+    {{messageStore.message}}
     <router-link to="Home">Home</router-link>
     <router-link to="Tutors">Tutors</router-link>
     <router-link to="contact">Contact</router-link>
@@ -18,12 +19,14 @@
 
 <script>
 import LoginStateStore from "./stores/LoginStateStore";
+import MessageStore from "./stores/MessageStore";
 
 export default {
   name: "app",
   data: function() {
     return {
       LoginStateStore: LoginStateStore.data,
+      messageStore: MessageStore.data,
     };
   },
   methods: {

@@ -10,10 +10,9 @@
       <div v-if="showCalander" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selected':day == calendar.selected }" class="calendar-day">{{day}}</div> </div>
       <input v-model="length" id="length">hr(s)
       <select id="tutor">
-      <option value="none">{{session.tutorName}}</option>
-      <option value="Client">Eunice Yoon</option>
-      <option value="Tutor">Sharon Song</option>
-    </select>
+      <option v-for="account, i  in relatedAccounts" :value="account.ID.N">{{account.firstName.S}} {{account.lastName.S}}</option>
+      <option>Find more Tutors</option>
+      </select>
     <div v-if="session.isnew">
       <button @click="scheduleLesson()">Schedule Lesson</button>
     </div>
@@ -37,8 +36,8 @@ export default {
   props: {
     session: {
       type: Object,
-      edit: false,
-    },
+      edit: false
+    }
   },
   name: "Session",
   data: function() {
@@ -46,52 +45,101 @@ export default {
       editing: false,
       showCalander: true,
       calendar: {
-        selected: this.session.isnew ? new Date().getDate() + 1 : new Date(parseInt(this.session.startTime)).getDate() + 1,
-        month: this.session.isnew ? new Date().getMonth() + 1 : new Date(parseInt(this.session.startTime)).getMonth() + 1,
-        year: this.session.isnew ? new Date().getFullYear() : new Date(parseInt(this.session.startTime)).getFullYear(),
+        selected: this.session.isnew
+          ? new Date().getDate() + 1
+          : new Date(parseInt(this.session.startTime)).getDate() + 1,
+        month: this.session.isnew
+          ? new Date().getMonth() + 1
+          : new Date(parseInt(this.session.startTime)).getMonth() + 1,
+        year: this.session.isnew
+          ? new Date().getFullYear()
+          : new Date(parseInt(this.session.startTime)).getFullYear()
       },
-      hour: this.session.isnew ? 5 : new Date(parseInt(this.session.startTime)).getHours(),
-      minuteVal: this.session.isnew ? 0 : new Date(parseInt(this.session.startTime)).getMinutes(),
+      hour: this.session.isnew
+        ? 5
+        : new Date(parseInt(this.session.startTime)).getHours(),
+      minuteVal: this.session.isnew
+        ? 0
+        : new Date(parseInt(this.session.startTime)).getMinutes(),
       AMPM: "PM",
       length: 1,
+      relatedAccounts: [],
     };
   },
   created: function() {
-    if(this.session.isnew) {
+    var _this = this;
+    if (this.session.isnew) {
       this.editing = true;
     }
+    axios
+      .post(
+        "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getRelatedAccountInfo",
+        {
+          token: localStorage.getItem("token")
+        }
+      )
+      .then(function(response) {
+        // JSON responses are automatically parsed.
+        console.log(response.data);
+        _this.relatedAccounts = response.data.accounts;
+      })
+      .catch(function(e) {
+        console.log(e);
+        //this.errors.push(e)
+      });
   },
   computed: {
     minute: {
       get: function() {
-        return (this.minuteVal < 10 ? "0" + this.minuteVal : this.minuteVal);
+        return this.minuteVal < 10 ? "0" + this.minuteVal : this.minuteVal;
       },
       set: function(newVal) {
         this.minuteVal = newVal;
       }
     },
     days: function() {
-      var lengths = [31, (((this.calendar.year%4==0)&&(this.calendar.year%100!=0))||(this.calendar.year%400==0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-      console.log(lengths[this.calendar.month-1]);
-      return lengths[this.calendar.month-1];
+      var lengths = [
+        31,
+        (this.calendar.year % 4 == 0 && this.calendar.year % 100 != 0) ||
+        this.calendar.year % 400 == 0
+          ? 29
+          : 28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31
+      ];
+      console.log(lengths[this.calendar.month - 1]);
+      return lengths[this.calendar.month - 1];
     },
     getMonth: function() {
-      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      console.log(months[this.calendar.month-1]);
+      var months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+      console.log(months[this.calendar.month - 1]);
       //document.getElementById("month").value = this.calendar.month + 1;
-      return months[this.calendar.month-1];
+      return months[this.calendar.month - 1];
     },
     dateTimeString: function() {
       var date = new Date(parseInt(this.session.startTime));
-      var days = [
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thurs",
-        "Fri",
-        "Sat",
-        "Sun"
-      ];
+      var days = ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"];
       var AMPM = "AM";
       var hours = date.getHours();
       if (hours > 12) {
@@ -129,7 +177,7 @@ export default {
             tutorID: 1,
             startTime: 1,
             endTime: 1,
-            sessionLocation: 1,
+            sessionLocation: 1
           }
         )
         .then(function(response) {
@@ -139,7 +187,8 @@ export default {
         })
         .catch(function(e) {
           console.log(e);
-          document.getElementById("message").innerHTML = e.response.data.message;
+          document.getElementById("message").innerHTML =
+            e.response.data.message;
           //this.errors.push(e)
         });
     },
@@ -159,25 +208,25 @@ export default {
         this.expanded = true;
       }
     },
-    selectDay(day) {
+    selectDay: function(day) {
       console.log(day);
       this.calendar.selected = day;
       document.getElementById("day").value = day;
     },
-    backMonth() {
+    backMonth: function() {
       if (this.calendar.month == 1) {
         this.calendar.month = 12;
-        this.calendar.year --;
+        this.calendar.year--;
       } else {
-        this.calendar.month --;
+        this.calendar.month--;
       }
     },
-    forwardMonth() {
+    forwardMonth: function() {
       if (this.calendar.month == 12) {
         this.calendar.month = 1;
-        this.calendar.year ++;
+        this.calendar.year++;
       } else {
-        this.calendar.month ++;
+        this.calendar.month++;
       }
     }
   }
@@ -203,6 +252,6 @@ export default {
   background-color: white;
 }
 .selected {
-  background-color: green; 
+  background-color: green;
 }
 </style>

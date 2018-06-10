@@ -11,6 +11,7 @@
 
 <script>
 import LoginStateStore from "../stores/LoginStateStore";
+import MessageStore from "../stores/MessageStore";
 import axios from "axios";
 export default {
   data: function() {
@@ -34,10 +35,12 @@ export default {
           console.log(response);
           LoginStateStore.methods.login(response.data.token);
           document.getElementById("message").innerHTML = response.data.message;
+          MessageStore.methods.showMessage(response.data.message);
         })
         .catch(function(e) {
           console.log(e);
           document.getElementById("message").innerHTML = e.response.data.message;
+          MessageStore.methods.showMessage(e.response.data.message);
           //this.errors.push(e)
         });
     }
