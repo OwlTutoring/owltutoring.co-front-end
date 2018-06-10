@@ -9,9 +9,9 @@
       <input v-model="calendar.selected" id="day">/<input v-model="calendar.month" id="month">/<input v-model="calendar.year" id="year">
       <div v-if="showCalander" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selected':day == calendar.selected }" class="calendar-day">{{day}}</div> </div>
       <input v-model="length" id="length">hr(s)
-      <select id="tutor">
+      <select v-model="tutorID" id="tutor">
       <option v-for="account, i  in relatedAccounts" :value="account.ID.N">{{account.firstName.S}} {{account.lastName.S}}</option>
-      <option>Find more Tutors</option>
+      <option value="findMore">Find more Tutors</option>
       </select>
     <div v-if="session.isnew">
       <button @click="scheduleLesson()">Schedule Lesson</button>
@@ -42,6 +42,7 @@ export default {
   name: "Session",
   data: function() {
     return {
+      tutorID: null,
       editing: false,
       showCalander: true,
       calendar: {
@@ -82,6 +83,7 @@ export default {
         // JSON responses are automatically parsed.
         console.log(response.data);
         _this.relatedAccounts = response.data.accounts;
+        _this.tutorID = _this.relatedAccounts[0].ID.N;
       })
       .catch(function(e) {
         console.log(e);
@@ -229,6 +231,13 @@ export default {
         this.calendar.month++;
       }
     }
+  },
+  watch: {
+    tutorID: function (val) {
+      if(val == "findMore") {
+        this.$router.push({ path: 'Tutors'});
+      }
+    },
   }
 };
 </script>
