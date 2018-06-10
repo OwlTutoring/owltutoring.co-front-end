@@ -6,6 +6,7 @@
     <h4>Subjects: {{subjectList}}</h4>
     <h4>Levels: {{levelsList}}</h4>
     <h4>Town: {{tutor.town}}</h4>
+    <button v-on:click="chosseTutor()">Schedule a Lesson</button>
     <button v-on:click="toggleMore()">more info</button>
     <div v-if="expanded">
       <h4>Phone: <a :href= "'sms:' + tutor.phone"> {{tutor.phone}}</a></h4>
@@ -17,13 +18,14 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   props: ["tutor"],
   name: "Tutor",
   data: function() {
     return {
-      expanded: false,
-    }
+      expanded: false
+    };
   },
   computed: {
     subjectList: function() {
@@ -34,9 +36,30 @@ export default {
     }
   },
   methods: {
+    chosseTutor: function() {
+      var _this = this;
+      axios
+        .post(
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/connectAccounts",
+          {
+            token: localStorage.getItem("token"),
+            otherID: this.tutor.ID,
+          }
+        )
+        .then(function(response) {
+          // JSON responses are automatically parsed.
+          console.log(response);
+          _this.$router.push('Sessions');
+
+        })
+        .catch(function(e) {
+          console.log(e);
+          //this.errors.push(e)
+        });
+    },
     toggleMore: function() {
       console.log(this.expanded);
-      if(this.expanded) {
+      if (this.expanded) {
         this.expanded = false;
       } else {
         this.expanded = true;
