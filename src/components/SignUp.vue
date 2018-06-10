@@ -47,8 +47,8 @@ export default {
   methods: {
     getStudentInputs: function() {
       var studentInput = [];
-      for(student in students) {
-        studentInput.push({S:student});
+      for(var i = 0; i < this.students.length; i++) {
+        studentInput.push({S:this.students[i]});
       }
       console.log(studentInput);
       return studentInput;
@@ -79,6 +79,8 @@ export default {
             firstName: _this.firstName,
             lastName: _this.lastName,
             phone: _this.phone,
+            isParent: _this.isParent,
+            students: _this.getStudentInputs(),
           }
         )
         .then(function(response) {
