@@ -27,12 +27,12 @@ export default {
     var _this = this;
     axios
       .post(
-        "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getSessions",{ token: localStorage.getItem("token") }
+        "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getSessions", { token: localStorage.getItem("token") }
       )
       .then(function(response) {
         // JSON responses are automatically parsed.
         console.log(response);
-        _this.sessions.concat(response.data.sessions);
+        _this.sessions = _this.sessions.concat(response.data.sessions);
       })
       .catch(function(e) {
         console.log(e);

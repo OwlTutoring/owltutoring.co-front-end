@@ -6,10 +6,10 @@
       <option value="AM">AM</option>
       <option value="PM">PM</option>
       </select>
-      <input v-model="calendar.selected" id="day">/<input v-model="calendar.month" id="month">/<input v-model="calendar.year" id="year">
-      <div v-if="showCalander" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selected':day == calendar.selected }" class="calendar-day">{{day}}</div> </div>
+      <input v-model="calendar.selectedDay" id="day">/<input v-model="calendar.month" id="month">/<input v-model="calendar.year" id="year">
+      <div v-if="showCalander" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == calendar.selectedDay }" class="calendar-day">{{day}}</div> </div>
       <input v-model="length" id="length">hr(s)
-      <select v-model="tutorID" id="tutor">
+      <select v-model="otherID" id="tutor">
       <option v-for="account, i  in relatedAccounts" :value="account.ID.N">{{account.firstName.S}} {{account.lastName.S}}</option>
       <option value="findMore">Find more Tutors</option>
       </select>
@@ -32,21 +32,22 @@
 
 <script>
 import axios from "axios";
+import MessageStore from "../stores/MessageStore";
 export default {
   props: {
     session: {
       type: Object,
-      edit: false
+      editing: false
     }
   },
   name: "Session",
   data: function() {
     return {
-      tutorID: null,
+      otherID: null,
       editing: false,
       showCalander: true,
       calendar: {
-        selected: this.session.isnew
+        selectedDay: this.session.isnew
           ? new Date().getDate() + 1
           : new Date(parseInt(this.session.startTime)).getDate() + 1,
         month: this.session.isnew
@@ -170,27 +171,28 @@ export default {
   },
   methods: {
     scheduleLesson: function() {
+      var _this = this;
+      var params = {
+            token: localStorage.getItem("token"),
+            otherID: _this.otherID,
+            startTime: (new Date(_this.calendar.year, _this.calendar.month, _this.calendar.selectedDay, _this.hour + _this.AMPM == "AM" ? 0 : 12, _this.minuteVal).getTime()).toString(),
+            endTime: (new Date(_this.calendar.year, _this.calendar.month, _this.calendar.selectedDay, _this.hour + _this.AMPM == "AM" ? 0 : 12, _this.minuteVal).getTime() + _this.length*3600000).toString(),
+            sessionLocation: "TODO: LOCATION"
+          };
+          console.log(params);
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/createSession",
-          {
-            token: localStorage.getItem("token"),
-            clientID: 1,
-            tutorID: 1,
-            startTime: 1,
-            endTime: 1,
-            sessionLocation: 1
-          }
+          params
         )
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          document.getElementById("message").innerHTML = response.data.message;
+          MessageStore.methods.showMessage(response.data.message);
         })
         .catch(function(e) {
           console.log(e);
-          document.getElementById("message").innerHTML =
-            e.response.data.message;
+          MessageStore.methods.showMessage(e.response.data.message);
           //this.errors.push(e)
         });
     },
@@ -212,7 +214,7 @@ export default {
     },
     selectDay: function(day) {
       console.log(day);
-      this.calendar.selected = day;
+      this.calendar.selectedDay = day;
       document.getElementById("day").value = day;
     },
     backMonth: function() {
@@ -260,7 +262,7 @@ export default {
   height: 30px;
   background-color: white;
 }
-.selected {
+.selectedDay {
   background-color: green;
 }
 </style>
