@@ -65,31 +65,31 @@ export default {
         : new Date(parseInt(this.session.startTime)).getMinutes(),
       AMPM: "PM",
       length: 1,
-      relatedAccounts: [],
+      relatedAccounts: []
     };
   },
   created: function() {
     var _this = this;
     if (this.session.isnew) {
       this.editing = true;
+      axios
+        .post(
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getRelatedAccountInfo",
+          {
+            token: localStorage.getItem("token")
+          }
+        )
+        .then(function(response) {
+          // JSON responses are automatically parsed.
+          console.log(response.data);
+          _this.relatedAccounts = response.data.accounts;
+          _this.otherID = _this.relatedAccounts[0].ID.N;
+        })
+        .catch(function(e) {
+          console.log(e);
+          //this.errors.push(e)
+        });
     }
-    axios
-      .post(
-        "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getRelatedAccountInfo",
-        {
-          token: localStorage.getItem("token")
-        }
-      )
-      .then(function(response) {
-        // JSON responses are automatically parsed.
-        console.log(response.data);
-        _this.relatedAccounts = response.data.accounts;
-        _this.tutorID = _this.relatedAccounts[0].ID.N;
-      })
-      .catch(function(e) {
-        console.log(e);
-        //this.errors.push(e)
-      });
   },
   computed: {
     minute: {
@@ -172,23 +172,40 @@ export default {
   methods: {
     scheduleLesson: function() {
       var _this = this;
+      console.log(_this);
       var params = {
-            token: localStorage.getItem("token"),
-            otherID: _this.otherID,
-            startTime: (new Date(_this.calendar.year, _this.calendar.month, _this.calendar.selectedDay, _this.hour + _this.AMPM == "AM" ? 0 : 12, _this.minuteVal).getTime()).toString(),
-            endTime: (new Date(_this.calendar.year, _this.calendar.month, _this.calendar.selectedDay, _this.hour + _this.AMPM == "AM" ? 0 : 12, _this.minuteVal).getTime() + _this.length*3600000).toString(),
-            sessionLocation: "TODO: LOCATION"
-          };
-          console.log(params);
-      axios
-        .post(
-          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/createSession",
-          params
+        token: localStorage.getItem("token"),
+        otherID: _this.otherID,
+        startTime: new Date(
+          _this.calendar.year,
+          _this.calendar.month,
+          _this.calendar.selectedDay,
+          _this.hour + (_this.AMPM == "AM" ? 0 : 12),
+          _this.minuteVal
         )
+          .getTime()
+          .toString(),
+        endTime: (
+          new Date(
+            _this.calendar.year,
+            _this.calendar.month,
+            _this.calendar.selectedDay,
+            _this.hour + (_this.AMPM == "AM" ? 0 : 12),
+            _this.minuteVal
+          ).getTime() +
+          _this.length * 3600000
+        ).toString(),
+        sessionLocation: "TODO: LOCATION"
+      };
+      console.log(params);
+      axios
+        .post("https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/createSession", params)
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
           MessageStore.methods.showMessage(response.data.message);
+          console.log("refresh");
+          _this.$emit('refresh');
         })
         .catch(function(e) {
           console.log(e);
@@ -235,11 +252,11 @@ export default {
     }
   },
   watch: {
-    tutorID: function (val) {
-      if(val == "findMore") {
-        this.$router.push({ path: 'Tutors'});
+    tutorID: function(val) {
+      if (val == "findMore") {
+        this.$router.push({ path: "Tutors" });
       }
-    },
+    }
   }
 };
 </script>
