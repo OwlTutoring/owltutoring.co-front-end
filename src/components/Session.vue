@@ -2,12 +2,12 @@
   <div class = "session-container">
     <div v-if="!!editing">
       <div id="message">New Session</div>
-      <input v-model="hour" id="hour">:<input v-model.lazy="minute" id="minute"> <select v-model="AMPM" id="AMPM">
+      <input v-model.lazy="hour" id="hour">:<input v-model.lazy="minute" id="minute"> <select v-model="AMPM" id="AMPM">
       <option value="AM">AM</option>
       <option value="PM">PM</option>
       </select>
-      <input v-model="calendar.selectedDay" id="day">/<input v-model="calendar.month" id="month">/<input v-model="calendar.year" id="year">
-      <div v-if="showCalander" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == calendar.selectedDay }" class="calendar-day">{{day}}</div> </div>
+      <input v-model.lazy="month" id="month">/<input v-model.lazy="day" id="day">/<input v-model.lazy="year" id="year">
+      <div v-if="showCalander" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> </div>
       <input v-model="length" id="length">hr(s)
       <select v-model="otherID" id="tutor">
       <option v-for="account, i  in relatedAccounts" :value="account.ID.N">{{account.firstName.S}} {{account.lastName.S}}</option>
@@ -42,28 +42,29 @@ export default {
   },
   name: "Session",
   data: function() {
+    var startDate = new Date(parseInt(this.session.startTime));
     return {
       otherID: null,
       editing: false,
       showCalander: true,
-      calendar: {
-        selectedDay: this.session.isnew
-          ? new Date().getDate() + 1
-          : new Date(parseInt(this.session.startTime)).getDate() + 1,
-        month: this.session.isnew
-          ? new Date().getMonth() + 1
-          : new Date(parseInt(this.session.startTime)).getMonth() + 1,
-        year: this.session.isnew
-          ? new Date().getFullYear()
-          : new Date(parseInt(this.session.startTime)).getFullYear()
-      },
-      hour: this.session.isnew
-        ? 5
-        : new Date(parseInt(this.session.startTime)).getHours(),
-      minuteVal: this.session.isnew
-        ? 0
-        : new Date(parseInt(this.session.startTime)).getMinutes(),
-      AMPM: "PM",
+      dayVal: this.session.isnew
+        ? new Date().getDate() + 1
+        : startDate.getDate(),
+      monthVal: this.session.isnew
+        ? new Date().getMonth() + 1
+        : startDate.getMonth() + 1,
+      yearVal: this.session.isnew
+        ? new Date().getFullYear()
+        : startDate.getFullYear(),
+      hourVal: this.session.isnew
+        ? 4
+        : startDate.getHours() <= 12
+          ? startDate.getHours()
+          : startDate.getHours() - 12,
+      minuteVal: this.session.isnew ? 0 : startDate.getMinutes(),
+      AMPM: this.session.isnew
+        ? "PM"
+        : startDate.getHours() <= 12 ? "AM" : "PM",
       length: 1,
       relatedAccounts: []
     };
@@ -97,14 +98,46 @@ export default {
         return this.minuteVal < 10 ? "0" + this.minuteVal : this.minuteVal;
       },
       set: function(newVal) {
-        this.minuteVal = newVal;
+        this.minuteVal = parseInt(newVal);
+      }
+    },
+    hour: {
+      get: function() {
+        return this.hourVal <= 12 ? this.hourVal : this.hourVal - 12;
+      },
+      set: function(newVal) {
+        this.hourVal = parseInt(newVal);
+      }
+    },
+    day: {
+      get: function() {
+        return this.dayVal.toString();
+      },
+      set: function(newVal) {
+        this.dayVal = parseInt(newVal);
+      }
+    },
+    month: {
+      get: function() {
+        return (this.monthVal + 1).toString();
+      },
+      set: function(newVal) {
+        this.monthVal = parseInt(newVal) - 1;
+      }
+    },
+    year: {
+      get: function() {
+        return this.yearVal.toString();
+      },
+      set: function(newVal) {
+        this.yearVal = parseInt(newVal);
       }
     },
     days: function() {
       var lengths = [
         31,
-        (this.calendar.year % 4 == 0 && this.calendar.year % 100 != 0) ||
-        this.calendar.year % 400 == 0
+        (this.year % 4 == 0 && this.year % 100 != 0) ||
+        this.year % 400 == 0
           ? 29
           : 28,
         31,
@@ -118,8 +151,8 @@ export default {
         30,
         31
       ];
-      console.log(lengths[this.calendar.month - 1]);
-      return lengths[this.calendar.month - 1];
+      console.log(lengths[this.month]);
+      return lengths[this.monthVal];
     },
     getMonth: function() {
       var months = [
@@ -136,9 +169,9 @@ export default {
         "November",
         "December"
       ];
-      console.log(months[this.calendar.month - 1]);
+      console.log(months[this.monthVal]);
       //document.getElementById("month").value = this.calendar.month + 1;
-      return months[this.calendar.month - 1];
+      return months[this.monthVal];
     },
     dateTimeString: function() {
       var date = new Date(parseInt(this.session.startTime));
@@ -161,7 +194,7 @@ export default {
         " " +
         days[date.getDay()] +
         " " +
-        date.getMonth() +
+        (date.getMonth() + 1) +
         "/" +
         date.getDate() +
         "/" +
@@ -170,42 +203,74 @@ export default {
     }
   },
   methods: {
-    scheduleLesson: function() {
-      var _this = this;
-      console.log(_this);
-      var params = {
+    getParams: function() {
+      console.log(this);
+      return {
         token: localStorage.getItem("token"),
-        otherID: _this.otherID,
+        otherID: this.otherID,
         startTime: new Date(
-          _this.calendar.year,
-          _this.calendar.month,
-          _this.calendar.selectedDay,
-          _this.hour + (_this.AMPM == "AM" ? 0 : 12),
-          _this.minuteVal
+          this.yearVal,
+          this.monthVal,
+          this.dayVal,
+          this.hourVal,
+          this.minuteVal
         )
           .getTime()
           .toString(),
         endTime: (
           new Date(
-            _this.calendar.year,
-            _this.calendar.month,
-            _this.calendar.selectedDay,
-            _this.hour + (_this.AMPM == "AM" ? 0 : 12),
-            _this.minuteVal
+            this.yearVal,
+            this.monthVal,
+            this.dayVal,
+            this.hourVal,
+            this.minuteVal
           ).getTime() +
-          _this.length * 3600000
+          this.length * 3600000
         ).toString(),
         sessionLocation: "TODO: LOCATION"
       };
+    },
+    editLesson: function() {
+      var _this = this;
+      console.log(_this);
+      var params = this.getParams();
+      params["sessionID"] = this.session.ID;
       console.log(params);
       axios
-        .post("https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/createSession", params)
+        .post(
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/editSession",
+          params
+        )
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
           MessageStore.methods.showMessage(response.data.message);
           console.log("refresh");
-          _this.$emit('refresh');
+          _this.$emit("refresh");
+          _this.editing = false;
+        })
+        .catch(function(e) {
+          console.log(e);
+          MessageStore.methods.showMessage(e.response.data.message);
+          //this.errors.push(e)
+        });
+    },
+    scheduleLesson: function() {
+      var _this = this;
+      console.log(_this);
+      var params = this.getParams();
+      console.log(params);
+      axios
+        .post(
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/createSession",
+          params
+        )
+        .then(function(response) {
+          // JSON responses are automatically parsed.
+          console.log(response);
+          MessageStore.methods.showMessage(response.data.message);
+          console.log("refresh");
+          _this.$emit("refresh");
         })
         .catch(function(e) {
           console.log(e);
@@ -231,23 +296,23 @@ export default {
     },
     selectDay: function(day) {
       console.log(day);
-      this.calendar.selectedDay = day;
+      this.dayVal = parseInt(day);
       document.getElementById("day").value = day;
     },
     backMonth: function() {
-      if (this.calendar.month == 1) {
-        this.calendar.month = 12;
-        this.calendar.year--;
+      if (this.monthVal == 0) {
+        this.monthVal = 11;
+        this.yearVal--;
       } else {
-        this.calendar.month--;
+        this.monthVal--;
       }
     },
     forwardMonth: function() {
-      if (this.calendar.month == 12) {
-        this.calendar.month = 1;
-        this.calendar.year++;
+      if (this.monthVal == 11) {
+        this.monthVal = 0;
+        this.yearVal++;
       } else {
-        this.calendar.month++;
+        this.monthVal++;
       }
     }
   },
