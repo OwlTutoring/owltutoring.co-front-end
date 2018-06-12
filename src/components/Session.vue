@@ -9,10 +9,17 @@
       <input v-model.lazy="month" id="month">/<input v-model.lazy="day" id="day">/<input v-model.lazy="year" id="year">
       <div v-if="showCalander" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> </div>
       <input v-model="length" id="length">hr(s)
+
+      <div v-if="session.isnew">
       <select v-model="otherID" id="tutor">
       <option v-for="account, i  in relatedAccounts" :value="account.ID.N">{{account.firstName.S}} {{account.lastName.S}}</option>
       <option value="findMore">Find more Tutors</option>
       </select>
+      </div>
+      <div v-else>
+        {{session.name}}
+      </div>
+
     <div v-if="session.isnew">
       <button @click="scheduleLesson()">Schedule Lesson</button>
     </div>
@@ -51,8 +58,8 @@ export default {
         ? new Date().getDate() + 1
         : startDate.getDate(),
       monthVal: this.session.isnew
-        ? new Date().getMonth() + 1
-        : startDate.getMonth() + 1,
+        ? new Date().getMonth()
+        : startDate.getMonth(),
       yearVal: this.session.isnew
         ? new Date().getFullYear()
         : startDate.getFullYear(),
