@@ -183,10 +183,10 @@ export default {
     dateTimeString: function() {
       var date = new Date(parseInt(this.session.startTime));
       var days = ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"];
-      var AMPM = "AM";
+      var AMPM = "am";
       var hours = date.getHours();
       if (hours > 12) {
-        AMPM = "PM";
+        AMPM = "pm";
         hours -= 12;
       }
       if (hours == 0) {
@@ -335,7 +335,11 @@ export default {
 
 <style scoped>
 .session-container {
-  background-color: azure;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 20px;
+  padding: 1%;
   margin: 1%;
 }
 .more-info {
@@ -344,6 +348,7 @@ export default {
 
 .calendar-container {
   width: 210px;
+  position: relative;
 }
 .calendar-day {
   float: left;
