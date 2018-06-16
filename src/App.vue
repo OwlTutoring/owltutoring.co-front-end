@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
-    <h1>Owl Tutoring</h1>
-    <div v-if="messageStore.show">
+    <div class="alert" v-if="messageStore.show">
       {{messageStore.message}}
     </div>
+    <h1>Owl Tutoring</h1>
     <div class="nav-grid" v-if="LoginStateStore.loggedIn">
       <router-link class= "nav-item nav-link" to="Home">Home</router-link>
       <router-link class= "nav-item nav-link" to="Tutors">Tutors</router-link>
@@ -98,5 +98,31 @@ h2 {
 .nav-link:hover {
   color: #2c3e50;
 }
-
+.alert {
+  position: absolute;
+  padding: .3em;
+  font-size: 1.5em;
+  border-radius: .5em;
+  background-color: tomato;
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 50%;
+  text-align: center;
+  color: white;
+  animation: popInOut 3.1s ease-in-out backwards  1;
+}
+@keyframes popInOut {
+  100% {
+    transform: translateY(-200px);
+  }
+  80% {
+    transform: translateY(0px);
+  }
+  20% {
+    transform: translateY(0px);
+  }
+  0% {
+    transform: translateY(-50vh);
+  }
+}
 </style>
