@@ -6,14 +6,14 @@
     <h4>Subjects: {{subjectList}}</h4>
     <h4>Levels: {{levelsList}}</h4>
     <h4>Town: {{tutor.town}}</h4>
-    <button v-on:click="chosseTutor()">Schedule a Lesson</button>
-    <button v-on:click="toggleMore()">more info</button>
     <div v-if="expanded">
       <h4>Phone: <a :href= "'sms:' + tutor.phone"> {{tutor.phone}}</a></h4>
       <h4>Email:<a :href= "'mailto:' + tutor.email"> {{tutor.email}}</a></h4>
       <p><b>Experience:</b> {{tutor.experience}}</p>
       <p><b>Bio:</b> {{tutor.bio}}</p>
     </div>
+    <button class ="light-button" v-on:click="toggleMore()"><div v-if="!expanded">more info</div><div v-else>less unfo</div></button><br>
+    <button class="color-button" v-on:click="chosseTutor()">Schedule a Lesson</button>
   </div>
 </template>
 

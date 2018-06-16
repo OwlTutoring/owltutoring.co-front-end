@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Tutors</h1>
-    <div v-for="tutor, i in tutors"><Tutor :tutor="tutor" /></div>
+    <div v-for="tutor, i in tutors"><Tutor class="tutor" :tutor="tutor" /></div>
 
   </div>
 </template>
@@ -43,5 +43,8 @@ ul {
 }
 li {
   list-style: none;
+}
+.tutor {
+  margin: 5%;
 }
 </style>

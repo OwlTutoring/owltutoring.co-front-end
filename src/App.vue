@@ -2,20 +2,22 @@
   <div id="app">
     <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
     <h1>Owl Tutoring</h1>
-    {{messageStore.message}}
+    <div v-if="messageStore.show">
+      {{messageStore.message}}
+    </div>
     <div class="nav-grid" v-if="LoginStateStore.loggedIn">
-      <router-link class= "nav-item" to="Home">Home</router-link>
-      <router-link class= "nav-item" to="Tutors">Tutors</router-link>
-      <router-link class= "nav-item" to="contact">Contact</router-link>
-      <router-link class= "nav-item" to="account">Account</router-link>
-      <router-link class= "nav-item" to="sessions">Sessions</router-link>
-      <button class= "nav-item" v-on:click="logout()">logout</button>  
+      <router-link class= "nav-item nav-link" to="Home">Home</router-link>
+      <router-link class= "nav-item nav-link" to="Tutors">Tutors</router-link>
+      <router-link class= "nav-item nav-link" to="contact">Contact</router-link>
+      <router-link class= "nav-item nav-link" to="account">Account</router-link>
+      <router-link class= "nav-item nav-link" to="sessions">Sessions</router-link>
+      <button class= "nav-item color-button" v-on:click="logout()">logout</button>  
     </div>
     <div class="nav-grid" v-else>
-      <router-link class= "nav-item" to="Home">Home</router-link>
-      <router-link class= "nav-item" to="Tutors">Tutors</router-link>
-      <router-link class= "nav-item" to="contact">Contact</router-link>
-      <router-link class= "nav-item" to="login">Login</router-link>
+      <router-link class= "nav-item nav-link" to="Home">Home</router-link>
+      <router-link class= "nav-item nav-link" to="Tutors">Tutors</router-link>
+      <router-link class= "nav-item nav-link" to="contact">Contact</router-link>
+      <router-link class= "nav-item nav-link" to="login">Login</router-link>
     </div>
     <router-view/>
   </div>
@@ -58,7 +60,7 @@ h1 {
 h2 {
   font-weight: 400;
 }
-button {
+.color-button {
   font-weight: 800;
   background-color: #ffb219;
   color: white;
@@ -67,14 +69,34 @@ button {
   padding: .3em 2em;
   border: none;
 }
+.plain-button {
+
+}
+.light-button {
+  border-width: .1em;
+  padding: .3em 2em;
+  border-radius: .2em;
+  background-color: white;
+  border-style: solid;
+}
 .nav-grid {
   display: flex;
   align-items: stretch;
   flex-direction: row;
+  justify-content: space-around;
 }
 .nav-item {
   display: flex;
   align-items: center;
   font-size: 1.5em;
 }
+.nav-link {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-link:hover {
+  color: #2c3e50;
+}
+
 </style>
