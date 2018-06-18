@@ -10,7 +10,7 @@ const MessageStore = {
             MessageStore.data.message = message;
             console.log(MessageStore.data.message);
             MessageStore.data.show = true;
-            setTimeout( () => {
+            setTimeout( function() {
                 console.log("timeout end");
                 MessageStore.data.show = false;
             }, 3000);

@@ -3,8 +3,8 @@
     <div class="login-box">
       <h1>Login</h1>
       <h4 id="message"></h4>
-      <input class="login-field" placeholder="Email" id="email"><br>
-      <input class="login-field" placeholder="Password" type="password" id="password"><br>
+      <input class="form-field" placeholder="Email" id="email"><br>
+      <input class="form-field" placeholder="Password" type="password" id="password"><br>
       <button class="color-button" v-on:click="login()">Login</button><br>
       <router-link to="signUp">Sign Up</router-link>
     </div>
@@ -73,7 +73,7 @@ li {
   margin-top: 10%;
   border-color: gray;
 }
-.login-field {
+.form-field {
   padding: .2em;
   font-size: 1.5em;
   border-radius: .2em;

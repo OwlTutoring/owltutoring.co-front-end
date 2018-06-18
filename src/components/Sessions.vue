@@ -9,6 +9,7 @@
 <script>
 import Session from "./Session.vue";
 import axios from "axios";
+import MessageStore from "../stores/MessageStore";
 export default {
   components: {
     Session
@@ -37,6 +38,7 @@ export default {
       })
       .catch(function(e) {
         console.log(e);
+        MessageStore.methods.showMessage(e.response.data.message);
         //this.errors.push(e)
       });
   },
@@ -57,6 +59,7 @@ export default {
         })
         .catch(function(e) {
           console.log(e);
+          MessageStore.methods.showMessage(e.response.data.message);
           //this.errors.push(e)
         });
     },

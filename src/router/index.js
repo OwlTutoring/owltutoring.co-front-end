@@ -8,6 +8,7 @@ import Tutor from '@/components/Tutor'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import Sessions from '@/components/Sessions'
+import Pay from '@/components/Pay'
 
 Vue.use(Router)
 
@@ -48,5 +49,10 @@ export default new Router({
       name: 'sessions',
       component: Sessions
     },
+    {
+      path: '/pay',
+      name: 'pay',
+      component: Pay
+    }
   ]
 })

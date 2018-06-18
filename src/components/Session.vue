@@ -2,13 +2,15 @@
   <div class = "session-container">
     <div v-if="!!editing">
       <div id="message">New Session</div>
-      <input v-model.lazy="hour" id="hour">:<input v-model.lazy="minute" id="minute"> <select v-model="AMPM" id="AMPM">
+      <input size="2" v-model.lazy="hour" id="hour">:<input size="2" v-model.lazy="minute" id="minute"> <select v-model="AMPM" id="AMPM">
       <option value="AM">AM</option>
       <option value="PM">PM</option>
       </select>
-      <input v-model.lazy="month" id="month">/<input v-model.lazy="day" id="day">/<input v-model.lazy="year" id="year">
+      <div class="dateEntry">
+      <input v-model.lazy="month" id="month" size="2">/<input v-model.lazy="day" id="day" size="2">/<input v-model.lazy="year" id="year" size="4">
       <div v-if="showCalander" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> </div>
-      <input v-model="length" id="length">hr(s)
+      </div>
+      <input v-model="length" id="length"size="1">hr(s)
 
       <div v-if="session.isnew">
       <select v-model="otherID" id="tutor">
@@ -348,7 +350,9 @@ export default {
 
 .calendar-container {
   width: 210px;
-  position: relative;
+  position: absolute;
+  display:none;
+  background-color: white;
 }
 .calendar-day {
   float: left;
@@ -358,5 +362,8 @@ export default {
 }
 .selectedDay {
   background-color: green;
+}
+.dateEntry:hover > .calendar-container {
+    display:block;
 }
 </style>

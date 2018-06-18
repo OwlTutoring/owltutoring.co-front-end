@@ -32,13 +32,13 @@ export default {
   data: function() {
     return {
       LoginStateStore: LoginStateStore.data,
-      messageStore: MessageStore.data,
+      messageStore: MessageStore.data
     };
   },
   methods: {
     logout: function() {
       LoginStateStore.methods.logout();
-    },
+    }
   },
   created: function() {
     LoginStateStore.methods.refresh();
@@ -48,7 +48,7 @@ export default {
 
 <style>
 #app {
-  font-family: 'Questrial', sans-serif;
+  font-family: "Questrial", sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -64,18 +64,26 @@ h2 {
   font-weight: 800;
   background-color: #ffb219;
   color: white;
-  border-radius: .2em;
+  border-radius: 0.2em;
   font-size: 1em;
-  padding: .3em 2em;
+  padding: 0.3em 2em;
   border: none;
 }
 .plain-button {
-
+  font-weight: 800;
+  background-color: white;
+  color: black;
+  border-radius: 0.2em;
+  font-size: 1em;
+  padding: 0.3em 2em;
+  border: solid;
+  border-color: grey;
+  border-width: 0.1em;
 }
 .light-button {
-  border-width: .1em;
-  padding: .3em 2em;
-  border-radius: .2em;
+  border-width: 0.1em;
+  padding: 0.3em 2em;
+  border-radius: 0.2em;
   background-color: white;
   border-style: solid;
 }
@@ -100,16 +108,16 @@ h2 {
 }
 .alert {
   position: absolute;
-  padding: .3em;
+  padding: 0.3em;
   font-size: 1.5em;
-  border-radius: .5em;
+  border-radius: 0.5em;
   background-color: tomato;
   width: 50%;
   margin-left: 25%;
   margin-right: 50%;
   text-align: center;
   color: white;
-  animation: popInOut 3.1s ease-in-out backwards  1;
+  animation: popInOut 3.1s ease-in-out backwards 1;
 }
 @keyframes popInOut {
   100% {

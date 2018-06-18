@@ -12,7 +12,7 @@
       <p><b>Experience:</b> {{tutor.experience}}</p>
       <p><b>Bio:</b> {{tutor.bio}}</p>
     </div>
-    <button class ="light-button" v-on:click="toggleMore()"><div v-if="!expanded">more info</div><div v-else>less unfo</div></button><br>
+    <button class ="light-button" v-on:click="toggleMore()"><div v-if="!expanded">more info</div><div v-else>less info</div></button><br>
     <button class="color-button" v-on:click="chosseTutor()">Schedule a Lesson</button>
   </div>
 </template>
