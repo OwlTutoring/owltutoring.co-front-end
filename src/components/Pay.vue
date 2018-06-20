@@ -1,21 +1,24 @@
 <template>
   <div>
     Pay
-    <form id="payment-form">
-    <div class="form-row">
-    <label for="card-element">
-    Credit or debit card
-    </label>
-    <div id="card-element">
-    <!-- A Stripe Element will be inserted here. -->
+    <div v-for="(source, i) in sources.data" :key="source.ID"> <input :id="'source-' + i" type="radio" v-model="selectedSource" :value="source.id" ><label :for="'source-' + i">{{source.card.brand}} {{source.card.last4}} {{source.card.exp_month}} {{source.card.exp_year}}</label><button v-on:click="deleteCard(source.id)" >Delete Card</button></div>
+    <input id="new" v-model="selectedSource" type="radio" value="new">
+    
+    
+    
+    <div @click="changeToNewSource">
+      <div id="card-element">
+        <!-- A Stripe Element will be inserted here. -->
+      </div>
     </div>
-
+    
     <!-- Used to display form errors. -->
     <div id="card-errors" role="alert"></div>
-    </div>
-
-    <button>Submit Payment</button>
-    </form>
+    
+    Save Card <input class="form-field" v-model="saveCard" type="checkbox">
+    <button @click="submit" class="color-button">Submit Payment</button>
+    
+    
   </div>
 </template>
 
@@ -25,57 +28,61 @@ import axios from "axios";
 import MessageStore from "../stores/MessageStore";
 
 // Create a Stripe client.
-var stripe = Stripe("pk_test_g6do5S237ekq10r65BnxO6S0");
+var stripe = Stripe("pk_test_gheuGNTfHiHL1ULiFHNPxlzm");
 
 // Create an instance of Elements.
 var elements = stripe.elements();
 
 export default {
   data: function() {
-    return {};
+    return {
+      sources: { data: [] },
+      saveCard: true,
+      selectedSource: "new",
+      card: elements.create("card", {
+        style: {
+          base: {
+            color: "#32325d",
+            lineHeight: "18px",
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSmoothing: "antialiased",
+            fontSize: "16px",
+            "::placeholder": {
+              color: "#aab7c4"
+            }
+          },
+          invalid: {
+            color: "#fa755a",
+            iconColor: "#fa755a"
+          }
+        }
+      }),
+    };
+  },
+  created: function() {
+    this.getSources();
   },
   mounted: function() {
     var _this = this;
-    // Custom styling can be passed to options when creating an Element.
-    // (Note that this demo uses a wider set of styles than the guide below.)
-    var style = {
-      base: {
-        color: "#32325d",
-        lineHeight: "18px",
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSmoothing: "antialiased",
-        fontSize: "16px",
-        "::placeholder": {
-          color: "#aab7c4"
-        }
-      },
-      invalid: {
-        color: "#fa755a",
-        iconColor: "#fa755a"
-      }
-    };
-
-    // Create an instance of the card Element.
-    var card = elements.create("card", { style: style });
-
-    // Add an instance of the card Element into the `card-element` <div>.
-    card.mount("#card-element");
+    this.card.mount("#card-element");
 
     // Handle real-time validation errors from the card Element.
-    card.addEventListener("change", function(event) {
-      var displayError = document.getElementById("card-errors");
+    this.card.addEventListener("change", function(event) {
       if (event.error) {
-        displayError.textContent = event.error.message;
-      } else {
-        displayError.textContent = "";
+        MessageStore.methods.showMessage(event.error.message);
       }
+      _this.changeToNewSource();
     });
 
-    // Handle form submission.
-    var form = document.getElementById("payment-form");
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
-
+    this.card.on("focus", function(event) {
+      _this.changeToNewSource();
+    });
+  },
+  methods: {
+    changeToNewSource: function() {
+      this.selectedSource = "new";
+    },
+    submit: function() {
       var ownerInfo = {
         owner: {
           name: "Jenny Rosen",
@@ -90,34 +97,83 @@ export default {
           errorElement.textContent = result.error.message;
         } else {
           // Send the token to your server.
-          stripeSourceHandler(result.source);
+
+          console.log(result.source);
+
+          axios
+            .post(
+              "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/pay",
+              {
+                source: result.source,
+                saveCard: true,
+                token: localStorage.getItem("token"),
+                amount: 2500,
+                saveCard: _this.saveCard
+              }
+            )
+            .then(function(response) {
+              // JSON responses are automatically parsed.
+              console.log(response);
+              MessageStore.methods.showMessage(response.data.message);
+            })
+            .catch(function(e) {
+              console.log(e);
+              MessageStore.methods.showMessage(e.response.data.message);
+              //this.errors.push(e)
+            });
         }
       });
-    });
-  },
-  methods: {
+    },
+    getSources: function() {
+      var _this = this;
+      axios
+        .post(
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/savedPayOptions",
+          {
+            token: localStorage.getItem("token")
+          }
+        )
+        .then(function(response) {
+          // JSON responses are automatically parsed.
+          console.log(response);
+          MessageStore.methods.showMessage(response.data.message);
+          _this.sources = response.data.sources;
+          _this.selectedSource = _this.sources.data[0].id;
+          console.log(_this.selectedSource);
+        })
+        .catch(function(e) {
+          console.log(e);
+          MessageStore.methods.showMessage(e.response.data.message);
+          //this.errors.push(e)
+        });
+    },
     handleSubmit: function() {
       console.log("bla");
+    },
+    deleteCard: function(sourceID) {
+      var _this = this;
+      axios
+        .post(
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/deleteCard",
+          {
+            token: localStorage.getItem("token"),
+            sourceID: sourceID
+          }
+        )
+        .then(function(response) {
+          // JSON responses are automatically parsed.
+          console.log(response);
+          MessageStore.methods.showMessage(response.data.message);
+          _this.sources = response.data.sources;
+        })
+        .catch(function(e) {
+          console.log(e);
+          MessageStore.methods.showMessage(e.response.data.message);
+          //this.errors.push(e)
+        });
     }
   }
 };
-
-function stripeSourceHandler(source) {
-  console.log(source);
-      // Insert the source ID into the form so it gets submitted to the server
-      /*
-      var form = document.getElementById('payment-form');
-      var hiddenInput = document.createElement('input');
-      hiddenInput.setAttribute('type', 'hidden');
-      hiddenInput.setAttribute('name', 'stripeSource');
-      hiddenInput.setAttribute('value', source.id);
-      form.appendChild(hiddenInput);
-
-      // Submit the form
-      form.submit();
-      */
-    }
-
 </script>
 
 <style>
@@ -145,14 +201,5 @@ function stripeSourceHandler(source) {
 
 .StripeElement--webkit-autofill {
   background-color: #fefde5 !important;
-}
-#payment-form button {
-  font-weight: 800;
-  background-color: #ffb219;
-  color: white;
-  border-radius: 0.2em;
-  font-size: 1em;
-  padding: 0.3em 2em;
-  border: none;
 }
 </style>
