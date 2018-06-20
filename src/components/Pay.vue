@@ -56,7 +56,7 @@ export default {
             iconColor: "#fa755a"
           }
         }
-      }),
+      })
     };
   },
   created: function() {
@@ -83,46 +83,71 @@ export default {
       this.selectedSource = "new";
     },
     submit: function() {
-      var ownerInfo = {
-        owner: {
-          name: "Jenny Rosen",
-          email: "jenny.rosen@example.com"
-        }
-      };
+      var _this = this;
+      if (_this.selectedSource == "new") {
+        var ownerInfo = {
+          owner: {
+            name: "Jenny Rosen",
+            email: "jenny.rosen@example.com"
+          }
+        };
 
-      stripe.createSource(card, ownerInfo).then(function(result) {
-        if (result.error) {
-          // Inform the user if there was an error.
-          var errorElement = document.getElementById("card-errors");
-          errorElement.textContent = result.error.message;
-        } else {
-          // Send the token to your server.
+        stripe.createSource(_this.card, ownerInfo).then(function(result) {
+          if (result.error) {
+            // Inform the user if there was an error.
+            MessageStore.methods.showMessage(result.error.message);
+          } else {
+            // Send the token to your server.
 
-          console.log(result.source);
+            console.log(result.source);
 
-          axios
-            .post(
-              "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/pay",
-              {
-                source: result.source,
-                saveCard: true,
-                token: localStorage.getItem("token"),
-                amount: 2500,
-                saveCard: _this.saveCard
-              }
-            )
-            .then(function(response) {
-              // JSON responses are automatically parsed.
-              console.log(response);
-              MessageStore.methods.showMessage(response.data.message);
-            })
-            .catch(function(e) {
-              console.log(e);
-              MessageStore.methods.showMessage(e.response.data.message);
-              //this.errors.push(e)
-            });
-        }
-      });
+            axios
+              .post(
+                "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/pay",
+                {
+                  source: result.source,
+                  token: localStorage.getItem("token"),
+                  amount: 2500,
+                  saveCard: _this.saveCard,
+                  isNew: true,
+                }
+              )
+              .then(function(response) {
+                // JSON responses are automatically parsed.
+                console.log(response);
+                MessageStore.methods.showMessage(response.data.message);
+              })
+              .catch(function(e) {
+                console.log(e);
+                MessageStore.methods.showMessage(e.response.data.message);
+                //this.errors.push(e)
+              });
+          }
+        });
+      } else {
+        console.log("using saved source");
+        axios
+          .post(
+            "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/pay",
+            {
+              source: {id: _this.selectedSource},
+              token: localStorage.getItem("token"),
+              amount: 2500,
+              saveCard: true,
+              isNew: false
+            }
+          )
+          .then(function(response) {
+            // JSON responses are automatically parsed.
+            console.log(response);
+            MessageStore.methods.showMessage(response.data.message);
+          })
+          .catch(function(e) {
+            console.log(e);
+            MessageStore.methods.showMessage(e.response.data.message);
+            //this.errors.push(e)
+          });
+      }
     },
     getSources: function() {
       var _this = this;
