@@ -7,8 +7,8 @@
       <option value="PM">PM</option>
       </select>
       <div class="dateEntry">
-      <input v-model.lazy="month" id="month" size="2">/<input v-model.lazy="day" id="day" size="2">/<input v-model.lazy="year" id="year" size="4">
-      <div v-if="showCalander" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> </div>
+      <input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="month" id="month" size="2">/<input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="day" id="day" size="2">/<input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="year" id="year" size="4">
+      <div v-bind:class="{show: showCalander}" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> </div>
       </div>
       <input v-model="length" id="length"size="1">hr(s)
 
@@ -55,7 +55,7 @@ export default {
     return {
       otherID: null,
       editing: false,
-      showCalander: true,
+      showCalander: false,
       dayVal: this.session.isnew
         ? new Date().getDate() + 1
         : startDate.getDate(),
@@ -307,6 +307,7 @@ export default {
       console.log(day);
       this.dayVal = parseInt(day);
       document.getElementById("day").value = day;
+      this.showCalander = false;
     },
     backMonth: function() {
       if (this.monthVal == 0) {
@@ -330,7 +331,7 @@ export default {
       if (val == "findMore") {
         this.$router.push({ path: "Tutors" });
       }
-    }
+    },
   }
 };
 </script>
@@ -351,7 +352,7 @@ export default {
 .calendar-container {
   width: 210px;
   position: absolute;
-  display:none;
+  display: none;
   background-color: white;
 }
 .calendar-day {
@@ -363,7 +364,7 @@ export default {
 .selectedDay {
   background-color: green;
 }
-.dateEntry:hover > .calendar-container {
-    display:block;
+.show {
+    display: block;
 }
 </style>
