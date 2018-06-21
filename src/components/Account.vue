@@ -4,6 +4,8 @@
   <h1>{{account.firstName}} {{account.lastName}}</h1>
     <h4>Phone: {{account.phone}}</h4>
     <h4>Email: {{account.email}}</h4>
+    <h4>Balance: {{account.balance}}</h4>
+
 </div>
 </template>
 
