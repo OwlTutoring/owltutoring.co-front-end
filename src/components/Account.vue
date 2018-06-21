@@ -1,38 +1,33 @@
 <template>
 <div>
   <h1>Account</h1>
-  <h1>{{account.firstName}} {{account.lastName}}</h1>
-    <h4>Phone: {{account.phone}}</h4>
-    <h4>Email: {{account.email}}</h4>
-    <h4>Balance: {{account.balance}}</h4>
-
+  <div v-if="AccountStore.account != null" >
+  <h1>{{AccountStore.account.firstName}} {{AccountStore.account.lastName}}</h1>
+    <h4>Phone: {{AccountStore.account.phone}}</h4>
+    <h4>Email: {{AccountStore.account.email}}</h4>
+    <h4>Balance: {{AccountStore.account.balance}}</h4>
+  </div>
+  <div v-else>
+    Please Login
+    <router-link class= "nav-item nav-link" to="login">Login</router-link>
+  </div>
 </div>
 </template>
 
 <script>
 import axios from "axios";
+import AccountStore from "../stores/AccountStore";
 export default {
   data: function() {
     return {
-      account: {}
+      AccountStore: AccountStore.data
     };
   },
   created: function() {
-    var _this = this;
-    axios
-      .post(
-        "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getAccountInfo",
-        { token: localStorage.getItem("token") }
-      )
-      .then(function(response) {
-        // JSON responses are automatically parsed.
-        console.log(response);
-        _this.account = response.data;
-      })
-      .catch(function(e) {
-        console.log(e);
-        //this.errors.push(e)
-      });
+    console.log(AccountStore);
+    if (AccountStore.data.account == null) {
+      AccountStore.methods.refreshAccount();
+    }
   }
 };
 </script>

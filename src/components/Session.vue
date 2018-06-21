@@ -8,7 +8,7 @@
       </select>
       <div class="dateEntry">
       <input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="month" id="month" size="2">/<input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="day" id="day" size="2">/<input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="year" id="year" size="4">
-      <div v-bind:class="{show: showCalander}" class="calendar-container"><h2><button @click="backMonth()"> < </button>{{getMonth}}<button @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> </div>
+      <div v-bind:class="{show: showCalander}" class="calendar-container"><h2><button @focus="showCalander=true" @blur="showCalander=false" @click="backMonth()"> < </button>{{getMonth}}<button @focus="showCalander=true" @blur="showCalander=false" @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> </div>
       </div>
       <input v-model="length" id="length"size="1">hr(s)
 

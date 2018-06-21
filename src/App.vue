@@ -5,7 +5,7 @@
       {{messageStore.message}}
     </div>
     <h1>Owl Tutoring</h1>
-    <div class="nav-grid" v-if="LoginStateStore.loggedIn">
+    <div class="nav-grid" v-if="AccountStore.loggedIn">
       <router-link class= "nav-item nav-link" to="Home">Home</router-link>
       <router-link class= "nav-item nav-link" to="Tutors">Tutors</router-link>
       <router-link class= "nav-item nav-link" to="contact">Contact</router-link>
@@ -24,24 +24,24 @@
 </template>
 
 <script>
-import LoginStateStore from "./stores/LoginStateStore";
+import AccountStore from "./stores/AccountStore";
 import MessageStore from "./stores/MessageStore";
 
 export default {
   name: "app",
   data: function() {
     return {
-      LoginStateStore: LoginStateStore.data,
+      AccountStore: AccountStore.data,
       messageStore: MessageStore.data
     };
   },
   methods: {
     logout: function() {
-      LoginStateStore.methods.logout();
+      AccountStore.methods.logout();
     }
   },
   created: function() {
-    LoginStateStore.methods.refresh();
+    AccountStore.methods.refreshLoginState();
   }
 };
 </script>

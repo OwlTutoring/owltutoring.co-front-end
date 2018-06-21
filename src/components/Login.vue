@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import LoginStateStore from "../stores/LoginStateStore";
+import AccountStore from "../stores/AccountStore";
 import MessageStore from "../stores/MessageStore";
 import axios from "axios";
 export default {
@@ -35,7 +35,7 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          LoginStateStore.methods.login(response.data.token);
+          AccountStore.methods.login(response.data.token);
           document.getElementById("message").innerHTML = response.data.message;
           MessageStore.methods.showMessage(response.data.message);
         })
