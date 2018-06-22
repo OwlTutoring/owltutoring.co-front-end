@@ -45,9 +45,10 @@ export default new Router({
       component: SignUp
     },
     {
-      path: '/sessions',
+      path: '/sessions/:display?',
       name: 'sessions',
-      component: Sessions
+      component: Sessions,
+      props: true
     },
     {
       path: '/pay',
