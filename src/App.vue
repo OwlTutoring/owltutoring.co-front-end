@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
     <div class="alert" v-if="messageStore.show">
       {{messageStore.message}}
     </div>
+    <img class="logo" src="../static/owl.png">
     <h1>Owl Tutoring</h1>
     <div class="nav-grid" v-if="AccountStore.loggedIn">
       <router-link class= "nav-item nav-link" to="Home">Home</router-link>
@@ -48,7 +49,7 @@ export default {
 
 <style>
 #app {
-  font-family: "Questrial", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -61,16 +62,20 @@ h2 {
   font-weight: 400;
 }
 .color-button {
-  font-weight: 800;
   background-color: #ffb219;
   color: white;
   border-radius: 0.2em;
   font-size: 1em;
   padding: 0.3em 2em;
   border: none;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-weight: 800;
+  
 }
 .plain-button {
-  font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
   background-color: white;
   color: black;
   border-radius: 0.2em;
@@ -79,6 +84,9 @@ h2 {
   border: solid;
   border-color: grey;
   border-width: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 800;
 }
 .light-button {
   border-width: 0.1em;
@@ -118,6 +126,12 @@ h2 {
   text-align: center;
   color: white;
   animation: popInOut 3.1s ease-in-out backwards 1;
+}
+.logo {
+  width:5em;
+}
+input {
+  font-family: 'Montserrat', sans-serif;
 }
 @keyframes popInOut {
   100% {

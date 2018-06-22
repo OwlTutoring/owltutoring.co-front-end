@@ -1,42 +1,46 @@
 <template>
   <div>
-    <div v-if="!!editing">
+    <div class="session-container" v-if="!!editing">
 
-      <div id="message">New Session</div>
-
-      <input size="2" v-model.lazy="hour" id="hour">:<input size="2" v-model.lazy="minute" id="minute">
-      <select v-model="AMPM" id="AMPM">
-        <option value="AM">AM</option>
-        <option value="PM">PM</option>
-      </select>
-
-      <div class="dateEntry">
-        <input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="month" id="month" size="2">/
-        <input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="day" id="day" size="2">/
-        <input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="year" id="year" size="4">
-        <div v-bind:class="{show: showCalander}" class="calendar-container">
-          <h2>
-            <button @focus="showCalander=true" @blur="showCalander=false" @click="backMonth()"> < </button>
-            {{getMonth}}
-            <button @focus="showCalander=true" @blur="showCalander=false" @click="forwardMonth()"> > </button>
-          </h2>
-          <div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> 
+      <div class="session-container-row-1">
+        <div class="time">
+          <input class="time-input inherit-input" size="2" v-model.lazy="hour" id="hour">:<input class="inherit-input" size="2" v-model.lazy="minute" id="minute">
+          <select  class="inherit-input" v-model="AMPM" id="AMPM">
+            <option class="inherit-input" value="AM">am</option>
+            <option class="inherit-input" value="PM">pm</option>
+          </select>
+        </div>
+        <div class="date dateEntry">
+          <input class="inherit-input" @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="month" id="month" size="2">/
+          <input class="inherit-input" @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="day" id="day" size="2">/
+          <input class="inherit-input" @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="year" id="year" size="4">
+          <div v-bind:class="{show: showCalander}" class="calendar-container">
+            <h2>
+              <button @focus="showCalander=true" @blur="showCalander=false" @click="backMonth()"> < </button>
+              {{getMonth}}
+              <button @focus="showCalander=true" @blur="showCalander=false" @click="forwardMonth()"> > </button>
+            </h2>
+            <div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> 
+          </div>
+        </div>
+        <div class="length">
+          <input class="inherit-input" v-model="length" id="length" size="1">hr(s)
         </div>
       </div>
-      <input v-model="length" id="length" size="1">hr(s)
-
-      <div v-if="session.isnew">
-        <select v-model="otherID" id="tutor">
+      <div class="session-container-row-2" v-if="session.isnew">
+        <select class="name" v-model="otherID" id="tutor">
           <option v-for="account, i  in relatedAccounts" :value="account.ID.N">{{account.firstName.S}} {{account.lastName.S}}</option>
           <option value="findMore">Find more Tutors</option>
         </select>
-        <button @click="scheduleLesson()">Schedule Lesson</button>
+        <button class="button-one plain-button" @click="cancelEdit()">Cancel</button>
+        <button class="button-two color-button" @click="scheduleLesson()">Schedule Lesson</button>
       </div>
-      <div v-else>
-        {{session.name}}
-        <button @click="editLesson()">Save Changes</button>
+      <div class="session-container-row-2" v-else>
+        <div class="name">{{session.name}}</div>
+        <button class="button-one plain-button" @click="cancelEdit()">Cancel</button>
+        <button class="button-two color-button" @click="editLesson()">Save Changes</button>
       </div>
-      <button @click="cancelEdit()">Cancel</button>
+      
     </div>
 
     <div class="session-container" v-else>
@@ -378,29 +382,35 @@ export default {
 
 <style scoped>
 .session-container {
-  border-color: black;
+  border-color: gray;
   border-width: 2px;
-  border-style: solid;
-  border-radius: 20px;
-  padding: 1em;
+  border-top-style: solid;
+  padding: 2vw;
   margin: 1%;
 }
 .session-container-row-1 {
   display: grid;
   grid-auto-columns: 1fr 1fr 1fr;
-  grid-gap: 1em;
+  grid-gap: 1vw;
   margin-bottom: 1em;
 }
 .session-container-row-2 {
   display: grid;
-  grid-auto-columns: 2fr 1fr 1fr;
-  grid-gap: 1em;
+  grid-auto-columns: auto auto auto;
+  grid-gap: 1vw;
 }
 .time {
   grid-column: 1 / span 1;
   grid-row: 1 / span 1;
-  font-size: 1.3em;
+  font-size: 1.5em;
   font-weight: 800;
+}
+.time-input {
+  text-align: right; 
+}
+.inherit-input {
+  font-weight: inherit;
+  font-size: inherit;
 }
 .date {
   grid-column: 2 / span 1;

@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="sessions-container">
     <h1>Sessions</h1>
-    <button @click="makeSession()">New Session</button>
+    {{Math.round(parseFloat(AccountStore.account.balance)/2500*100)/100 }} Lessons Credits
+    <router-link class="plain-button" to="pay">Buy More Lessons</router-link>
+    <button class="color-button" @click="makeSession()">New Session</button>
     <div ><Session v-for="session in sessions" :key="session.ID" @refresh="refresh" :session="session" /></div>
   </div>
 </template>
@@ -10,13 +12,15 @@
 import Session from "./Session.vue";
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
+import AccountStore from "../stores/AccountStore";
 export default {
   components: {
     Session
   },
   data: function() {
     return {
-      sessions: []
+      sessions: [],
+      AccountStore: AccountStore.data,
     };
   },
   mounted: function() {
@@ -76,5 +80,8 @@ ul {
 }
 li {
   list-style: none;
+}
+.sessions-container {
+  margin: 1% 10%;
 }
 </style>
