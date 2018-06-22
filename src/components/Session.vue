@@ -1,39 +1,55 @@
 <template>
-  <div class = "session-container">
+  <div>
     <div v-if="!!editing">
+
       <div id="message">New Session</div>
-      <input size="2" v-model.lazy="hour" id="hour">:<input size="2" v-model.lazy="minute" id="minute"> <select v-model="AMPM" id="AMPM">
-      <option value="AM">AM</option>
-      <option value="PM">PM</option>
+
+      <input size="2" v-model.lazy="hour" id="hour">:<input size="2" v-model.lazy="minute" id="minute">
+      <select v-model="AMPM" id="AMPM">
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
       </select>
+
       <div class="dateEntry">
-      <input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="month" id="month" size="2">/<input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="day" id="day" size="2">/<input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="year" id="year" size="4">
-      <div v-bind:class="{show: showCalander}" class="calendar-container"><h2><button @focus="showCalander=true" @blur="showCalander=false" @click="backMonth()"> < </button>{{getMonth}}<button @focus="showCalander=true" @blur="showCalander=false" @click="forwardMonth()"> > </button></h2><div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> </div>
+        <input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="month" id="month" size="2">/
+        <input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="day" id="day" size="2">/
+        <input @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="year" id="year" size="4">
+        <div v-bind:class="{show: showCalander}" class="calendar-container">
+          <h2>
+            <button @focus="showCalander=true" @blur="showCalander=false" @click="backMonth()"> < </button>
+            {{getMonth}}
+            <button @focus="showCalander=true" @blur="showCalander=false" @click="forwardMonth()"> > </button>
+          </h2>
+          <div v-for="day in days" v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> 
+        </div>
       </div>
-      <input v-model="length" id="length"size="1">hr(s)
+      <input v-model="length" id="length" size="1">hr(s)
 
       <div v-if="session.isnew">
-      <select v-model="otherID" id="tutor">
-      <option v-for="account, i  in relatedAccounts" :value="account.ID.N">{{account.firstName.S}} {{account.lastName.S}}</option>
-      <option value="findMore">Find more Tutors</option>
-      </select>
+        <select v-model="otherID" id="tutor">
+          <option v-for="account, i  in relatedAccounts" :value="account.ID.N">{{account.firstName.S}} {{account.lastName.S}}</option>
+          <option value="findMore">Find more Tutors</option>
+        </select>
+        <button @click="scheduleLesson()">Schedule Lesson</button>
       </div>
       <div v-else>
         {{session.name}}
+        <button @click="editLesson()">Save Changes</button>
       </div>
+      <button @click="cancelEdit()">Cancel</button>
+    </div>
 
-    <div v-if="session.isnew">
-      <button @click="scheduleLesson()">Schedule Lesson</button>
-    </div>
-    <div v-else>
-      <button @click="editLesson()">Save Changes</button>
-    </div>
-    <button @click="cancelEdit()">Cancel</button>
-    </div>
-    <div v-else>
-    <h2>{{dateTimeString}}</h2>
-    {{session.name}}
-    <button v-on:click="changeToEdit()">Edit</button>
+    <div class="session-container" v-else>
+      <div class="session-container-row-1">
+        <div class="time">{{timeString}}</div>
+        <div class="date">{{dateString}}</div>
+        <div class="length">{{lengthString}}</div>
+      </div>
+      <div class="session-container-row-2">
+        <div class="name">{{session.name}}</div>
+        <button class="button-one plain-button" v-on:click="changeToEdit()">Edit</button>
+        <button class="button-two color-button" v-on:click="changeToEdit()">Confirm</button>
+      </div>
     </div>
     
   </div>
@@ -73,7 +89,7 @@ export default {
       minuteVal: this.session.isnew ? 0 : startDate.getMinutes(),
       AMPM: this.session.isnew
         ? "PM"
-        : startDate.getHours() <= 12 ? "AM" : "PM",
+        : (startDate.getHours() <= 12 ? "AM" : "PM"),
       length: 1,
       relatedAccounts: []
     };
@@ -145,8 +161,7 @@ export default {
     days: function() {
       var lengths = [
         31,
-        (this.year % 4 == 0 && this.year % 100 != 0) ||
-        this.year % 400 == 0
+        (this.year % 4 == 0 && this.year % 100 != 0) || this.year % 400 == 0
           ? 29
           : 28,
         31,
@@ -182,6 +197,31 @@ export default {
       //document.getElementById("month").value = this.calendar.month + 1;
       return months[this.monthVal];
     },
+    timeString: function () {
+      var date = new Date(parseInt(this.session.startTime));
+      var days = ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+      var AMPM = "am";
+      var hours = date.getHours();
+      if (hours > 12) {
+        AMPM = "pm";
+        hours -= 12;
+      }
+      return hours +
+        ":" +
+        (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()) +
+        AMPM + " " + days[date.getDay()];
+    },
+    dateString: function() {
+      var date = new Date(parseInt(this.session.startTime));
+      return (date.getMonth() + 1) +
+        "/" +
+        date.getDate() +
+        "/" +
+        date.getFullYear();
+    },
+    lengthString: function() {
+      return this.session.hours.toString() + " hrs";
+    },
     dateTimeString: function() {
       var date = new Date(parseInt(this.session.startTime));
       var days = ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat", "Sun"];
@@ -213,7 +253,7 @@ export default {
   },
   methods: {
     getParams: function() {
-      console.log(this);
+      console.log(this.length);
       return {
         token: localStorage.getItem("token"),
         otherID: this.otherID,
@@ -221,7 +261,7 @@ export default {
           this.yearVal,
           this.monthVal,
           this.dayVal,
-          this.hourVal,
+          this.hourVal + (this.AMPM == "AM"  ? 0: 12),
           this.minuteVal
         )
           .getTime()
@@ -231,7 +271,7 @@ export default {
             this.yearVal,
             this.monthVal,
             this.dayVal,
-            this.hourVal,
+            this.hourVal + (this.AMPM == "AM"  ? 0: 12),
             this.minuteVal
           ).getTime() +
           this.length * 3600000
@@ -331,7 +371,7 @@ export default {
       if (val == "findMore") {
         this.$router.push({ path: "Tutors" });
       }
-    },
+    }
   }
 };
 </script>
@@ -342,8 +382,51 @@ export default {
   border-width: 2px;
   border-style: solid;
   border-radius: 20px;
-  padding: 1%;
+  padding: 1em;
   margin: 1%;
+}
+.session-container-row-1 {
+  display: grid;
+  grid-auto-columns: 1fr 1fr 1fr;
+  grid-gap: 1em;
+  margin-bottom: 1em;
+}
+.session-container-row-2 {
+  display: grid;
+  grid-auto-columns: 2fr 1fr 1fr;
+  grid-gap: 1em;
+}
+.time {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+  font-size: 1.3em;
+  font-weight: 800;
+}
+.date {
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+  text-align: center;
+  font-size: 1.2em;
+}
+.length {
+  grid-column: 3 / span 1;
+  grid-row: 1 / span 1;
+  text-align: right;
+  font-size: 1.2em;
+}
+.button-one {
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
+}
+.button-two {
+  grid-column: 3 / span 1;
+  grid-row: 2 / span 1;
+}
+.name {
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+  font-size: 1.2em;
+  align-self: end;
 }
 .more-info {
   visibility: hidden;
@@ -365,6 +448,6 @@ export default {
   background-color: green;
 }
 .show {
-    display: block;
+  display: block;
 }
 </style>
