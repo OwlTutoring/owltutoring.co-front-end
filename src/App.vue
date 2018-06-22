@@ -4,8 +4,10 @@
     <div class="alert" v-if="messageStore.show">
       {{messageStore.message}}
     </div>
-    <img class="logo" src="../static/owl.png">
-    <h1>Owl Tutoring</h1>
+    <div class="title-container">
+      <img class="logo" src="../static/owl.png">
+      <h1 class="title">Owl Tutoring</h1>
+    </div>
     <div class="nav-grid" v-if="AccountStore.loggedIn">
       <router-link class= "nav-item nav-link" to="Home">Home</router-link>
       <router-link class= "nav-item nav-link" to="Tutors">Tutors</router-link>
@@ -129,9 +131,13 @@ h2 {
 }
 .logo {
   width:5em;
+  height:5em;
 }
 input {
   font-family: 'Montserrat', sans-serif;
+}
+.title-container {
+  display:flex;
 }
 @keyframes popInOut {
   100% {

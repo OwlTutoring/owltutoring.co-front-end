@@ -1,12 +1,16 @@
 <template>
   <div class="sessions-container">
     <h1>Sessions</h1>
-    <router-link :to="{ name: 'sessions', params: { display: 'future' }}">Schedueled</router-link>
-    <router-link :to="{ name: 'sessions', params: { display: 'history' }}">Passed</router-link>
-    <router-link :to="{ name: 'sessions', params: { display: 'canceled' }}">Canceled</router-link>
-    {{Math.round(parseFloat(AccountStore.account.balance)/2500*100)/100 }} Lessons Credits
-    <router-link class="plain-button" to="pay">Buy More Lessons</router-link>
-    <button class="color-button" @click="makeSession()">New Session</button>
+    <div class="nav-grid">
+    <router-link class="nav-link nav-item" :to="{ name: 'sessions', params: { display: 'future' }}">Schedueled</router-link>
+    <router-link class="nav-link nav-item" :to="{ name: 'sessions', params: { display: 'history' }}">Passed</router-link>
+    <router-link class="nav-link nav-item" :to="{ name: 'sessions', params: { display: 'canceled' }}">Canceled</router-link>
+    </div>
+    <div class="ui-grid">
+      <div class="balance">{{Math.round(parseFloat(AccountStore.account.balance)/2500*100)/100 }} Lessons Credits</div>
+      <router-link class="moreLessons plain-button" to="pay">Buy More Lessons</router-link>
+      <button class="makeSession color-button" @click="makeSession()">New Session</button>
+    </div>
     <div ><Session v-for="session in displaySessions" :key="session.ID" @refresh="refresh" v-on:cancelNew="removeSession($event)" :session="session" /></div>
   </div>
 </template>
@@ -66,6 +70,9 @@ export default {
   },
   created: function() {
     var _this = this;
+    if (AccountStore.data.account == null) {
+      AccountStore.methods.refreshAccount();
+    }
     axios
       .post(
         "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getSessions",
@@ -140,5 +147,15 @@ li {
 }
 .sessions-container {
   margin: 1% 10%;
+}
+.ui-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1vw;
+  padding: 3vw;
+}
+.balance {
+  font-weight: 800;
+  font-size: 1.2em;
 }
 </style>
