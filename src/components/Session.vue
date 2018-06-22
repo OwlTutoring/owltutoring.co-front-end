@@ -34,7 +34,7 @@
           <option v-for="(account, i)  in relatedAccounts"  :value="account.ID.N">{{account.firstName.S}} {{account.lastName.S}}</option>
           <option value="findMore">Find more Tutors</option>
         </select>
-        <button class="button-one plain-button" @click="cancelEdit()">Cancel</button>
+        <button class="button-one plain-button" @click="cancelNew()">Cancel</button>
         <button class="button-two color-button" @click="scheduleLesson()">Schedule Lesson</button>
       </div>
       <div class="session-container-row-2" v-else>
@@ -341,6 +341,9 @@ export default {
     },
     cancelEdit: function() {
       this.editing = false;
+    },
+    cancelNew: function() {
+      this.$emit("cancelNew", this.session.ID);
     },
     changeToEdit: function() {
       console.log(this.editing);

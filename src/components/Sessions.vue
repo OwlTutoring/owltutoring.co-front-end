@@ -7,7 +7,7 @@
     {{Math.round(parseFloat(AccountStore.account.balance)/2500*100)/100 }} Lessons Credits
     <router-link class="plain-button" to="pay">Buy More Lessons</router-link>
     <button class="color-button" @click="makeSession()">New Session</button>
-    <div ><Session v-for="session in displaySessions" :key="session.ID" @refresh="refresh" :session="session" /></div>
+    <div ><Session v-for="session in displaySessions" :key="session.ID" @refresh="refresh" v-on:cancelNew="removeSession($event)" :session="session" /></div>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
   props: {
     display: {
       type: String,
-      default:'future',
+      default: "future"
     }
   },
   components: {
@@ -33,18 +33,26 @@ export default {
     };
   },
   computed: {
-    displaySessions: function () {
+    displaySessions: function() {
       console.log(this.display);
       var currentTime = new Date().getTime();
-      if(this.display == 'future') {
+      if (this.display == "future") {
         return this.sessions.filter(function(session) {
-          return parseInt(session.endTime) > currentTime && session.canceled == false || session.isnew;
+          return (
+            (parseInt(session.endTime) > currentTime &&
+              session.canceled == false) ||
+            session.isnew
+          );
         });
-      } else if(this.display == 'history') {
+      } else if (this.display == "history") {
         return this.sessions.filter(function(session) {
-          return parseInt(session.endTime) < currentTime && session.canceled == false || session.isnew;
+          return (
+            (parseInt(session.endTime) < currentTime &&
+              session.canceled == false) ||
+            session.isnew
+          );
         });
-      } else if(this.display=='canceled') {
+      } else if (this.display == "canceled") {
         return this.sessions.filter(function(session) {
           return session.canceled == true || session.isnew;
         });
@@ -108,7 +116,16 @@ export default {
         });
     },
     makeSession: function() {
-      this.sessions.unshift({ isnew: true, startTime: new Date().getTime() });
+      this.sessions.unshift({
+        ID: parseInt(Math.random() * 100000000000),
+        isnew: true,
+        startTime: new Date().getTime()
+      });
+    },
+    removeSession: function(removeID) {
+      this.sessions = this.sessions.filter(function(session) {
+        return session.ID != removeID;
+      });
     }
   }
 };
