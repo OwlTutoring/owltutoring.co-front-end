@@ -1,19 +1,21 @@
 <template>
-  <div>
-    <h1>{{tutor.firstName}} {{tutor.lastName}}</h1>
-    <h3>${{tutor.rate}}</h3>
-    <h3>{{tutor.grade}}th Grade</h3>
-    <h4>Subjects: {{subjectList}}</h4>
-    <h4>Levels: {{levelsList}}</h4>
-    <h4>Town: {{tutor.town}}</h4>
+  <div class="tutor-grid">
+    <img class="profile-image" :src="tutor.imageLink">
+    <h1 class="name">{{tutor.firstName}} {{tutor.lastName}}</h1>
+    <h3 class="grade">{{tutor.grade}}th Grade</h3>
+    <h3 class="rate">${{tutor.rate}}</h3>
+    <div class="short-bio">{{tutor.shortBio}}</div>
+    <h4 class="subjects">{{subjectList}}</h4>
+    <h4 class="levels">{{levelsList}}</h4>
+    <h4 class="town">{{tutor.town}}</h4>
     <div v-if="expanded">
       <h4>Phone: <a :href= "'sms:' + tutor.phone"> {{tutor.phone}}</a></h4>
       <h4>Email:<a :href= "'mailto:' + tutor.email"> {{tutor.email}}</a></h4>
       <p><b>Experience:</b> {{tutor.experience}}</p>
       <p><b>Bio:</b> {{tutor.bio}}</p>
     </div>
-    <button class ="light-button" v-on:click="toggleMore()"><div v-if="!expanded">more info</div><div v-else>less info</div></button><br>
-    <button class="color-button" v-on:click="chosseTutor()">Schedule a Lesson</button>
+    <button class ="button-one light-button" v-on:click="toggleMore()"><div v-if="!expanded">more info</div><div v-else>less info</div></button><br>
+    <button class="button-two color-button" v-on:click="chosseTutor()">Schedule a Lesson</button>
   </div>
 </template>
 
@@ -89,7 +91,54 @@ function creatListString(list) {
 </script>
 
 <style scoped>
+.tutor-grid {
+  display: grid;
+  grid-template-columns: repeat(1fr, 4);
+  grid-template-rows: repeat(1fr, 4);
+
+}
 .more-info {
   visibility: hidden;
+}
+.profile-image {
+  width: 20vw;
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
+}
+.name {
+  grid-column: 2 / 3;
+  grid-row: 1 / 1;
+}
+.grade {
+  grid-column: 3 / 4;
+  grid-row: 1 / 1;
+}
+.rate {
+  grid-column: 4 / 5;
+  grid-row: 1 / 1;
+}
+.short-bio {
+  grid-column: 2 / 5;
+  grid-row: 2 / 2;
+}
+.subject {
+  grid-column: 2 / 4;
+  grid-row: 3 / 3;
+}
+.levels {
+  grid-column: 4 / 5;
+  grid-row: 3 / 3;
+}
+.town {
+  grid-column: 1 / 3;
+  grid-row: 4 / 4;
+}
+.button-one {
+  grid-column: 3 / 4;
+  grid-row: 4 / 4;
+}
+.button-two {
+  grid-column: 4 / 5;
+  grid-row: 4 / 4;
 }
 </style>

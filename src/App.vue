@@ -9,11 +9,11 @@
       <h1 class="title">Owl Tutoring</h1>
     </div>
     <div class="nav-grid" v-if="AccountStore.loggedIn">
-      <router-link class= "nav-item nav-link" to="Home">Home</router-link>
-      <router-link class= "nav-item nav-link" to="Tutors">Tutors</router-link>
-      <router-link class= "nav-item nav-link" to="contact">Contact</router-link>
-      <router-link class= "nav-item nav-link" to="account">Account</router-link>
-      <router-link class= "nav-item nav-link" to="sessions">Sessions</router-link>
+      <router-link class= "nav-item nav-link" to="/Home">Home</router-link>
+      <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
+      <router-link class= "nav-item nav-link" to="/contact">Contact</router-link>
+      <router-link class= "nav-item nav-link" to="/account">Account</router-link>
+      <router-link class= "nav-item nav-link" to="/sessions">Sessions</router-link>
       <button class= "nav-item color-button" v-on:click="logout()">logout</button>  
     </div>
     <div class="nav-grid" v-else>

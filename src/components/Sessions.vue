@@ -1,17 +1,26 @@
 <template>
   <div class="sessions-container">
     <h1>Sessions</h1>
-    <div class="nav-grid">
-    <router-link class="nav-link nav-item" :to="{ name: 'sessions', params: { display: 'future' }}">Schedueled</router-link>
-    <router-link class="nav-link nav-item" :to="{ name: 'sessions', params: { display: 'history' }}">Passed</router-link>
-    <router-link class="nav-link nav-item" :to="{ name: 'sessions', params: { display: 'canceled' }}">Canceled</router-link>
+    <div v-if="AccountStore.account != null" >
+      <div class="nav-grid">
+      <router-link class="nav-link nav-item" :to="{ name: 'sessions', params: { display: 'future' }}">Schedueled</router-link>
+      <router-link class="nav-link nav-item" :to="{ name: 'sessions', params: { display: 'history' }}">History</router-link>
+      <router-link class="nav-link nav-item" :to="{ name: 'sessions', params: { display: 'canceled' }}">Canceled</router-link>
+      </div>
+      <div class="ui-grid">
+        <div class="balance">{{Math.round(parseFloat(AccountStore.account.balance)/2500*100)/100 }} Lessons Credits</div>
+        <router-link class="moreLessons plain-button" to="pay">Buy More Lessons</router-link>
+        <button class="makeSession color-button" @click="makeSession()">New Session</button>
+      </div>
+      <div v-if="displaySessions == 0">
+        <h2 class="list-message">No Sessions</h2>
+      </div>
+      <div ><Session v-for="session in displaySessions" :key="session.ID" @refresh="refresh" v-on:cancelNew="removeSession($event)" :session="session" /></div>
     </div>
-    <div class="ui-grid">
-      <div class="balance">{{Math.round(parseFloat(AccountStore.account.balance)/2500*100)/100 }} Lessons Credits</div>
-      <router-link class="moreLessons plain-button" to="pay">Buy More Lessons</router-link>
-      <button class="makeSession color-button" @click="makeSession()">New Session</button>
+    <div v-else>
+      Please Login
+      <router-link class= "nav-item nav-link" to="login">Login</router-link>
     </div>
-    <div ><Session v-for="session in displaySessions" :key="session.ID" @refresh="refresh" v-on:cancelNew="removeSession($event)" :session="session" /></div>
   </div>
 </template>
 
@@ -157,5 +166,8 @@ li {
 .balance {
   font-weight: 800;
   font-size: 1.2em;
+}
+.list-message {
+  text-align: center;
 }
 </style>
