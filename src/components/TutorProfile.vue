@@ -93,7 +93,7 @@ export default {
         _this.zipcode = response.data.zipcode;
         _this.experience = response.data.experience;
         _this.shortBio = response.data.shortBio;
-        _this.parseSubjectDataString(response.data.subjects);
+        _this.selectedSubjects = _this.parseSubjectDataString(response.data.subjects);
       })
       .catch(function(e) {
         console.log(e);
@@ -103,14 +103,19 @@ export default {
   },
   methods: {
     parseSubjectDataString: function(string) {
-      if(string == null) {
+      var newSubjects ={};
+      if (string == null) {
         console.log("no subjects");
-        return;
+        return {};
       }
       var array = string.split(",");
       for (var entry in array) {
-        this.selectedSubjects[entry] = true;
+        if (array[entry] != "") {
+          newSubjects[array[entry]] = true;
+        }
       }
+      console.log(newSubjects);
+      return newSubjects;
     },
     getSubjectDataString: function() {
       console.log(this.selectedSubjects);
