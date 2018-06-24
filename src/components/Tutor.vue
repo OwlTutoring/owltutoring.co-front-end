@@ -1,9 +1,11 @@
 <template>
   <div class="tutor-grid">
     <img class="profile-image" :src="tutor.imageLink">
-    <h1 class="name">{{tutor.firstName}} {{tutor.lastName}}</h1>
-    <h3 class="grade">{{tutor.grade}}th Grade</h3>
-    <h3 class="rate">${{tutor.rate}}</h3>
+    <div class="line-one-grid">
+      <h1 class="name">{{tutor.firstName}} {{tutor.lastName}}</h1>
+      <h3 class="grade">{{tutor.grade}}th Grade</h3>
+      <h3 class="rate">${{tutor.rate}}</h3>
+    </div>
     <div class="short-bio">{{tutor.shortBio}}</div>
     <h4 class="subjects">{{subjectList}}</h4>
     <h4 class="levels">{{levelsList}}</h4>
@@ -71,6 +73,7 @@ export default {
 };
 
 function creatListString(list) {
+  /*
   var listString = "";
 
   for (var i = 0; i < list.length; i++) {
@@ -86,14 +89,15 @@ function creatListString(list) {
       }
     }
   }
-  return listString;
+  */
+  return list;
 }
 </script>
 
 <style scoped>
 .tutor-grid {
   display: grid;
-  grid-template-columns: repeat(1fr, 4);
+  grid-template-columns: 20vw 1fr 1fr 1fr;
   grid-template-rows: repeat(1fr, 4);
 
 }
@@ -105,17 +109,24 @@ function creatListString(list) {
   grid-column: 1 / 2;
   grid-row: 1 / 4;
 }
+.line-one-grid {
+  grid-column: 2 / 5;
+  grid-row: 1 / 2;
+  display: grid;
+  grid-template-columns: repeat(1fr 3);
+}
 .name {
-  grid-column: 2 / 3;
+  grid-column: 1 / 2;
   grid-row: 1 / 1;
 }
 .grade {
-  grid-column: 3 / 4;
+  grid-column: 2 / 3;
   grid-row: 1 / 1;
 }
 .rate {
-  grid-column: 4 / 5;
+  grid-column: 3 / 4;
   grid-row: 1 / 1;
+  text-align: right;
 }
 .short-bio {
   grid-column: 2 / 5;
