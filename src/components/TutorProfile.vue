@@ -3,29 +3,14 @@
     <h1>Tutor Profile</h1>
     Bio: <input placeholder="A paragraph description of information related to your Academic knowledge and teaching abilities" type="text" class="form-field" v-model="bio" id="bio">
     
-    <subject-select :subjectObj="subjectOptions" :selectedSubjects="selectedSubjects" parent=""/>
+    <subject-select :subjectObj="subjectOptions" :selectedSubjects="selectedSubjects" parent="*"/>
 
-    <select v-model="accountType" id="accountType">
-      <option value="null">Select Account Type</option>
-      <option value="Client">Client</option>
-      <option value="Tutor">Tutor</option>
-    </select>
-    <div v-if="accountType == 'Client'">
-      Are you a parent? <input class="form-field" v-model="isParent" type="checkbox">
-    </div>
-    <input  placeholder="First Name" class="form-field" v-model="firstName" id="firstName">
-    <input placeholder="Last Name" class="form-field" v-model="lastName" id="lastName">
-    Email: <input class="form-field" v-model="email" id="email">
-    Phone Number: <input placeholder="(000) 000-0000" class="form-field" v-model="phone" id="phone">
-    Password: <input class="form-field" v-model="password" id="password" type="password">
-    Confirm password: <input class="form-field" v-model="confirmPassword" id="confirmPassword" type="password">
-    <div v-if="isParent && accountType == 'Client'">
-      Children Names:
-      <div v-for="(student, index) in students"><input class="form-field" id="student" v-model="students[index]"><button v-on:click="removeStudent(index)">-</button> </div>
-      <button class="plain-button" v-on:click="addStudent()">Add Child</button>
-    </div>
-    <button class="color-button" v-on:click="signUp()">SignUp</button>
-    <router-link to="login">Login</router-link>
+    Grade: <input  type="number" placeholder="11" class="form-field" v-model="grade" id="grade">
+    Town: <input  type="text" placeholder="Vernon Hills" class="form-field" v-model="grade" id="town">
+    Zipcode: <input  type="number" placeholder="60061" class="form-field" v-model="zipcode" id="zipCode">,
+    Experience: <input  type="text" placeholder="Describe what experience you have" class="form-field" v-model="experience" id="experience">,
+    Short Bio: <input  type="text" placeholder="One Sentenece describing yourself" class="form-field" v-model="shortBio" id="shortBio">,
+    <button class="color-button" v-on:click="update()">Submit Profile</button>
   </div>
 </template>
 
@@ -53,16 +38,12 @@ export default {
   data: function() {
     return {
       bio: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      accountType: null,
-      isParent: false,
-      students: [""],
-      password: "",
-      confirmPassword: "",
-      accountType: null,
+      grade: "",
+      town: "",
+      zipcode: "",
+      experience: "",
+      shortBio: "",
+
       selectedSubjects: {},
       subjectOptions: {
         subject: "",
@@ -93,45 +74,92 @@ export default {
       }
     };
   },
+  created: function() {
+    var _this = this;
+    axios
+      .post(
+        "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getTutorProfile",
+        {
+          token: localStorage.getItem("token")
+        }
+      )
+      .then(function(response) {
+        // JSON responses are automatically parsed.
+        console.log(response);
+        MessageStore.methods.showMessage(response.data.message);
+        _this.bio = response.data.bio;
+        _this.grade = response.data.grade;
+        _this.town = response.data.town;
+        _this.zipcode = response.data.zipcode;
+        _this.experience = response.data.experience;
+        _this.shortBio = response.data.shortBio;
+        _this.parseSubjectDataString(response.data.subjects);
+      })
+      .catch(function(e) {
+        console.log(e);
+        MessageStore.methods.showMessage(e.response.data.message);
+        //this.errors.push(e)
+      });
+  },
   methods: {
-    getStudentInputs: function() {
-      var studentInput = [];
-      for (var i = 0; i < this.students.length; i++) {
-        studentInput.push({ S: this.students[i] });
+    parseSubjectDataString: function(string) {
+      if(string == null) {
+        console.log("no subjects");
+        return;
       }
-      console.log(studentInput);
-      return studentInput;
+      var array = string.split(",");
+      for (var entry in array) {
+        this.selectedSubjects[entry] = true;
+      }
     },
-    removeStudent: function(index) {
-      this.students.splice(index, 1);
-    },
-    addStudent: function() {
-      this.students.push("");
-    },
-    signUp: function() {
+    getSubjectDataString: function() {
       console.log(this.selectedSubjects);
-      /*
+      for (var subject in this.selectedSubjects) {
+        if (
+          this.selectedSubjects.hasOwnProperty(subject) &&
+          this.selectedSubjects[subject] == false
+        ) {
+          for (var subjectTwo in this.selectedSubjects) {
+            if (
+              this.selectedSubjects.hasOwnProperty(subjectTwo) &&
+              subjectTwo.includes(subject)
+            ) {
+              console.log(subjectTwo);
+              this.selectedSubjects[subjectTwo] = false;
+            }
+          }
+        }
+      }
+
+      var res = "";
+      for (var subject in this.selectedSubjects) {
+        if (
+          this.selectedSubjects.hasOwnProperty(subject) &&
+          this.selectedSubjects[subject]
+        ) {
+          res += subject + ",";
+        }
+      }
+      console.log(res);
+      return res;
+    },
+    update: function() {
       var _this = this;
-      if (this.password != _this.confirmPassword) {
-        MessageStore.methods.showMessage("Error, Passwords don't match");
-        return;
-      }
-      if (_this.accountType == "none") {
-        MessageStore.methods.showMessage("please select an account type");
-        return;
-      }
+      console.log(this.selectedSubjects);
+      this.getSubjectDataString();
+
       axios
         .post(
-          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/signUp",
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/updateTutorProfile",
           {
-            accountType: _this.accountType,
-            email: _this.email,
-            password: _this.password,
-            firstName: _this.firstName,
-            lastName: _this.lastName,
-            phone: _this.phone,
-            isParent: _this.isParent,
-            students: _this.getStudentInputs()
+            bio: _this.bio,
+            grade: _this.grade,
+            town: _this.town,
+            zipcode: _this.zipcode,
+            experience: _this.experience,
+            shortBio: _this.shortBio,
+            subjects: _this.getSubjectDataString(),
+            token: localStorage.getItem("token")
           }
         )
         .then(function(response) {
@@ -144,7 +172,6 @@ export default {
           MessageStore.methods.showMessage(e.response.data.message);
           //this.errors.push(e)
         });
-      */
     }
   }
 };
@@ -158,6 +185,6 @@ li {
   list-style: none;
 }
 .sub-list {
-      padding-left: 3vw;
-    }
+  padding-left: 3vw;
+}
 </style>
