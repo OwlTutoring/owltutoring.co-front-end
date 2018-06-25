@@ -32,7 +32,7 @@
       <div class="session-container-row-2" v-if="session.isnew">
         <select class="name" v-model="otherID" id="tutor">
           <option v-for="(account, i)  in relatedAccounts"  :value="account.ID.N">{{account.firstName.S}} {{account.lastName.S}}</option>
-          <option value="findMore">Find more Tutors</option>
+          <option v-if="AccountStore.account.accountType == 'Client'" value="findMore">Find more Tutors</option>
         </select>
         <button class="button-one plain-button" @click="cancelNew()">Cancel</button>
         <button class="button-two color-button" @click="scheduleLesson()">Schedule Lesson</button>
@@ -64,6 +64,7 @@
 <script>
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
+import AccountStore from "../stores/AccountStore";
 export default {
   props: {
     session: {
@@ -76,6 +77,7 @@ export default {
   data: function() {
     var startDate = new Date(parseInt(this.session.startTime));
     return {
+      AccountStore: AccountStore.data,
       dayNames: [ "Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"],
       otherID: null,
       editing: false,
@@ -104,6 +106,9 @@ export default {
   },
   created: function() {
     var _this = this;
+    if (AccountStore.data.account == null) {
+      AccountStore.methods.refreshAccount();
+    }
     if (this.session.isnew) {
       this.editing = true;
       axios
@@ -382,7 +387,7 @@ export default {
     }
   },
   watch: {
-    tutorID: function(val) {
+    otherID: function(val) {
       if (val == "findMore") {
         this.$router.push({ path: "Tutors" });
       }

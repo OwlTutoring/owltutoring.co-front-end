@@ -9,7 +9,7 @@
     <div class="short-bio">{{tutor.shortBio}}</div>
     <h4 class="subjects">{{subjectList}}</h4>
     <h4 class="levels">{{levelsList}}</h4>
-    <h4 class="town">{{tutor.town}}</h4>
+    <h4 class="town">{{tutor.town + ", " + tutor.usState}}</h4>
     <div v-if="expanded">
       <h4>Phone: <a :href= "'sms:' + tutor.phone"> {{tutor.phone}}</a></h4>
       <h4>Email:<a :href= "'mailto:' + tutor.email"> {{tutor.email}}</a></h4>

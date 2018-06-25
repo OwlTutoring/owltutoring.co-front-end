@@ -6,8 +6,12 @@
     <subject-select :subjectObj="subjectOptions" :selectedSubjects="selectedSubjects" parent="*"/>
 
     Grade: <input  type="number" placeholder="11" class="form-field" v-model="grade" id="grade">
-    Town: <input  type="text" placeholder="Vernon Hills" class="form-field" v-model="grade" id="town">
-    Zipcode: <input  type="number" placeholder="60061" class="form-field" v-model="zipcode" id="zipCode">,
+    Town: <input  type="text" placeholder="Vernon Hills" class="form-field" v-model="town" id="town">
+    State: 
+    <select v-model="usState">
+      <option v-for="state in states" :value="state">{{state}}</option>
+    </select>
+    Zip Code: <input  type="number" placeholder="60061" class="form-field" v-model="zipCode" id="zipCode">,
     Experience: <input  type="text" placeholder="Describe what experience you have" class="form-field" v-model="experience" id="experience">,
     Short Bio: <input  type="text" placeholder="One Sentenece describing yourself" class="form-field" v-model="shortBio" id="shortBio">,
     <button class="color-button" v-on:click="update()">Submit Profile</button>
@@ -37,13 +41,14 @@ Vue.component("subject-select", {
 export default {
   data: function() {
     return {
+      states: ['AL','AK','AS','AZ','AR','CA','CO','CT','DE','DC','FM','FL','GA','GU','HI','ID','IL','IN','IA','KS','KY','LA','ME','MH','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','MP','OH','OK','OR','PW','PA','PR','RI','SC','SD','TN','TX','UT','VT','VI','VA','WA','WV','WI','WY'],
       bio: "",
       grade: "",
       town: "",
-      zipcode: "",
+      usState: "",
+      zipCode: "",
       experience: "",
       shortBio: "",
-
       selectedSubjects: {},
       subjectOptions: {
         subject: "",
@@ -90,7 +95,8 @@ export default {
         _this.bio = response.data.bio;
         _this.grade = response.data.grade;
         _this.town = response.data.town;
-        _this.zipcode = response.data.zipcode;
+        _this.usState = response.data.usState;
+        _this.zipCode = response.data.zipCode;
         _this.experience = response.data.experience;
         _this.shortBio = response.data.shortBio;
         _this.selectedSubjects = _this.parseSubjectDataString(response.data.subjects);
@@ -160,7 +166,8 @@ export default {
             bio: _this.bio,
             grade: _this.grade,
             town: _this.town,
-            zipcode: _this.zipcode,
+            zipCode: _this.zipCode,
+            usState: _this.usState,
             experience: _this.experience,
             shortBio: _this.shortBio,
             subjects: _this.getSubjectDataString(),

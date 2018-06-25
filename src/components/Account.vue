@@ -2,10 +2,13 @@
 <div>
   <h1>Account</h1>
   <div v-if="AccountStore.account != null" >
-  <h1>{{AccountStore.account.firstName}} {{AccountStore.account.lastName}}</h1>
+    <h1>{{AccountStore.account.firstName}} {{AccountStore.account.lastName}}</h1>
     <h4>Phone: {{AccountStore.account.phone}}</h4>
     <h4>Email: {{AccountStore.account.email}}</h4>
     <h4>Balance: {{AccountStore.account.balance}}</h4>
+    <div v-if="AccountStore.account.accountType == 'Tutor'">
+      <router-link class= "color-button" to="tutorProfile">Edit Tutor Profile</router-link>
+    </div>
   </div>
   <div v-else>
     Please Login
