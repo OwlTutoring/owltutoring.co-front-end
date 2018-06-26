@@ -4,7 +4,7 @@
     Bio: <input placeholder="A paragraph description of information related to your Academic knowledge and teaching abilities" type="text" class="form-field" v-model="bio" id="bio">
     
     <subject-select :subjectObj="subjectOptions" :selectedSubjects="selectedSubjects" parent="*"/>
-
+    Subject List: <input  type="text" placeholder="" class="form-field" v-model="subjectsDesc" id="subjectsDesc">,
     Grade: <input  type="number" placeholder="11" class="form-field" v-model="grade" id="grade">
     Town: <input  type="text" placeholder="Vernon Hills" class="form-field" v-model="town" id="town">
     State: 
@@ -25,17 +25,7 @@ import Vue from "vue";
 
 Vue.component("subject-select", {
   props: ["subjectObj", "selectedSubjects", "parent"],
-  template: `
-    <div>
-      <div v-for="subject in subjectObj.subList">
-        <input type="checkbox" :id="subject.subject" :value="subject.subject" v-model="selectedSubjects[parent +':'+ subject.subject]">
-        <label :for="subject.subject">{{subject.subject}}</label>
-        <div class="sub-list" v-if="subject.subList != null && selectedSubjects[parent +':'+ subject.subject]">
-          <subject-select :subjectObj="subject" :selectedSubjects="selectedSubjects" :parent="parent +':'+ subject.subject"/>
-        </div>
-      </div>
-    </div>
-    `
+  template: "<div><div v-for=\"subject in subjectObj.subList\"><input type=\"checkbox\" :id=\"subject.subject\" :value=\"subject.subject\" v-model=\"selectedSubjects[parent +':'+ subject.subject]\"><label :for=\"subject.subject\">{{subject.subject}}</label><div class=\"sub-list\" v-if=\"subject.subList != null && selectedSubjects[parent +':'+ subject.subject]\"><subject-select :subjectObj=\"subject\" :selectedSubjects=\"selectedSubjects\" :parent=\"parent +':'+ subject.subject\"/></div></div></div>"
 });
 
 export default {
@@ -49,6 +39,7 @@ export default {
       zipCode: "",
       experience: "",
       shortBio: "",
+      subjectsDesc:"",
       selectedSubjects: {},
       subjectOptions: {
         subject: "",
@@ -99,6 +90,7 @@ export default {
         _this.zipCode = response.data.zipCode;
         _this.experience = response.data.experience;
         _this.shortBio = response.data.shortBio;
+        _this.subjectsDesc = response.data.subjectsDesc;
         _this.selectedSubjects = _this.parseSubjectDataString(response.data.subjects);
       })
       .catch(function(e) {
@@ -170,6 +162,7 @@ export default {
             usState: _this.usState,
             experience: _this.experience,
             shortBio: _this.shortBio,
+            subjectsDesc: _this.subjectsDesc,
             subjects: _this.getSubjectDataString(),
             token: localStorage.getItem("token")
           }

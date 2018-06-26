@@ -7,7 +7,7 @@
       <h3 class="rate">${{tutor.rate}}</h3>
     </div>
     <div class="short-bio">{{tutor.shortBio}}</div>
-    <h4 class="subjects">{{subjectList}}</h4>
+    <h4 class="subjects">{{tutor.subjectsDesc}}</h4>
     <h4 class="levels">{{levelsList}}</h4>
     <h4 class="town">{{tutor.town + ", " + tutor.usState}}</h4>
     <div v-if="expanded">
