@@ -30,10 +30,15 @@
         </div>
       </div>
       <div class="session-container-row-2" v-if="session.isnew">
-        <select class="name" v-model="otherID" id="tutor">
-          <option v-for="(account, i)  in relatedAccounts"  :value="account.ID.N">{{account.firstName.S}} {{account.lastName.S}}</option>
+        <select class="name" v-model="otherAccount" id="tutor">
+          <option v-for="(account, i)  in relatedAccounts"  :value="account">{{account.firstName.S}} {{account.lastName.S}}</option>
           <option v-if="AccountStore.account.accountType == 'Client'" value="findMore">Find more Tutors</option>
         </select>
+        <div v-if="otherAccount != null && otherAccount.students.L.length > 1">
+        <select  class="name" v-model="studentName" id="student">
+          <option v-for="(student, i) in otherAccount.students.L"  :value="student.S">{{student.S}}</option>
+        </select>
+        </div>
         <button class="button-one plain-button" @click="cancelNew()">Cancel</button>
         <button class="button-two color-button" @click="scheduleLesson()">Schedule Lesson</button>
       </div>
@@ -79,9 +84,10 @@ export default {
     return {
       AccountStore: AccountStore.data,
       dayNames: [ "Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"],
-      otherID: null,
+      otherAccount: null,
       editing: false,
       showCalander: false,
+      studentName:"",
       dayVal: this.session.isnew
         ? new Date().getDate() + 1
         : startDate.getDate(),
@@ -122,7 +128,7 @@ export default {
           // JSON responses are automatically parsed.
           console.log(response.data);
           _this.relatedAccounts = response.data.accounts;
-          _this.otherID = _this.relatedAccounts[0].ID.N;
+          _this.otherAccount = _this.relatedAccounts[0];
         })
         .catch(function(e) {
           console.log(e);
@@ -273,7 +279,8 @@ export default {
       console.log(this.length);
       return {
         token: localStorage.getItem("token"),
-        otherID: this.otherID,
+        otherID: this.otherAccount.ID.N,
+        studentName: this.studentName == "" ? null : this.studentName,
         startTime: new Date(
           this.yearVal,
           this.monthVal,
@@ -387,7 +394,7 @@ export default {
     }
   },
   watch: {
-    otherID: function(val) {
+    otherAccount: function(val) {
       if (val == "findMore") {
         this.$router.push({ path: "Tutors" });
       }
