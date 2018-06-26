@@ -60,6 +60,7 @@ export default {
     };
   },
   created: function() {
+    document.title = "Pay - Owl Tutoring";
     this.getSources();
   },
   mounted: function() {

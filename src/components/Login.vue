@@ -20,6 +20,7 @@ export default {
     return {};
   },
   created: function() {
+    document.title = "Login - Owl Tutoring";
     var _this = this;
   },
   methods: {

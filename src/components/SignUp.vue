@@ -44,6 +44,9 @@ export default {
       accountType: null,
     };
   },
+  created: function() {
+    document.title = "Sign Up - Owl Tutoring";
+  }
   methods: {
     getStudentInputs: function() {
       var studentInput = [];

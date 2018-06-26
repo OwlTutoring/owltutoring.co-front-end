@@ -27,6 +27,7 @@ export default {
     };
   },
   created: function() {
+    document.title = "Account - Owl Tutoring";
     console.log(AccountStore);
     if (AccountStore.data.account == null) {
       AccountStore.methods.refreshAccount();

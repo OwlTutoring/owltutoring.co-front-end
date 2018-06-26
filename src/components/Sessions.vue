@@ -78,6 +78,7 @@ export default {
     }
   },
   created: function() {
+    document.title = "Sessions - Owl Tutoring";
     var _this = this;
     if (AccountStore.data.account == null) {
       AccountStore.methods.refreshAccount();

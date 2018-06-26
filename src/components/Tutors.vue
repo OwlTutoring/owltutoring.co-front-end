@@ -19,6 +19,7 @@ export default {
     };
   },
   created: function() {
+    document.title = "Tutors - Owl Tutoring";
     var _this = this;
     axios
       .get(
