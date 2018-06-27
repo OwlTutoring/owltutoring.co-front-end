@@ -136,6 +136,9 @@ h2 {
 input {
   font-family: 'Montserrat', sans-serif;
 }
+a {
+  color: inherit;
+}
 .title-container {
   display:flex;
 }

@@ -11,8 +11,8 @@
     <h4 class="levels">{{levelsList}}</h4>
     <h4 class="town">{{tutor.town + ", " + tutor.usState}}</h4>
     <div class= "more-info-grid" v-if="expanded">
-      <h4 class="phone">Phone: <a :href= "'sms:' + tutor.phone"> {{tutor.phone}}</a></h4>
-      <h4 class="email">Email:<a :href= "'mailto:' + tutor.email"> {{tutor.email}}</a></h4>
+      <h4 class="phone">Phone: <a :href= "'sms:' + tutor.phone">{{tutor.phone}}</a></h4>
+      <h4 class="email">Email: <a :href= "'mailto:' + tutor.email">{{tutor.email}}</a></h4>
       <p class="experience"><b>Experience:</b> {{tutor.experience}}</p>
       <p class="bio"><b>Bio:</b> {{tutor.bio}}</p>
     </div>
