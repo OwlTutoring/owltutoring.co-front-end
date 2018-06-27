@@ -25,8 +25,12 @@
             <div v-for="(day,i) in days"  v-on:click="selectDay(day)" v-bind:class="{'selectedDay':day == dayVal.toString() }" class="calendar-day">{{day}}</div> 
           </div>
         </div>
-        <div class="length">
-          <input class="inherit-input" v-model="length" id="length" size="1">hr(s)
+         <input class="location inherit-input" placeholder="Location ex: Cook Library" v-model="sessionLocation" id="location">
+        <div  v-if="parseInt(length)>1" class="length">
+          <input class="inherit-input" v-model="length" id="length" size="1">hrs
+        </div>
+        <div  v-else class="length">
+          <input class="inherit-input" v-model="length" id="length" size="1">hr
         </div>
       </div>
       <div class="session-container-row-2" v-if="session.isnew">
@@ -34,18 +38,20 @@
           <option v-for="(account, i)  in relatedAccounts"  :value="account">{{account.firstName.S}} {{account.lastName.S}}</option>
           <option v-if="AccountStore.account.accountType == 'Client'" value="findMore">Find more Tutors</option>
         </select>
-        <div v-if="otherAccount != null && otherAccount.students.L.length > 1">
+        <div v-if="otherAccount != null && AccountStore.account.accountType =='Tutor' && otherAccount.students.L.length > 1">
         <select  class="name" v-model="studentName" id="student">
           <option v-for="(student, i) in otherAccount.students.L"  :value="student.S">{{student.S}}</option>
         </select>
         </div>
-        <button class="button-one plain-button" @click="cancelNew()">Cancel</button>
-        <button class="button-two color-button" @click="scheduleLesson()">Schedule Lesson</button>
+        <button class="button-two plain-button" @click="cancelNew()">Cancel</button>
+        <button class="button-three color-button" @click="scheduleLesson()">Schedule Lesson</button>
       </div>
       <div class="session-container-row-2" v-else>
         <div class="name">{{session.name}}</div>
-        <button class="button-one plain-button" @click="cancelEdit()">Cancel</button>
-        <button class="button-two color-button" @click="editLesson()">Save Changes</button>
+        <button v-if="!session.canceled" class="button-one plain-button" @click="changeCancelState(true)">Cancel Lesson</button>
+        <button v-if="session.canceled" class="button-one plain-button" @click="changeCancelState(false)">Un Cancel Lesson</button>
+        <button class="button-two plain-button" @click="cancelEdit()">Cancel Edit</button>
+        <button class="button-three color-button" @click="editLesson()">Save Changes</button>
       </div>
       
     </div>
@@ -54,6 +60,7 @@
       <div class="session-container-row-1">
         <div class="time">{{timeString}}</div>
         <div class="date">{{dateString}}</div>
+        <div class="location">{{sessionLocation}}</div>
         <div class="length">{{lengthString}}</div>
       </div>
       <div class="session-container-row-2">
@@ -88,6 +95,9 @@ export default {
       editing: false,
       showCalander: false,
       studentName:"",
+      sessionLocation: this.session.isnew
+        ? ""
+        : this.session.sessionLocation,
       dayVal: this.session.isnew
         ? new Date().getDate() + 1
         : startDate.getDate(),
@@ -243,7 +253,7 @@ export default {
         date.getFullYear();
     },
     lengthString: function() {
-      return this.session.hours.toString() + " hrs";
+      return this.session.hours.toString() + (this.session.hours > 1 ? " hrs" : " hr");
     },
     dateTimeString: function() {
       var date = new Date(parseInt(this.session.startTime));
@@ -275,11 +285,38 @@ export default {
     }
   },
   methods: {
+    
+    changeCancelState: function(state) {
+      var _this = this;
+      console.log(this.session.ID);
+      axios
+        .post(
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/editSession",
+          {
+            token: localStorage.getItem("token"),
+            sessionID: this.session.ID,
+            canceled: state
+          }
+        )
+        .then(function(response) {
+          // JSON responses are automatically parsed.
+          console.log(response);
+          MessageStore.methods.showMessage(response.data.message);
+          console.log("refresh");
+          _this.$emit("refresh");
+          _this.editing = false;
+        })
+        .catch(function(e) {
+          console.log(e);
+          MessageStore.methods.showMessage(e.response.data.message);
+          //this.errors.push(e)
+        });
+    },
     getParams: function() {
       console.log(this.length);
       return {
         token: localStorage.getItem("token"),
-        otherID: this.otherAccount.ID.N,
+        otherID: this.isnew ? this.otherAccount.ID.N : null, // if not new we dont care about other account
         studentName: this.studentName == "" ? null : this.studentName,
         startTime: new Date(
           this.yearVal,
@@ -300,7 +337,7 @@ export default {
           ).getTime() +
           this.length * 3600000
         ).toString(),
-        sessionLocation: "TODO: LOCATION"
+        sessionLocation: this.sessionLocation
       };
     },
     editLesson: function() {
@@ -413,13 +450,13 @@ export default {
 }
 .session-container-row-1 {
   display: grid;
-  grid-auto-columns: 1fr 1fr 1fr;
+  grid-auto-columns: auto auto auto auto;
   grid-gap: 1vw;
   margin-bottom: 1em;
 }
 .session-container-row-2 {
   display: grid;
-  grid-auto-columns: auto auto auto;
+  grid-auto-columns: auto auto auto auto;
   grid-gap: 1vw;
 }
 .time {
@@ -441,8 +478,15 @@ export default {
   text-align: center;
   font-size: 1.2em;
 }
-.length {
+.location {
   grid-column: 3 / span 1;
+  grid-row: 1 / span 1;
+  text-align: center;
+  font-size: 1.2em;
+  height: 1.2em;
+}
+.length {
+  grid-column: 4 / span 1;
   grid-row: 1 / span 1;
   text-align: right;
   font-size: 1.2em;
@@ -453,6 +497,10 @@ export default {
 }
 .button-two {
   grid-column: 3 / span 1;
+  grid-row: 2 / span 1;
+}
+.button-three {
+  grid-column: 4 / span 1;
   grid-row: 2 / span 1;
 }
 .name {
