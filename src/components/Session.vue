@@ -65,8 +65,9 @@
       </div>
       <div class="session-container-row-2">
         <div class="name">{{session.name}}</div>
-        <button class="button-one plain-button" v-on:click="changeToEdit()">Edit</button>
-        <button class="button-two color-button" v-on:click="changeToEdit()">Confirm</button>
+        <button class="button-two plain-button" v-on:click="changeToEdit()">Edit</button>
+        <button v-if="isConfirmed" class="button-three color-button" v-on:click="confirmLesson()">Confirm</button>
+        <div class= "button-three" v-else>Confirmed</div>
       </div>
     </div>
     
@@ -147,6 +148,23 @@ export default {
     }
   },
   computed: {
+    isConfirmed: function() {
+
+      // if session hasnt started yet
+      if(parseInt(this.session.startTime) < new Date().getTime) {
+        if(this.AccountStore.account.accountType == "Client") {
+          return this.session.clientPreConfirm;
+        } else {
+          return this.session.tutorPreConfirm;
+        }
+      } else {
+        if(this.AccountStore.account.accountType == "Client") {
+          return this.session.clientPostConfirm;
+        } else {
+          return this.session.tutorPostConfirm;
+        }
+      }
+    },
     minute: {
       get: function() {
         return this.minuteVal < 10 ? "0" + this.minuteVal : this.minuteVal;
@@ -285,7 +303,30 @@ export default {
     }
   },
   methods: {
-    
+    confirmLesson: function() {
+      var _this = this;
+      axios
+        .post(
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/confirmSession",
+          {
+            token: localStorage.getItem("token"),
+            sessionID: this.session.ID,
+          }
+        )
+        .then(function(response) {
+          // JSON responses are automatically parsed.
+          console.log(response);
+          MessageStore.methods.showMessage(response.data.message);
+          console.log("refresh");
+          _this.$emit("refresh");
+          _this.editing = false;
+        })
+        .catch(function(e) {
+          console.log(e);
+          MessageStore.methods.showMessage(e.response.data.message);
+          //this.errors.push(e)
+        });
+    },
     changeCancelState: function(state) {
       var _this = this;
       console.log(this.session.ID);
