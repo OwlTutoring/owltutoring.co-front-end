@@ -10,11 +10,11 @@
     <h4 class="subjects">{{tutor.subjectsDesc}}</h4>
     <h4 class="levels">{{levelsList}}</h4>
     <h4 class="town">{{tutor.town + ", " + tutor.usState}}</h4>
-    <div v-if="expanded">
-      <h4>Phone: <a :href= "'sms:' + tutor.phone"> {{tutor.phone}}</a></h4>
-      <h4>Email:<a :href= "'mailto:' + tutor.email"> {{tutor.email}}</a></h4>
-      <p><b>Experience:</b> {{tutor.experience}}</p>
-      <p><b>Bio:</b> {{tutor.bio}}</p>
+    <div class= "more-info-grid" v-if="expanded">
+      <h4 class="phone">Phone: <a :href= "'sms:' + tutor.phone"> {{tutor.phone}}</a></h4>
+      <h4 class="email">Email:<a :href= "'mailto:' + tutor.email"> {{tutor.email}}</a></h4>
+      <p class="experience"><b>Experience:</b> {{tutor.experience}}</p>
+      <p class="bio"><b>Bio:</b> {{tutor.bio}}</p>
     </div>
     <button class ="button-one light-button" v-on:click="toggleMore()"><div v-if="!expanded">more info</div><div v-else>less info</div></button><br>
     <button class="button-two color-button" v-on:click="chosseTutor()">Schedule a Lesson</button>
@@ -97,8 +97,9 @@ function creatListString(list) {
 <style scoped>
 .tutor-grid {
   display: grid;
-  grid-template-columns: 20vw 1fr 1fr 1fr;
-  grid-template-rows: repeat(1fr, 4);
+  grid-template-columns: 20vw auto auto auto;
+  grid-template-rows: auto auto auto auto auto;
+  grid-gap: 1em;
 
 }
 .more-info {
@@ -113,7 +114,7 @@ function creatListString(list) {
   grid-column: 2 / 5;
   grid-row: 1 / 2;
   display: grid;
-  grid-template-columns: repeat(1fr 3);
+  grid-template-columns: repeat(auto, 3);
 }
 .name {
   grid-column: 1 / 2;
@@ -132,24 +133,45 @@ function creatListString(list) {
   grid-column: 2 / 5;
   grid-row: 2 / 2;
 }
-.subject {
-  grid-column: 2 / 4;
+.subjects {
+  grid-column: 2 / 5;
   grid-row: 3 / 3;
 }
 .levels {
   grid-column: 4 / 5;
   grid-row: 3 / 3;
 }
+
+.more-info-grid {
+  grid-column: 1 / 5;
+  grid-row: 4 / 4;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+.phone {
+  grid-column: 1 / 1;
+}
+.email {
+  grid-column: 2 / 2;
+}
+.experience {
+  grid-column: 1 / 3;
+}
+.bio {
+  grid-column: 1 / 3;
+}
+
 .town {
   grid-column: 1 / 3;
-  grid-row: 4 / 4;
+  grid-row: 5 / 5;
+  margin: .1em;
 }
 .button-one {
   grid-column: 3 / 4;
-  grid-row: 4 / 4;
+  grid-row: 5 / 5;
 }
 .button-two {
   grid-column: 4 / 5;
-  grid-row: 4 / 4;
+  grid-row: 5 / 5;
 }
 </style>
