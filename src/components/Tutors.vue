@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Tutors</h1>
+    <Tutor-search />
     <div v-for="tutor, i in tutors"><Tutor class="tutor" :tutor="tutor" /></div>
 
   </div>
@@ -8,19 +9,34 @@
 
 <script>
 import Tutor from './Tutor.vue';
+import TutorSearch from './TutorSearch.vue'
 import axios from "axios";
 export default {
   components: {
-    Tutor
+    Tutor,
+    TutorSearch
+  },
+  props: {
+    zipCode: {
+      default: null,
+    },
+    tutorID: {
+      default: null,
+    }
   },
   data: function() {
     return {
       tutors: [],
-      zipCode: this.$route.query.zipCode,
-      tutorID: this.$route.query.tutorID
+      
     };
   },
   created: function() {
+    if(this.zipCode == null) {
+      this.zipCode = this.$route.query.zipCode;
+    }
+    if(this.tutorID == null) {
+      this.tutorID = this.$route.query.tutorID;
+    }
     console.log(this.zipCode);
     document.title = "Tutors - Owl Tutoring";
     var _this = this;

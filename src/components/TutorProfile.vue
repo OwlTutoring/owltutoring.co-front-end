@@ -22,6 +22,7 @@
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
 import Vue from "vue";
+import SubjectTypesStore from "../stores/SubjectTypesStore";
 
 Vue.component("subject-select", {
   props: ["subjectObj", "selectedSubjects", "parent"],
@@ -41,33 +42,7 @@ export default {
       shortBio: "",
       subjectsDesc:"",
       selectedSubjects: {},
-      subjectOptions: {
-        subject: "",
-        subList: [
-          { subject: "Math", subList: [{ subject: "Algebra" }] },
-          {
-            subject: "Music",
-            subList: [
-              {
-                subject: "Violin",
-                subList: [
-                  { subject: "Begineer" },
-                  { subject: "Intermediate" },
-                  { subject: "Advanced" }
-                ]
-              },
-              {
-                subject: "Cello",
-                subList: [
-                  { subject: "Begineer" },
-                  { subject: "Intermediate" },
-                  { subject: "Advanced" }
-                ]
-              }
-            ]
-          }
-        ]
-      }
+      subjectOptions: SubjectTypesStore.data.subjects,
     };
   },
   created: function() {
