@@ -3,7 +3,7 @@
     <input  placeholder="Subject" v-model="subject" id="subject">
     <input  placeholder="zipCode" v-model="zipCode" id="zipCode">
     <input  placeholder="distance" v-model="distance" id="distance"> miles away
-     <router-link class= "color-button" :to="'Tutors'+">Tutors</router-link>
+     <router-link class= "color-button" :to="'Tutors'+ requestString">Tutors</router-link>
   </div>
 </template>
 
@@ -21,6 +21,11 @@ export default {
   },
   created: function() {
     
+  },
+  computed: {
+    requestString: function() {
+      return "?zipCode=60061";
+    }
   }
 };
 </script>
