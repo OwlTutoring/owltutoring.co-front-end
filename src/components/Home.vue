@@ -1,15 +1,20 @@
 <template>
   <div class="home">
-    
+    Owl Tutoring
+    Quality, Personal and Affordable Peer to Peer Tutoring
+    <Tutor-search />
   </div>
 </template>
 
 <script>
+import TutorSearch from './TutorSearch.vue';
 export default {
+   components: {
+    TutorSearch
+  },
   name: 'Home',
   data: function data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
     }
   },
   created: function() {
