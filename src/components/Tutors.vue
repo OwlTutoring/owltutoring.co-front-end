@@ -75,7 +75,7 @@ export default {
     }
   },
   watch: {
-    '$route.query'() {
+    '$route.query': function() {
       this.getTutors();
     }
   },

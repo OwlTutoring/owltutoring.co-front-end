@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    Owl Tutoring
-    Quality, Personal and Affordable Peer to Peer Tutoring
+    <h1 class="title">Owl Tutoring</h1>
+    <h2 class="tag-line">Quality, Personal and Affordable Peer to Peer Tutoring</h2>
     <Tutor-search />
   </div>
 </template>
@@ -28,7 +28,12 @@ export default {
 h1, h2 {
   font-weight: normal;
 }
-
+.title {
+  text-align: center;
+}
+.tag-line {
+  text-align: center;
+}
 ul {
   list-style-type: none;
   padding: 0;

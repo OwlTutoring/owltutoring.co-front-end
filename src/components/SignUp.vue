@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="signup-grid">
     <h1>Sign Up</h1>
     <h4 id="message"></h4>
     <select v-model="accountType" id="accountType">
@@ -18,7 +18,7 @@
     Confirm password: <input class="form-field" v-model="confirmPassword" id="confirmPassword" type="password">
     <div v-if="isParent && accountType == 'Client'">
       Children Names:
-      <div v-for="(student, index) in students"><input class="form-field" id="student" v-model="students[index]"><button v-on:click="removeStudent(index)">-</button> </div>
+      <div v-for="(student, index) in students"><input placeholder="Child's Name"class="form-field" id="student" v-model="students[index]"><button class="color-button"v-on:click="removeStudent(index)">remove</button> </div>
       <button class="plain-button" v-on:click="addStudent()">Add Child</button>
     </div>
     <button class="color-button" v-on:click="signUp()">SignUp</button>
@@ -101,11 +101,12 @@ export default {
 };
 </script>
 
-<style>
-ul {
-  padding: 0;
+<style scoped>
+.signup-grid {
+  display: grid;
+  grid-gap: .2em;
 }
-li {
-  list-style: none;
+.form-field {
+  font-size: 1.4em;
 }
 </style>

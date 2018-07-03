@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tutor-search">
     <input  placeholder="Subject" v-model="subjectVal" id="subject">
     <input  placeholder="zipCode" v-model="zipCodeVal" id="zipCode">
     <input size="2" type="number" placeholder="distance" v-model="distanceVal" id="distance"> miles away
@@ -62,5 +62,7 @@ export default {
 </script>
 
 <style>
-
+.tutor-search {
+  text-align: center;
+}
 </style>
