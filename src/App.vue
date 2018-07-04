@@ -132,12 +132,13 @@ h2 {
   color: grey;
 }
 .alert {
-  position: absolute;
+  position: fixed;
   padding: 0.3em;
   font-size: 1.5em;
   border-radius: 0.5em;
   background-color: tomato;
   width: 50%;
+  margin-top: 5vh;
   margin-left: 25%;
   margin-right: 50%;
   text-align: center;

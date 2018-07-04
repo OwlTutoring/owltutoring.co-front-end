@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <h1>Tutors</h1>
-    <Tutor-search :zipCode="this.$route.query.zipCode" :distance="this.$route.query.distance" :subject="this.$route.query.subject"/>
+  <div class="tutors">
+    <div class="top-info">
+      <h1>Tutors</h1>
+      <Tutor-search :zipCode="this.$route.query.zipCode" :distance="this.$route.query.distance" :subject="this.$route.query.subject"/>
+    </div>
     <div v-for="tutor, i in tutors"><Tutor class="tutor" :tutor="tutor" /></div>
 
   </div>
@@ -47,7 +49,7 @@ export default {
         querys.push("distance=" + this.distance);
       }
       if(this.subject != null) {
-        querys.push("sujbect=" + this.subject);
+        querys.push("subject=" + this.subject);
       }
       var queryString = "";
       for(var i = 0; i < querys.length; i ++) {
@@ -94,5 +96,8 @@ li {
 }
 .tutor {
   margin: 5%;
+}
+.top-info {
+  text-align: center;
 }
 </style>
