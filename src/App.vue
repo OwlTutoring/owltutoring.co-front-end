@@ -1,31 +1,33 @@
 <template>
   <div id="app">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
-    <div class="alert" v-if="messageStore.show">
-      {{messageStore.message}}
+    <div id="content">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
+      <div class="alert" v-if="messageStore.show">
+        {{messageStore.message}}
+      </div>
+      <div class="head">
+        <div class="title-container">
+          <img class="logo" src="../static/owl.png">
+          <h1 class="title">Owl Tutoring</h1>
+        </div>
+        <div class="nav-grid" v-if="AccountStore.loggedIn">
+          <router-link class= "nav-item nav-link" to="/">Home</router-link>
+          <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
+          <router-link class= "nav-item nav-link" to="/contact">Contact</router-link>
+          <router-link class= "nav-item nav-link" to="/account">Account</router-link>
+          <router-link class= "nav-item nav-link" to="/sessions">Sessions</router-link>
+          <button class= "nav-item color-button" v-on:click="logout()">logout</button>  
+        </div>
+        <div class="nav-grid" v-else>
+          <router-link class= "nav-item nav-link" to="/">Home</router-link>
+          <router-link class= "nav-item nav-link" to="Tutors">Tutors</router-link>
+          <router-link class= "nav-item nav-link" to="contact">Contact</router-link>
+          <router-link class= "nav-item nav-link" to="SignUp">Sign Up</router-link>
+          <router-link class= "nav-item nav-link" to="login">Login</router-link>
+        </div>
+      </div>
+      <router-view/>
     </div>
-    <div class="head">
-      <div class="title-container">
-        <img class="logo" src="../static/owl.png">
-        <h1 class="title">Owl Tutoring</h1>
-      </div>
-      <div class="nav-grid" v-if="AccountStore.loggedIn">
-        <router-link class= "nav-item nav-link" to="/">Home</router-link>
-        <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
-        <router-link class= "nav-item nav-link" to="/contact">Contact</router-link>
-        <router-link class= "nav-item nav-link" to="/account">Account</router-link>
-        <router-link class= "nav-item nav-link" to="/sessions">Sessions</router-link>
-        <button class= "nav-item color-button" v-on:click="logout()">logout</button>  
-      </div>
-      <div class="nav-grid" v-else>
-        <router-link class= "nav-item nav-link" to="/">Home</router-link>
-        <router-link class= "nav-item nav-link" to="Tutors">Tutors</router-link>
-        <router-link class= "nav-item nav-link" to="contact">Contact</router-link>
-        <router-link class= "nav-item nav-link" to="SignUp">Sign Up</router-link>
-        <router-link class= "nav-item nav-link" to="login">Login</router-link>
-      </div>
-    </div>
-    <router-view/>
     <footer>Owl Tutoring {{year}}</footer>
   </div>
 </template>
@@ -63,8 +65,12 @@ export default {
   color: #2c3e50;
   margin: 0;
 }
+#content {
+  min-height: 100vh;
+}
 body {
   margin: 0;
+  
 }
 h1 {
   font-weight: 400;

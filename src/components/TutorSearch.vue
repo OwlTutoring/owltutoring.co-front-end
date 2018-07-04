@@ -64,6 +64,12 @@ export default {
 <style>
 .tutor-search {
   text-align: center;
+  border-style: solid;
+  padding: .4em;
+  border-radius: 4px;
+  border-width: 2px;
+  display:inline-block;
+  border-color: grey;
 }
 #distance {
   
