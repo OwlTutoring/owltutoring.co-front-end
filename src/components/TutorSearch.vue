@@ -2,8 +2,8 @@
   <div class="tutor-search">
     <input  placeholder="Subject" v-model="subjectVal" id="subject">
     <input  placeholder="zipCode" v-model="zipCodeVal" id="zipCode">
-    <input size="2" type="number" placeholder="distance" v-model="distanceVal" id="distance"> miles away
-     <router-link class= "color-button" :to="'Tutors'+ requestString">Tutors</router-link>
+    <input  type="number" placeholder="distance" v-model="distanceVal"  min="1" max="5" id="distance"> miles away
+     <router-link class= "color-button" :to="'Tutors'+ requestString">Find Tutors</router-link>
   </div>
 </template>
 
@@ -64,5 +64,8 @@ export default {
 <style>
 .tutor-search {
   text-align: center;
+}
+#distance {
+  
 }
 </style>

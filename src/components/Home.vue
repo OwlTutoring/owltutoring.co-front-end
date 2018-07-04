@@ -1,8 +1,10 @@
 <template>
   <div class="home">
-    <h1 class="title">Owl Tutoring</h1>
-    <h2 class="tag-line">Quality, Personal and Affordable Peer to Peer Tutoring</h2>
+    <h2 class="tag-line">Quality, Personal, and Affordable Peer to Peer Tutoring</h2>
     <Tutor-search />
+    <h3>need help? text <a href="sms://2248149291">(224) 814-9291</a></h3>
+    <h1>Why Owl Tutoring?</h1>
+    Owl Tutoring provides a unique tutoring experience focused on providing young, trained, qualified, and experienced tutors who can realate too and mentor their students. Owl Tutoring strives to provide these services at a competitive and affordable rate.
   </div>
 </template>
 
@@ -38,13 +40,16 @@ ul {
   list-style-type: none;
   padding: 0;
 }
-
+.home {
+  text-align: center;
+}
 li {
   display: inline-block;
   margin: 0 10px;
 }
 
 a {
-  color: #42b983;
+
 }
+
 </style>
