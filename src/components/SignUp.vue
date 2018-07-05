@@ -65,11 +65,11 @@ export default {
     signUp: function() {
       var _this = this;
       if(this.password != _this.confirmPassword) {
-        MessageStore.methods.showMessage("Error, Passwords don't match");
+        MessageStore.methods.showMessage("Error, Passwords don't match", true);
         return;
       }
       if(_this.accountType == "none") {
-        MessageStore.methods.showMessage("please select an account type");
+        MessageStore.methods.showMessage("please select an account type", true);
         return;
       }
       axios
@@ -89,11 +89,11 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          MessageStore.methods.showMessage(response.data.message);
+          MessageStore.methods.showMessage(response.data.message, false);
         })
         .catch(function(e) {
           console.log(e);
-          MessageStore.methods.showMessage(e.response.data.message);
+          MessageStore.methods.showMessage(e.response.data.message, true);
           //this.errors.push(e)
         });
     }

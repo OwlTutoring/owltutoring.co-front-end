@@ -102,7 +102,7 @@ export default {
       })
       .catch(function(e) {
         console.log(e);
-        MessageStore.methods.showMessage(e.response.data.message);
+        MessageStore.methods.showMessage(e.response.data.message, true);
         //this.errors.push(e)
       });
   },
@@ -128,7 +128,7 @@ export default {
         })
         .catch(function(e) {
           console.log(e);
-          MessageStore.methods.showMessage(e.response.data.message);
+          MessageStore.methods.showMessage(e.response.data.message, true);
           //this.errors.push(e)
         });
     },

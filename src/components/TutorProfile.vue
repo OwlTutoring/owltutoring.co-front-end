@@ -57,7 +57,7 @@ export default {
       .then(function(response) {
         // JSON responses are automatically parsed.
         console.log(response);
-        MessageStore.methods.showMessage(response.data.message);
+        MessageStore.methods.showMessage(response.data.message, false);
         _this.bio = response.data.bio;
         _this.grade = response.data.grade;
         _this.town = response.data.town;
@@ -70,7 +70,7 @@ export default {
       })
       .catch(function(e) {
         console.log(e);
-        MessageStore.methods.showMessage(e.response.data.message);
+        MessageStore.methods.showMessage(e.response.data.message, true);
         //this.errors.push(e)
       });
   },
@@ -145,11 +145,11 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          MessageStore.methods.showMessage(response.data.message);
+          MessageStore.methods.showMessage(response.data.message, false);
         })
         .catch(function(e) {
           console.log(e);
-          MessageStore.methods.showMessage(e.response.data.message);
+          MessageStore.methods.showMessage(e.response.data.message, true);
           //this.errors.push(e)
         });
     }

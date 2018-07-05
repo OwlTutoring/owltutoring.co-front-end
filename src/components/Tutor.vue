@@ -23,6 +23,7 @@
 
 <script>
 import axios from "axios";
+import MessageStore from "../stores/MessageStore";
 export default {
   props: ["tutor"],
   name: "Tutor",
@@ -58,6 +59,7 @@ export default {
         })
         .catch(function(e) {
           console.log(e);
+          MessageStore.methods.showMessage(e.response.data.message, true);
           //this.errors.push(e)
         });
     },

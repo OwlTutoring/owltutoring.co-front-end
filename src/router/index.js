@@ -10,6 +10,7 @@ import SignUp from '@/components/SignUp'
 import Sessions from '@/components/Sessions'
 import Pay from '@/components/Pay'
 import TutorProfile from '@/components/TutorProfile'
+import ForgotPassword from '@/components/ForgotPassword'
 
 Vue.use(Router)
 
@@ -60,6 +61,11 @@ export default new Router({
       path: '/tutorProfile',
       name: 'tutorProfile',
       component: TutorProfile
+    },
+    {
+      path: '/forgotPassword',
+      name: 'forgotPassword',
+      component: ForgotPassword
     }
   ]
 })

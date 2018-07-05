@@ -4,7 +4,7 @@
     <Tutor-search />
     <h3>need help? text <a href="sms://2248149291">(224) 814-9291</a></h3>
     <h1>Why Owl Tutoring?</h1>
-    Owl Tutoring provides a unique tutoring experience focused on providing young, trained, qualified, and experienced tutors who can realate too and mentor their students. Owl Tutoring strives to provide these services at a competitive and affordable rate.
+    Owl Tutoring provides a unique tutoring experience focused on providing trained, qualified, and experienced tutors who can realate too and mentor their students. Owl Tutoring strives to provide these services at a competitive and affordable rate.
   </div>
 </template>
 

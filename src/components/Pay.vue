@@ -70,7 +70,7 @@ export default {
     // Handle real-time validation errors from the card Element.
     this.card.addEventListener("change", function(event) {
       if (event.error) {
-        MessageStore.methods.showMessage(event.error.message);
+        MessageStore.methods.showMessage(event.error.message, true);
       }
       _this.changeToNewSource();
     });
@@ -96,7 +96,7 @@ export default {
         stripe.createSource(_this.card, ownerInfo).then(function(result) {
           if (result.error) {
             // Inform the user if there was an error.
-            MessageStore.methods.showMessage(result.error.message);
+            MessageStore.methods.showMessage(result.error.message, true);
           } else {
             // Send the token to your server.
 
@@ -116,11 +116,11 @@ export default {
               .then(function(response) {
                 // JSON responses are automatically parsed.
                 console.log(response);
-                MessageStore.methods.showMessage(response.data.message);
+                MessageStore.methods.showMessage(response.data.message, false);
               })
               .catch(function(e) {
                 console.log(e);
-                MessageStore.methods.showMessage(e.response.data.message);
+                MessageStore.methods.showMessage(e.response.data.message, true);
                 //this.errors.push(e)
               });
           }
@@ -145,7 +145,7 @@ export default {
           })
           .catch(function(e) {
             console.log(e);
-            MessageStore.methods.showMessage(e.response.data.message);
+            MessageStore.methods.showMessage(e.response.data.message, true);
             //this.errors.push(e)
           });
       }
@@ -169,7 +169,7 @@ export default {
         })
         .catch(function(e) {
           console.log(e);
-          MessageStore.methods.showMessage(e.response.data.message);
+          MessageStore.methods.showMessage(e.response.data.message, true);
           //this.errors.push(e)
         });
     },
@@ -189,12 +189,12 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          MessageStore.methods.showMessage(response.data.message);
+          MessageStore.methods.showMessage(response.data.message, false);
           _this.sources = response.data.sources;
         })
         .catch(function(e) {
           console.log(e);
-          MessageStore.methods.showMessage(e.response.data.message);
+          MessageStore.methods.showMessage(e.response.data.message, true);
           //this.errors.push(e)
         });
     }

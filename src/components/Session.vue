@@ -11,9 +11,9 @@
           </select>
         </div>
         <div class="date dateEntry">
-          <input class="inherit-input" @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="month" id="month" size="2">/
-          <input class="inherit-input" @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="day" id="day" size="2">/
-          <input class="inherit-input" @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="year" id="year" size="4">
+          <input class="inherit-input" @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="month" id="month" type="number">/
+          <input class="inherit-input" @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="day" id="day" type="number">/
+          <input class="inherit-input" @focus="showCalander=true" @blur="showCalander=false" v-model.lazy="year" id="year" type="number">
           <div v-bind:class="{show: showCalander}" class="calendar-container">
             <h2>
               <button @focus="showCalander=true" @blur="showCalander=false" @click="backMonth()"> < </button>
@@ -572,5 +572,14 @@ export default {
 }
 .show {
   display: block;
+}
+#month {
+  width: 2.5em;
+}
+#day {
+  width: 2.5em;
+}
+#year {
+  width: 4.5em;
 }
 </style>

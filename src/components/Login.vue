@@ -7,6 +7,7 @@
       <input class="form-field" placeholder="Password" type="password" id="password"><br>
       <button class="color-button" v-on:click="login()">Login</button><br>
       <router-link to="signUp">Sign Up</router-link>
+      <router-link to="forgotPassword">Forgot Password?</router-link>
     </div>
   </div>
 </template>
@@ -38,12 +39,12 @@ export default {
           console.log(response);
           AccountStore.methods.login(response.data.token);
           document.getElementById("message").innerHTML = response.data.message;
-          MessageStore.methods.showMessage(response.data.message);
+          MessageStore.methods.showMessage(response.data.message, false);
         })
         .catch(function(e) {
           console.log(e);
           document.getElementById("message").innerHTML = e.response.data.message;
-          MessageStore.methods.showMessage(e.response.data.message);
+          MessageStore.methods.showMessage(e.response.data.message, true);
           //this.errors.push(e)
         });
     }
