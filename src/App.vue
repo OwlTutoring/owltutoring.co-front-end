@@ -10,7 +10,7 @@
           <img class="logo" src="../static/owl.png">
           <h1 class="title">Owl Tutoring</h1>
         </div>
-        <div class="nav-grid" v-if="AccountStore.loggedIn">
+        <div class="nav-grid" v-if="AccountStore.account != null">
           <router-link class= "nav-item nav-link" to="/">Home</router-link>
           <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
           <router-link class= "nav-item nav-link" to="/contact">Contact</router-link>
@@ -51,7 +51,8 @@ export default {
     }
   },
   created: function() {
-    AccountStore.methods.refreshLoginState();
+    AccountStore.methods.refreshAccount();
+    
   }
 };
 </script>

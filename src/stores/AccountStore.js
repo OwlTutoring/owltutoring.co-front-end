@@ -8,18 +8,13 @@ const accountStore = {
   methods: {
     logout: function () {
       localStorage.setItem("token", null);
-      accountStore.data.loggedIn = false;
-      accountStore.account = null;
+      accountStore.data.account = null;
       console.log("logged OUT!");
     },
     login: function (token) {
       localStorage.setItem("token", token);
-      accountStore.data.loggedIn = true;
       accountStore.methods.refreshAccount();
       console.log("logged IN!");
-    },
-    refreshLoginState: function () {
-      accountStore.data.loggedIn = (localStorage.getItem("token") != null);
     },
     refreshAccount: function () {
       axios
