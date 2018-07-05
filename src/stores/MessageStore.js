@@ -3,13 +3,13 @@ const MessageStore = {
     data: {
         message: "no message",
         show: false,
-        color: "red",
+        isError: true,
     },
     methods: {
-        showMessage: function(message, color) {
+        showMessage: function(message, isError) {
             
             MessageStore.data.message = message;
-            MessageStore.data.color = color;
+            MessageStore.data.isError = isError;
             console.log(MessageStore.data.message);
             MessageStore.data.show = true;
             setTimeout( function() {

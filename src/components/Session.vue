@@ -316,14 +316,14 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          MessageStore.methods.showMessage(response.data.message);
+          MessageStore.methods.showMessage(response.data.message, false);
           console.log("refresh");
           _this.$emit("refresh");
           _this.editing = false;
         })
         .catch(function(e) {
           console.log(e);
-          MessageStore.methods.showMessage(e.response.data.message);
+          MessageStore.methods.showMessage(e.response.data.message,true);
           //this.errors.push(e)
         });
     },
@@ -342,14 +342,14 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          MessageStore.methods.showMessage(response.data.message);
+          MessageStore.methods.showMessage(response.data.message, false);
           console.log("refresh");
           _this.$emit("refresh");
           _this.editing = false;
         })
         .catch(function(e) {
           console.log(e);
-          MessageStore.methods.showMessage(e.response.data.message);
+          MessageStore.methods.showMessage(e.response.data.message,true);
           //this.errors.push(e)
         });
     },
@@ -395,14 +395,14 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          MessageStore.methods.showMessage(response.data.message);
+          MessageStore.methods.showMessage(response.data.message, false);
           console.log("refresh");
           _this.$emit("refresh");
           _this.editing = false;
         })
         .catch(function(e) {
           console.log(e);
-          MessageStore.methods.showMessage(e.response.data.message);
+          MessageStore.methods.showMessage(e.response.data.message,true);
           //this.errors.push(e)
         });
     },
@@ -420,13 +420,13 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          MessageStore.methods.showMessage(response.data.message);
+          MessageStore.methods.showMessage(response.data.message, false);
           console.log("refresh");
           _this.$emit("refresh");
         })
         .catch(function(e) {
           console.log(e);
-          MessageStore.methods.showMessage(e.response.data.message);
+          MessageStore.methods.showMessage(e.response.data.message,true);
           //this.errors.push(e)
         });
     },

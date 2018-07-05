@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="content">
-      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
-      <div class="alert" v-if="messageStore.show">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,8e 00" rel="stylesheet">
+      <div :class="['alert', { errorAlert: messageStore.isError }]" v-if="messageStore.show">
         {{messageStore.message}}
       </div>
       <div class="head">
@@ -136,7 +136,7 @@ h2 {
   padding: 0.3em;
   font-size: 1.5em;
   border-radius: 0.5em;
-  background-color: tomato;
+  background-color: lime;
   width: 50%;
   margin-top: 5vh;
   margin-left: 25%;
@@ -144,6 +144,9 @@ h2 {
   text-align: center;
   color: white;
   animation: popInOut 3.1s ease-in-out backwards 1;
+}
+.errorAlert {
+  background-color: tomato;
 }
 .logo {
   width:5em;

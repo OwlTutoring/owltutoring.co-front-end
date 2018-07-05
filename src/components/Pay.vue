@@ -141,7 +141,7 @@ export default {
           .then(function(response) {
             // JSON responses are automatically parsed.
             console.log(response);
-            MessageStore.methods.showMessage(response.data.message);
+            //MessageStore.methods.showMessage(response.data.message);
           })
           .catch(function(e) {
             console.log(e);
@@ -162,7 +162,7 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          MessageStore.methods.showMessage(response.data.message);
+          //MessageStore.methods.showMessage(response.data.message);
           _this.sources = response.data.sources;
           _this.selectedSource = _this.sources.data[0].id;
           console.log(_this.selectedSource);
