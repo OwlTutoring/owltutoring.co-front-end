@@ -43,6 +43,11 @@
           <option v-for="(student, i) in otherAccount.students.L"  :value="student.S">{{student.S}}</option>
         </select>
         </div>
+        <div v-if="AccountStore.account.accountType =='Client' && AccountStore.account.students.L.length > 1">
+        <select  class="name" v-model="studentName" id="student">
+          <option v-for="(student, i) in AccountStore.account.students.L"  :value="student.S">{{student.S}}</option>
+        </select>
+        </div>
         <button class="button-two plain-button" @click="cancelNew()">Cancel</button>
         <button class="button-three color-button" @click="scheduleLesson()">Schedule Lesson</button>
       </div>
@@ -65,6 +70,7 @@
       </div>
       <div class="session-container-row-2">
         <div class="name">{{session.name}}</div>
+        <div v-if="session.studentName" class="studentName">{{session.studentName}}</div>
         <button class="button-two plain-button" v-on:click="changeToEdit()">Edit</button>
         <button v-if="isConfirmed" class="button-three color-button" v-on:click="confirmLesson()">Confirm</button>
         <div class= "button-three" v-else>Confirmed</div>
@@ -547,6 +553,12 @@ export default {
 }
 .name {
   grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+  font-size: 1.2em;
+  align-self: end;
+}
+.studentName {
+  grid-column: 2 / span 1;
   grid-row: 2 / span 1;
   font-size: 1.2em;
   align-self: end;

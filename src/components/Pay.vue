@@ -37,6 +37,7 @@ export default {
   data: function() {
     return {
       sources: { data: [] },
+      amount: 2500,
       saveCard: true,
       selectedSource: "new",
       card: elements.create("card", {
@@ -164,7 +165,9 @@ export default {
           console.log(response);
           //MessageStore.methods.showMessage(response.data.message);
           _this.sources = response.data.sources;
+          if(_this.sources.data.length > 0) {
           _this.selectedSource = _this.sources.data[0].id;
+          }
           console.log(_this.selectedSource);
         })
         .catch(function(e) {
