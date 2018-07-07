@@ -11,6 +11,7 @@ import Sessions from '@/components/Sessions'
 import Pay from '@/components/Pay'
 import TutorProfile from '@/components/TutorProfile'
 import ForgotPassword from '@/components/ForgotPassword'
+import ChangePassword from '@/components/ChangePassword'
 
 Vue.use(Router)
 
@@ -66,6 +67,11 @@ export default new Router({
       path: '/forgotPassword',
       name: 'forgotPassword',
       component: ForgotPassword
+    },
+    {
+      path: '/changePassword',
+      name: 'changePassword',
+      component: ChangePassword
     }
   ]
 })

@@ -17,6 +17,10 @@ const accountStore = {
       console.log("logged IN!");
     },
     refreshAccount: function () {
+      if(!localStorage.getItem("token")) {
+        accountStore.data.account = null;
+        return;
+      }
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getAccountInfo",

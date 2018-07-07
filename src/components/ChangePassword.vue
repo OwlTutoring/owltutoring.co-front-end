@@ -1,10 +1,11 @@
 <template>
   <div class ="grid-container">
     <div class="login-box">
-      <h1>Forgot Password</h1>
+      <h1>Change Password</h1>
       <h4 id="message">{{message}}</h4>
-      <input class="form-field" placeholder="Email" id="email" v-model="email"><br>
-      <button class="color-button" v-on:click="sendEmail()">Send Email</button><br>
+      <input class="form-field" placeholder="New Password" id="password" v-model="password" type="password"><br>
+      <input class="form-field" placeholder="Confirm Password" id="confirmPassword" v-model="confirmPassword" type="password"><br>
+      <button class="color-button" v-on:click="changePassword()">Change Password</button><br>
       <router-link to="login">Login</router-link>
     </div>
   </div>
@@ -16,22 +17,27 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      email: "",
+      password: "",
+      confirmPassword: "",
       message: "",
     };
   },
   created: function() {
-    document.title = "Forgot Password - Owl Tutoring";
+    document.title = "Change Password - Owl Tutoring";
     var _this = this;
   },
   methods: {
-    sendEmail: function() {
+    changePassword: function() {
       var _this = this;
+      if(this.password != this.confirmPassword) {
+        this.message = "Error Passwords do not match";
+      }
       axios
         .post(
-          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/sendRecoveryEmail",
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/changePassword",
           {
-            email: _this.email,
+            password: _this.password,
+            token: localStorage.getItem("token"),
           }
         )
         .then(function(response) {
