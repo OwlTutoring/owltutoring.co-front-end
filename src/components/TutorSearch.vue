@@ -1,7 +1,7 @@
 <template>
   <form onSubmit="console.log('rhfghfg')" class="tutor-search">
     <input class="search-input" placeholder="Subject" v-model="subjectVal" id="subject">
-    <input class="search-input" placeholder="zipCode" v-model="zipCodeVal" id="zipCode">
+    <input class="search-input" placeholder="Zip Code" v-model="zipCodeVal" id="zipCode">
     <input class="search-input" type="number" placeholder="distance" v-model="distanceVal"  min="1" max="5" id="distance"> miles away
      <router-link class= "color-button" :to="'Tutors'+ requestString">Find Tutors</router-link>
   </form>
@@ -69,6 +69,7 @@ export default {
   border-width: 2px;
   display:inline-block;
   border-color: grey;
+  background-color: white;
 }
 .search-input {
   border: none;

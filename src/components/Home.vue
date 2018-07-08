@@ -1,10 +1,15 @@
 <template>
   <div class="home">
-    <h2 class="tag-line">Quality, Personal, and Affordable Peer to Peer Tutoring</h2>
-    <Tutor-search />
-    <h3>need help? text <a href="sms://2248149291">(224) 814-9291</a></h3>
-    <h1>Why Owl Tutoring?</h1>
-    Owl Tutoring provides a unique tutoring experience focused on providing trained, qualified, and experienced tutors who can realate too and mentor their students. Owl Tutoring strives to provide these services at a competitive and affordable rate.
+    <div class="head-img">
+      <h2 class="tag-line">Quality, Personal, and Affordable Peer to Peer Tutoring</h2>
+      <Tutor-search />
+      <h3>need help? text <a href="sms://2248149291">(224) 814-9291</a></h3>
+    </div>
+    <div class="home-grid">
+      <div id="why-image"></div>
+      <h1>Why Owl Tutoring?</h1>
+      Owl Tutoring provides a unique tutoring experience focused on providing trained, qualified, and experienced tutors who can realate too and mentor their students. Owl Tutoring strives to provide these services at a competitive and affordable rate.
+    </div>
   </div>
 </template>
 
@@ -51,5 +56,17 @@ li {
 a {
 
 }
-
+.head-img {
+  background-image: url("https://images.pexels.com/photos/301943/pexels-photo-301943.jpeg?cs=srgb&dl=apple-book-business-301943.jpg&fm=jpg");
+  background-size: 100vw;
+  background-position: center; 
+  margin: 0;
+  padding: 5%;
+}
+#why-image {
+  background-image: url("https://images.pexels.com/photos/239548/pexels-photo-239548.jpeg?cs=srgb&dl=adult-blur-business-239548.jpg&fm=jpg");
+  width: 50vw;
+  height: 50vw;
+  background-size: auto 50vw;
+}
 </style>

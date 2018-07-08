@@ -13,7 +13,6 @@
         <div class="nav-grid" v-if="AccountStore.account != null">
           <router-link class= "nav-item nav-link" to="/">Home</router-link>
           <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
-          <router-link class= "nav-item nav-link" to="/contact">Contact</router-link>
           <router-link class= "nav-item nav-link" to="/account">Account</router-link>
           <router-link class= "nav-item nav-link" to="/sessions">Sessions</router-link>
           <button class= "nav-item color-button" v-on:click="logout()">logout</button>  
@@ -21,7 +20,6 @@
         <div class="nav-grid" v-else>
           <router-link class= "nav-item nav-link" to="/">Home</router-link>
           <router-link class= "nav-item nav-link" to="Tutors">Tutors</router-link>
-          <router-link class= "nav-item nav-link" to="contact">Contact</router-link>
           <router-link class= "nav-item nav-link" to="SignUp">Sign Up</router-link>
           <router-link class= "nav-item nav-link" to="login">Login</router-link>
         </div>
@@ -71,6 +69,7 @@ export default {
 }
 body {
   margin: 0;
+  padding: 0;
   
 }
 h1 {
@@ -90,6 +89,7 @@ h2 {
   font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
   font-weight: 800;
+  text-align: center;
   
 }
 .plain-button {
@@ -105,6 +105,7 @@ h2 {
   text-decoration: none;
   text-transform: uppercase;
   font-weight: 800;
+  text-align: center;
 }
 .light-button {
   border-width: 0.1em;
@@ -182,6 +183,7 @@ a {
   margin: 0;
   padding: 1em;
   padding-bottom: 1.5em;
+  margin: 0;
 }
 footer {
   color: white;
