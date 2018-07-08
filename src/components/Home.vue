@@ -7,8 +7,10 @@
     </div>
     <div class="home-grid">
       <div id="why-image"></div>
-      <h1>Why Owl Tutoring?</h1>
-      Owl Tutoring provides a unique tutoring experience focused on providing trained, qualified, and experienced tutors who can realate too and mentor their students. Owl Tutoring strives to provide these services at a competitive and affordable rate.
+      <div id="why">
+        <h1>Why Owl Tutoring?</h1>
+        Owl Tutoring provides a unique tutoring experience focused on providing trained, qualified, and experienced tutors who can realate too and mentor their students. Owl Tutoring strives to provide these services at a competitive and affordable rate.
+      </div>
     </div>
   </div>
 </template>
@@ -65,8 +67,20 @@ a {
 }
 #why-image {
   background-image: url("https://images.pexels.com/photos/239548/pexels-photo-239548.jpeg?cs=srgb&dl=adult-blur-business-239548.jpg&fm=jpg");
-  width: 50vw;
-  height: 50vw;
-  background-size: auto 50vw;
+  width: 30vw;
+  height: 30vw;
+  background-size: auto 30vw;
+  grid-column: 2 / 2;
+  grid-row: 1 / 1;
+  margin: 5vw 5vw 5vw 0;
+}
+.home-grid {
+  display: grid;
+  grid-auto-columns: auto auto;
+}
+#why {
+  margin: 5vw;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
 }
 </style>
