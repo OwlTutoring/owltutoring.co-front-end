@@ -80,6 +80,10 @@ export default {
       _this.changeToNewSource();
     });
   },
+  beforeDestroy: function() {
+    this.card.unmount();
+    this.card.destroy();
+  },
   methods: {
     changeToNewSource: function() {
       this.selectedSource = "new";
