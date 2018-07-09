@@ -7,8 +7,12 @@
       <option value="Client">Client</option>
       <option value="Tutor">Tutor</option>
     </select>
-    <div v-if="accountType == 'Client'">
-      Are you a parent? <input class="form-field" v-model="isParent" type="checkbox">
+    <div id="parent-select" v-if="accountType == 'Client'">
+      Are you a parent?
+      <input class="hidden-radio" id="no" :value="false" name="isParent" v-model="isParent" type="radio">
+      <label class="" for="no">No</label>
+      <input class="hidden-radio" id="yes" :value="true" name="isParent" v-model="isParent" type="radio">
+      <label class="" for="yes">Yes</label>
     </div>
     <input  placeholder="First name" class="form-field" v-model="firstName" id="firstName">
     <input placeholder="Last name" class="form-field" v-model="lastName" id="lastName">
@@ -108,6 +112,7 @@ export default {
   grid-gap: 1em;
   margin: 1% 20%;
   grid-auto-columns: auto auto;
+  margin-bottom: 20vh;
 }
 .form-field {
   font-size: 1.2em;
@@ -136,5 +141,32 @@ export default {
 }
 .remove-button {
   grid-column: 2 / 2;
+}
+.hidden-radio {
+  display: none;
+  background-color: white;
+}
+.hidden-radio + label {
+  padding: 7px;
+  font-size: 1.2em;
+  border-style: solid;
+  border-color: #cccccc;
+  display: block;
+  float:right;
+}
+#yes + label{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#no + label {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.hidden-radio:checked + label {
+  background-color: #3399ff;
+  color: white;
+}
+#parent-select {
+  display: block;
 }
 </style>
