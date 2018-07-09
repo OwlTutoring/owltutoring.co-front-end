@@ -2,7 +2,7 @@
   <div class="signup-grid">
     <h1>Sign Up</h1>
     <h4 id="message"></h4>
-    <select v-model="accountType" id="accountType">
+    <select class="form-field" v-model="accountType" id="accountType">
       <option value="null">Select Account Type</option>
       <option value="Client">Client</option>
       <option value="Tutor">Tutor</option>
@@ -10,19 +10,20 @@
     <div v-if="accountType == 'Client'">
       Are you a parent? <input class="form-field" v-model="isParent" type="checkbox">
     </div>
-    <input  placeholder="First Name" class="form-field" v-model="firstName" id="firstName">
-    <input placeholder="Last Name" class="form-field" v-model="lastName" id="lastName">
-    Email: <input class="form-field" v-model="email" id="email">
-    Phone Number: <input placeholder="(000) 000-0000" class="form-field" v-model="phone" id="phone">
-    Password: <input class="form-field" v-model="password" id="password" type="password">
-    Confirm password: <input class="form-field" v-model="confirmPassword" id="confirmPassword" type="password">
-    <div v-if="isParent && accountType == 'Client'">
-      Children Names:
-      <div v-for="(student, index) in students"><input placeholder="Child's Name"class="form-field" id="student" v-model="students[index]"><button class="color-button"v-on:click="removeStudent(index)">remove</button> </div>
+    <input  placeholder="First name" class="form-field" v-model="firstName" id="firstName">
+    <input placeholder="Last name" class="form-field" v-model="lastName" id="lastName">
+    <input placeholder="Email" class="form-field wide-input" v-model="email" id="email">
+    <input placeholder="Phone (000) 000-0000" class="form-field wide-input" v-model="phone" id="phone">
+    <input placeholder="Password" class="form-field wide-input" v-model="password" id="password" type="password">
+    <input placeholder="Confirm password" class="form-field wide-input" v-model="confirmPassword" id="confirmPassword" type="password">
+    <div class="wide-input" v-if="isParent && accountType == 'Client'">
+      <div class="child-grid" v-for="(student, index) in students">
+        <input placeholder="Child's Name"class="form-field child" id="student" v-model="students[index]">
+        <button class="color-button remove-button" v-on:click="removeStudent(index)">remove</button> 
+      </div>
       <button class="plain-button" v-on:click="addStudent()">Add Child</button>
     </div>
-    <button class="color-button" v-on:click="signUp()">SignUp</button>
-    <router-link to="login">Login</router-link>
+    <button class="color-button wide-input" id="signUp" v-on:click="signUp()">SignUp</button>
   </div>
 </template>
 
@@ -104,9 +105,36 @@ export default {
 <style scoped>
 .signup-grid {
   display: grid;
-  grid-gap: .2em;
+  grid-gap: 1em;
+  margin: 1% 20%;
+  grid-auto-columns: auto auto;
 }
 .form-field {
-  font-size: 1.4em;
+  font-size: 1.2em;
+  padding: 7px;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: #cccccc;
+}
+.wide-input {
+  grid-column: span 2;
+}
+#firstName {
+  grid-column: 1 / 1;
+}
+#lastName {
+  grid-column: 2 /2;
+}
+.child-grid {
+  display: grid;
+  grid-auto-columns: auto auto;
+  grid-gap: 1em;
+  margin: 1em 0;
+}
+.child {
+  grid-column: 1 / 1;
+}
+.remove-button {
+  grid-column: 2 / 2;
 }
 </style>
