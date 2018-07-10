@@ -1,34 +1,44 @@
 <template>
-  <div>
-    Pay
+  <div id="pay">
     <div class="nav-grid">
       <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'pay' }}">Pay</router-link>
       <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'history' }}">History</router-link>
       <h2>Balance: {{"$" + AccountStore.account.balance/100}}</h2>
     </div>
-    <input placehoder="#" type=number v-model="numLessons">
-    <div v-if="numLessons > 1">Lessons</div>
-    <div v-else>Lesson</div>
-    <div v-if="value != cost">
-    <div class="value">{{"$" + value/100}}</div> 10% off</div>
-    <div v-else>buy 5 or more lessons and get 10% off</div>
-    {{"$" + cost/100}}
-    <div v-for="(source, i) in sources.data" :key="source.ID"> <input :id="'source-' + i" type="radio" v-model="selectedSource" :value="source.id" >
-      <label :for="'source-' + i">{{source.card.brand}} **** **** **** {{source.card.last4}} Exp. {{source.card.exp_month}}/{{source.card.exp_year}}</label>
-      <button class="plain-button" v-on:click="deleteCard(source.id)" >Delete Card</button>
+
+    <div id="pay-row-one">
+      <div id="lesson-input-container">
+        <input placehoder="#" type=number v-model="numLessons" id="num-lessons">
+        <div id="lesson-word" v-if="numLessons > 1">Lessons</div>
+        <div id="lesson-word" v-else>Lesson</div>
+      </div>
+      <div id="center-message" v-if="value != cost">
+        <div class="value">{{"$" + value/100}}</div> 10% off
+      </div>
+      <div id="center-message" v-else>buy 5 or more lessons and get 10% off</div>
+      <div id="cost">{{"$" + cost/100}}</div>
     </div>
-    <input id="new" v-model="selectedSource" type="radio" value="new">
+    <div v-if="sources.data.length > 0">Pay with</div>
+    <div class="saved-source" v-for="(source, i) in sources.data" :key="source.ID"> <input :id="'source-' + i" type="radio" v-model="selectedSource" :value="source.id" >
+      <label class= "source-label" :for="'source-' + i">{{source.card.brand}} **** **** **** {{source.card.last4}} Exp. {{source.card.exp_month}}/{{source.card.exp_year}}</label>
+      <button class="plain-button delete-button" v-on:click="deleteCard(source.id)" >Delete Card</button>
+    </div>
     
-    <div @click="changeToNewSource">
-      <div id="card-element">
+    <div v-if="sources.data.length > 0">or add new card</div>
+    <div id="new-card">
+      <input id="new" v-model="selectedSource" type="radio" value="new">
+      
+      <div @click="changeToNewSource" id="card-element">
         <!-- A Stripe Element will be inserted here. -->
       </div>
+    
+      
+      <!-- Used to display form errors. -->
+      <div id="card-errors" role="alert"></div>
+      <div id="save-card-container">
+        Save Card <input class="form-field" v-model="saveCard" type="checkbox">
+      </div>
     </div>
-    
-    <!-- Used to display form errors. -->
-    <div id="card-errors" role="alert"></div>
-    
-    Save Card <input class="form-field" v-model="saveCard" type="checkbox">
     <button @click="submit" class="color-button">Continue to Confirmation</button>
     
     
@@ -121,8 +131,8 @@ export default {
       if (_this.selectedSource == "new") {
         var ownerInfo = {
           owner: {
-            name: "Jenny Rosen",
-            email: "jenny.rosen@example.com"
+            name: _this.AccountStore.account.firstName  + _this.AccountStore.account.lastName,
+            email: _this.AccountStore.account.email
           }
         };
 
@@ -141,7 +151,7 @@ export default {
                 {
                   source: result.source,
                   token: localStorage.getItem("token"),
-                  amount: 2500,
+                  amount: _this.value,
                   saveCard: _this.saveCard,
                   isNew: true,
                 }
@@ -166,7 +176,7 @@ export default {
             {
               source: {id: _this.selectedSource},
               token: localStorage.getItem("token"),
-              amount: 2500,
+              amount: this.value,
               saveCard: true,
               isNew: false
             }
@@ -264,7 +274,64 @@ export default {
   background-color: #fefde5 !important;
 }
 
+#pay {
+  margin: 0 15%;
+}
+
 .value {
   text-decoration: line-through;
+  display: inline;
+}
+#num-lessons {
+  width: 3em;
+}
+#lesson-input-container {
+  grid-column: 1 / 1;
+}
+#pay-row-one {
+  display: grid;
+  grid-auto-columns: repeat(auto, 3);
+}
+#lesson-word {
+  display: inline;
+}
+#center-message {
+  grid-column: 2 /2;
+  text-align: center;
+}
+#cost {
+  grid-column: 3/3;
+  text-align: right;
+  font-size: 2em;
+}
+.saved-source {
+  display: grid;
+  padding: 10px;
+  grid-auto-columns: min-content auto auto;
+}
+.delete-button {
+  display: block;
+  grid-column: 3 / 3;
+}
+.source-label {
+  grid-column: 2 /2;
+}
+#new-card {
+  display:grid;
+  grid-auto-columns: auto min-content;
+}
+#save-card-container {
+  grid-column: 2 / 2;
+  grid-row: 2 / 2;
+  display: block;
+  text-align: right;
+  white-space: nowrap;
+}
+#card-element {
+  grid-column: 1 / 1;
+  grid-row: 2 / 2;
+}
+#new {
+  display: none;
 }
 </style>
