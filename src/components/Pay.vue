@@ -39,8 +39,8 @@
         Save Card <input class="form-field" v-model="saveCard" type="checkbox">
       </div>
     </div>
-    <button @click="submit" class="color-button">Continue to Confirmation</button>
-    
+    <button @click="showConfirmation()" class="color-button">Continue to Confirmation</button>
+    <div v-if="viewConfirmation">CONFIRMATION PAGE</div>
     
   </div>
 </template>
@@ -67,6 +67,8 @@ export default {
       amount: 2500,
       saveCard: true,
       selectedSource: "new",
+      sourceToConfirm: null,
+      viewConfirmation: false,
       card: elements.create("card", {
         style: {
           base: {
@@ -126,8 +128,10 @@ export default {
     changeToNewSource: function() {
       this.selectedSource = "new";
     },
-    submit: function() {
+    showConfirmation: function() {
       var _this = this;
+
+      // if new create source with stripe to get info to confirm
       if (_this.selectedSource == "new") {
         var ownerInfo = {
           owner: {
@@ -142,32 +146,41 @@ export default {
             MessageStore.methods.showMessage(result.error.message, true);
           } else {
             // Send the token to your server.
-
             console.log(result.source);
 
-            axios
-              .post(
-                "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/pay",
-                {
-                  source: result.source,
-                  token: localStorage.getItem("token"),
-                  amount: _this.value,
-                  saveCard: _this.saveCard,
-                  isNew: true,
-                }
-              )
-              .then(function(response) {
-                // JSON responses are automatically parsed.
-                console.log(response);
-                MessageStore.methods.showMessage(response.data.message, false);
-              })
-              .catch(function(e) {
-                console.log(e);
-                MessageStore.methods.showMessage(e.response.data.message, true);
-                //this.errors.push(e)
-              });
+            // save source locally so that user can then confirm
+            _this.sourceToConfirm = result.source; 
+            this.viewConfirmation = true;  
           }
         });
+      } else {
+        this.sourceToConfirm = this.selectedSource;
+        this.viewConfirmation = true;
+      }
+    },
+    submitPayment: function() {
+      if (_this.selectedSource == "new") {
+        axios
+          .post(
+            "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/pay",
+            {
+              source: _this.sourceToConfirm,
+              token: localStorage.getItem("token"),
+              amount: _this.value,
+              saveCard: _this.saveCard,
+              isNew: true,
+            }
+          )
+          .then(function(response) {
+            // JSON responses are automatically parsed.
+            console.log(response);
+            MessageStore.methods.showMessage(response.data.message, false);
+          })
+          .catch(function(e) {
+            console.log(e);
+            MessageStore.methods.showMessage(e.response.data.message, true);
+            //this.errors.push(e)
+          });
       } else {
         console.log("using saved source");
         axios
@@ -284,6 +297,7 @@ export default {
 }
 #num-lessons {
   width: 3em;
+  font-size: 1em;
 }
 #lesson-input-container {
   grid-column: 1 / 1;
@@ -291,6 +305,7 @@ export default {
 #pay-row-one {
   display: grid;
   grid-auto-columns: repeat(auto, 3);
+  font-size: 2em;
 }
 #lesson-word {
   display: inline;
@@ -302,12 +317,11 @@ export default {
 #cost {
   grid-column: 3/3;
   text-align: right;
-  font-size: 2em;
 }
 .saved-source {
   display: grid;
   padding: 10px;
-  grid-auto-columns: min-content auto auto;
+  grid-auto-columns: min-content auto min-content;
 }
 .delete-button {
   display: block;
@@ -326,6 +340,8 @@ export default {
   display: block;
   text-align: right;
   white-space: nowrap;
+  margin: auto;
+  padding-left: 10px;
 }
 #card-element {
   grid-column: 1 / 1;

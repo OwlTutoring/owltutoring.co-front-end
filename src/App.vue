@@ -90,6 +90,7 @@ h2 {
   text-transform: uppercase;
   font-weight: 800;
   text-align: center;
+  white-space: nowrap;
   
 }
 .plain-button {
@@ -106,6 +107,7 @@ h2 {
   text-transform: uppercase;
   font-weight: 800;
   text-align: center;
+  white-space: nowrap;
 }
 .light-button {
   border-width: 0.1em;
@@ -113,6 +115,7 @@ h2 {
   border-radius: 0.2em;
   background-color: white;
   border-style: solid;
+  white-space: nowrap;
 }
 .nav-grid {
   display: flex;
