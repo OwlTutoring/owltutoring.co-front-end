@@ -19,7 +19,8 @@
       <div id="cost">{{"$" + cost/100}}</div>
     </div>
     <div v-if="sources.data.length > 0">Pay with</div>
-    <div class="saved-source" v-for="(source, i) in sources.data" :key="source.ID"> <input :id="'source-' + i" type="radio" v-model="selectedSource" :value="source.id" >
+    <div class="saved-source" v-for="(source, i) in sources.data" :key="source.ID">
+      <input :id="'source-' + i" type="radio" v-model="selectedSource" :value="source" >
       <label class= "source-label" :for="'source-' + i">{{source.card.brand}} **** **** **** {{source.card.last4}} Exp. {{source.card.exp_month}}/{{source.card.exp_year}}</label>
       <button class="plain-button delete-button" v-on:click="deleteCard(source.id)" >Delete Card</button>
     </div>
@@ -40,7 +41,14 @@
       </div>
     </div>
     <button @click="showConfirmation()" class="color-button">Continue to Confirmation</button>
-    <div v-if="viewConfirmation">CONFIRMATION PAGE</div>
+    <div v-if="viewConfirmation" id="confirm-back">
+      <div id="confirm-window">
+        {{lessonString}}<br>
+        ${{cost/100}}<br>
+        {{sourceToConfirm.card.brand}} {{sourceToConfirm.card.last4}} {{sourceToConfirm.card.exp_month}}/{{sourceToConfirm.card.exp_year.toString().substring(2,4)}}<br>
+        <button @click="submitPayment()">Confirm</button><button @click="hideConfirmation()">Go Back</button>
+      </div>
+    </div>
     
   </div>
 </template>
@@ -64,7 +72,6 @@ export default {
       numLessons: 5,
       AccountStore: AccountStore.data,
       sources: { data: [] },
-      amount: 2500,
       saveCard: true,
       selectedSource: "new",
       sourceToConfirm: null,
@@ -114,6 +121,9 @@ export default {
     this.card.destroy();
   },
   computed: {
+    lessonString: function() {
+      return this.numLessons + (this.numLessons > 1 ? " Lessons" : " Lesson");
+    },
     cost: function() {
       if(this.numLessons*this.rate >= 2499*5) {
         return Math.round(this.numLessons*this.rate*.9);
@@ -127,6 +137,9 @@ export default {
   methods: {
     changeToNewSource: function() {
       this.selectedSource = "new";
+    },
+    hideConfirmation: function() {
+      this.viewConfirmation = false;
     },
     showConfirmation: function() {
       var _this = this;
@@ -150,7 +163,7 @@ export default {
 
             // save source locally so that user can then confirm
             _this.sourceToConfirm = result.source; 
-            this.viewConfirmation = true;  
+            _this.viewConfirmation = true;  
           }
         });
       } else {
@@ -159,6 +172,7 @@ export default {
       }
     },
     submitPayment: function() {
+      var _this = this;
       if (_this.selectedSource == "new") {
         axios
           .post(
@@ -187,7 +201,7 @@ export default {
           .post(
             "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/pay",
             {
-              source: {id: _this.selectedSource},
+              source: _this.sourceToConfirm,
               token: localStorage.getItem("token"),
               amount: this.value,
               saveCard: true,
@@ -349,5 +363,13 @@ export default {
 }
 #new {
   display: none;
+}
+#confirm-back {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: lightblue;
+  top: 0;
+  left: 0;
 }
 </style>
