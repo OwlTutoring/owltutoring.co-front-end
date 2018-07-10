@@ -84,13 +84,15 @@ h2 {
   border-radius: 0.2em;
   font-size: 1em;
   padding: 0.3em 2em;
-  border: none;
   text-decoration: none;
   font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
   font-weight: 800;
   text-align: center;
   white-space: nowrap;
+  border-color: #ffb219;
+  border-width: 0.1em;
+  border-style: solid;
   
 }
 .plain-button {
@@ -113,8 +115,19 @@ h2 {
   border-width: 0.1em;
   padding: 0.3em 2em;
   border-radius: 0.2em;
-  background-color: white;
+  border-color: #cccccc;
   border-style: solid;
+
+
+  background-color: white;
+  border-radius: 0.2em;
+  font-size: 1em;
+  padding: 0.3em 2em;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-weight: 800;
+  text-align: center;
   white-space: nowrap;
 }
 .nav-grid {

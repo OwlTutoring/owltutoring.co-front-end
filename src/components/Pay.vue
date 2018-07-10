@@ -43,10 +43,12 @@
     <button @click="showConfirmation()" class="color-button">Continue to Confirmation</button>
     <div v-if="viewConfirmation" id="confirm-back">
       <div id="confirm-window">
+        <h2>
         {{lessonString}}<br>
         ${{cost/100}}<br>
         {{sourceToConfirm.card.brand}} {{sourceToConfirm.card.last4}} {{sourceToConfirm.card.exp_month}}/{{sourceToConfirm.card.exp_year.toString().substring(2,4)}}<br>
-        <button @click="submitPayment()">Confirm</button><button @click="hideConfirmation()">Go Back</button>
+        </h2>
+        <button class="color-button" @click="submitPayment()">Confirm</button><button class="light-button" @click="hideConfirmation()">Go Back</button>
       </div>
     </div>
     
@@ -368,8 +370,23 @@ export default {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background-color: lightblue;
+  background-color: #EEEEEE;
   top: 0;
   left: 0;
+  padding-top: 50vh;
+}
+#confirm-window {
+  font-size: 1em;
+  text-align: center;
+  border-style: solid;
+  display: block;
+  margin: auto;
+  width:fit-content;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  border-color: #cccccc;
+  top: 50%;
+  transform: translateY(-50%);
 }
 </style>
