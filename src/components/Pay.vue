@@ -1,10 +1,23 @@
 <template>
   <div>
     Pay
-    <div v-for="(source, i) in sources.data" :key="source.ID"> <input :id="'source-' + i" type="radio" v-model="selectedSource" :value="source.id" ><label :for="'source-' + i">{{source.card.brand}} {{source.card.last4}} {{source.card.exp_month}} {{source.card.exp_year}}</label><button v-on:click="deleteCard(source.id)" >Delete Card</button></div>
+    <div class="nav-grid">
+      <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'pay' }}">Pay</router-link>
+      <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'history' }}">History</router-link>
+      <h2>Balance: {{"$" + AccountStore.account.balance/100}}</h2>
+    </div>
+    <input placehoder="#" type=number v-model="numLessons">
+    <div v-if="numLessons > 1">Lessons</div>
+    <div v-else>Lesson</div>
+    <div v-if="value != cost">
+    <div class="value">{{"$" + value/100}}</div> 10% off</div>
+    <div v-else>buy 5 or more lessons and get 10% off</div>
+    {{"$" + cost/100}}
+    <div v-for="(source, i) in sources.data" :key="source.ID"> <input :id="'source-' + i" type="radio" v-model="selectedSource" :value="source.id" >
+      <label :for="'source-' + i">{{source.card.brand}} **** **** **** {{source.card.last4}} Exp. {{source.card.exp_month}}/{{source.card.exp_year}}</label>
+      <button class="plain-button" v-on:click="deleteCard(source.id)" >Delete Card</button>
+    </div>
     <input id="new" v-model="selectedSource" type="radio" value="new">
-    
-    
     
     <div @click="changeToNewSource">
       <div id="card-element">
@@ -16,7 +29,7 @@
     <div id="card-errors" role="alert"></div>
     
     Save Card <input class="form-field" v-model="saveCard" type="checkbox">
-    <button @click="submit" class="color-button">Submit Payment</button>
+    <button @click="submit" class="color-button">Continue to Confirmation</button>
     
     
   </div>
@@ -26,6 +39,7 @@
 <script>
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
+import AccountStore from "../stores/AccountStore";
 
 // Create a Stripe client.
 var stripe = Stripe("pk_test_gheuGNTfHiHL1ULiFHNPxlzm");
@@ -36,6 +50,9 @@ var elements = stripe.elements();
 export default {
   data: function() {
     return {
+      rate: 2499,
+      numLessons: 5,
+      AccountStore: AccountStore.data,
       sources: { data: [] },
       amount: 2500,
       saveCard: true,
@@ -83,6 +100,17 @@ export default {
   beforeDestroy: function() {
     this.card.unmount();
     this.card.destroy();
+  },
+  computed: {
+    cost: function() {
+      if(this.numLessons*this.rate >= 2499*5) {
+        return Math.round(this.numLessons*this.rate*.9);
+      }
+      return this.numLessons*this.rate;
+    },
+    value: function() {
+      return this.numLessons*this.rate;
+    }
   },
   methods: {
     changeToNewSource: function() {
@@ -234,5 +262,9 @@ export default {
 
 .StripeElement--webkit-autofill {
   background-color: #fefde5 !important;
+}
+
+.value {
+  text-decoration: line-through;
 }
 </style>
