@@ -64,6 +64,14 @@ export default {
   color: #2c3e50;
   margin: 0;
 }
+.grid-margin-container {
+  display: grid;
+  grid-auto-columns: auto auto auto;
+  margin: 0;
+}
+.after-margin {
+  grid-column: 3 / 3;
+}
 #content {
   min-height: 100vh;
 }

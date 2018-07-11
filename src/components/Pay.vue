@@ -1,57 +1,59 @@
 <template>
-  <div id="pay">
-    <div class="nav-grid">
-      <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'pay' }}">Pay</router-link>
-      <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'history' }}">History</router-link>
-      <h2>Balance: {{"$" + AccountStore.account.balance/100}}</h2>
-    </div>
+  <div class="grid-margin-container">
+    <div id="pay">
+      <div class="nav-grid">
+        <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'pay' }}">Pay</router-link>
+        <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'history' }}">History</router-link>
+        <h2>Balance: {{"$" + AccountStore.account.balance/100}}</h2>
+      </div>
 
-    <div id="pay-row-one">
-      <div id="lesson-input-container">
-        <input placehoder="#" type=number v-model="numLessons" id="num-lessons">
-        <div id="lesson-word" v-if="numLessons > 1">Lessons</div>
-        <div id="lesson-word" v-else>Lesson</div>
+      <div id="pay-row-one">
+        <div id="lesson-input-container">
+          <input placehoder="#" type=number v-model="numLessons" id="num-lessons">
+          <div id="lesson-word" v-if="numLessons > 1">Lessons</div>
+          <div id="lesson-word" v-else>Lesson</div>
+        </div>
+        <div id="center-message" v-if="value != cost">
+          <div class="value">{{"$" + value/100}}</div> 10% off
+        </div>
+        <div id="center-message" v-else>buy 5 or more lessons and get 10% off</div>
+        <div id="cost">{{"$" + cost/100}}</div>
       </div>
-      <div id="center-message" v-if="value != cost">
-        <div class="value">{{"$" + value/100}}</div> 10% off
+      <div v-if="sources.data.length > 0">Pay with</div>
+      <div class="saved-source" v-for="(source, i) in sources.data" :key="source.ID">
+        <input :id="'source-' + i" type="radio" v-model="selectedSource" :value="source" >
+        <label class= "source-label" :for="'source-' + i">{{source.card.brand}} **** **** **** {{source.card.last4}} Exp. {{source.card.exp_month}}/{{source.card.exp_year}}</label>
+        <button class="plain-button delete-button" v-on:click="deleteCard(source.id)" >Delete Card</button>
       </div>
-      <div id="center-message" v-else>buy 5 or more lessons and get 10% off</div>
-      <div id="cost">{{"$" + cost/100}}</div>
-    </div>
-    <div v-if="sources.data.length > 0">Pay with</div>
-    <div class="saved-source" v-for="(source, i) in sources.data" :key="source.ID">
-      <input :id="'source-' + i" type="radio" v-model="selectedSource" :value="source" >
-      <label class= "source-label" :for="'source-' + i">{{source.card.brand}} **** **** **** {{source.card.last4}} Exp. {{source.card.exp_month}}/{{source.card.exp_year}}</label>
-      <button class="plain-button delete-button" v-on:click="deleteCard(source.id)" >Delete Card</button>
-    </div>
-    
-    <div v-if="sources.data.length > 0">or add new card</div>
-    <div id="new-card">
-      <input id="new" v-model="selectedSource" type="radio" value="new">
       
-      <div @click="changeToNewSource" id="card-element">
-        <!-- A Stripe Element will be inserted here. -->
-      </div>
-    
+      <div v-if="sources.data.length > 0">or add new card</div>
+      <div id="new-card">
+        <input id="new" v-model="selectedSource" type="radio" value="new">
+        
+        <div @click="changeToNewSource" id="card-element">
+          <!-- A Stripe Element will be inserted here. -->
+        </div>
       
-      <!-- Used to display form errors. -->
-      <div id="card-errors" role="alert"></div>
-      <div id="save-card-container">
-        Save Card <input class="form-field" v-model="saveCard" type="checkbox">
+        
+        <!-- Used to display form errors. -->
+        <div id="card-errors" role="alert"></div>
+        <div id="save-card-container">
+          Save Card <input class="form-field" v-model="saveCard" type="checkbox">
+        </div>
+      </div>
+      <button @click="showConfirmation()" class="color-button">Continue to Confirmation</button>
+      <div v-if="viewConfirmation" id="confirm-back">
+        <div id="confirm-window">
+          <h2>
+          {{lessonString}}<br>
+          ${{cost/100}}<br>
+          {{sourceToConfirm.card.brand}} {{sourceToConfirm.card.last4}} {{sourceToConfirm.card.exp_month}}/{{sourceToConfirm.card.exp_year.toString().substring(2,4)}}<br>
+          </h2>
+          <button class="color-button" @click="submitPayment()">Confirm</button><button class="light-button" @click="hideConfirmation()">Go Back</button>
+        </div>
       </div>
     </div>
-    <button @click="showConfirmation()" class="color-button">Continue to Confirmation</button>
-    <div v-if="viewConfirmation" id="confirm-back">
-      <div id="confirm-window">
-        <h2>
-        {{lessonString}}<br>
-        ${{cost/100}}<br>
-        {{sourceToConfirm.card.brand}} {{sourceToConfirm.card.last4}} {{sourceToConfirm.card.exp_month}}/{{sourceToConfirm.card.exp_year.toString().substring(2,4)}}<br>
-        </h2>
-        <button class="color-button" @click="submitPayment()">Confirm</button><button class="light-button" @click="hideConfirmation()">Go Back</button>
-      </div>
-    </div>
-    
+    <div class="after-margin"></div>
   </div>
 </template>
 
@@ -304,7 +306,8 @@ export default {
 }
 
 #pay {
-  margin: 0 15%;
+  grid-column-start: 2;
+  grid-column-end: 3;
 }
 
 .value {
@@ -358,6 +361,7 @@ export default {
   white-space: nowrap;
   margin: auto;
   padding-left: 10px;
+  display: none;
 }
 #card-element {
   grid-column: 1 / 1;

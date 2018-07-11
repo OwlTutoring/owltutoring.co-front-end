@@ -1,4 +1,5 @@
 <template>
+<div class="grid-margin-container">
   <div class="signup-grid">
     <h1>Sign Up</h1>
     <h4 id="message"></h4>
@@ -29,6 +30,8 @@
     </div>
     <button class="color-button wide-input" id="signUp" v-on:click="signUp()">SignUp</button>
   </div>
+  <div class="after-margin"></div>
+</div>
 </template>
 
 <script>
@@ -108,9 +111,9 @@ export default {
 
 <style scoped>
 .signup-grid {
+  grid-column: 2 / 2;
   display: grid;
   grid-gap: 1em;
-  margin: 1% 20%;
   grid-auto-columns: auto auto;
   margin-bottom: 20vh;
 }

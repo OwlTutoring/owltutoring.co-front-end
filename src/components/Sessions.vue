@@ -1,4 +1,5 @@
 <template>
+<div class="grid-margin-container">
   <div class="sessions-container">
     <h1>Sessions</h1>
     <div v-if="AccountStore.account != null" >
@@ -22,6 +23,8 @@
       <router-link class= "nav-item nav-link" to="login">Login</router-link>
     </div>
   </div>
+  <div class="after-margin"></div>
+</div>
 </template>
 
 <script>
@@ -156,7 +159,7 @@ li {
   list-style: none;
 }
 .sessions-container {
-  margin: 1% 10%;
+  grid-column: 2 / 2;
 }
 .ui-grid {
   display: grid;

@@ -12,6 +12,7 @@ import Pay from '@/components/Pay'
 import TutorProfile from '@/components/TutorProfile'
 import ForgotPassword from '@/components/ForgotPassword'
 import ChangePassword from '@/components/ChangePassword'
+import ChargeHistory from '@/components/ChargeHistory'
 
 Vue.use(Router)
 
@@ -72,6 +73,11 @@ export default new Router({
       path: '/changePassword',
       name: 'changePassword',
       component: ChangePassword
+    },
+    {
+      path: '/chargeHistory',
+      name: 'chargeHistory',
+      component: ChargeHistory
     }
   ]
 })
