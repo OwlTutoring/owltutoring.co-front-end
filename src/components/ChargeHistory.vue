@@ -2,12 +2,13 @@
 <div class="grid-margin-container">
   <div class="container">
     <div class="nav-grid">
-        <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'pay' }}">Pay</router-link>
-        <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'history' }}">History</router-link>
-        <h2>Balance: {{"$" + AccountStore.account.balance/100}}</h2>
-      </div>
+      <router-link class="nav-link nav-item" to="pay">Pay</router-link>
+      <router-link class="nav-link nav-item" to="chargeHistory">History</router-link>
+      <h2>Balance: {{"$" + AccountStore.account.balance/100}}</h2>
+    </div>
     <h1>Charge History</h1>
     <div v-if="AccountStore.account != null" >
+      <list-charge v-for="charge in charges" :charge="charge" :key="charge.id"/>
     </div>
     <div v-else>
       Please Login
@@ -23,6 +24,25 @@ import axios from "axios";
 console.log("waha");
 import MessageStore from "../stores/MessageStore";
 import AccountStore from "../stores/AccountStore";
+import Vue from "vue";
+
+Vue.component("list-charge", {
+  props: ["charge"],
+  template: "<div>{{dateString}} {{lessonString}} {{charge.source.card.brand}} ---- ---- ---- {{charge.source.card.last4}} {{charge.source.card.exp_month}}/{{charge.source.card.exp_year.toString().substring(2,4)}} ${{charge.amount/100}}</div>",
+  computed: {
+    dateString: function() {
+      var date = new Date(this.charge.created*1000);
+      return date.getMonth().toString() +"/" + date.getDate() + "/" + date.getFullYear().toString().substring(2,4);
+    },
+    lessonString: function() {
+      if(this.charge.metadata.numLessons == null) {
+        return "";
+      }
+      return this.charge.metadata.numLessons.toString() + (this.charge.metadata.numLessons > 1 ? " Lessons" : " Lessson");
+    }
+  }
+});
+
 export default {
   data: function() {
     return {
@@ -44,6 +64,7 @@ export default {
       .then(function(response) {
         // JSON responses are automatically parsed.
         console.log(response);
+        _this.charges = response.data.charges.data
 
       })
       .catch(function(e) {
@@ -52,6 +73,9 @@ export default {
         //this.errors.push(e)
       });
   },
+  methods: {
+    
+  }
 };
 </script>
 
@@ -62,7 +86,7 @@ ul {
 li {
   list-style: none;
 }
-.sessions-container {
+.container {
   grid-column: 2 / 2;
 }
 .ui-grid {

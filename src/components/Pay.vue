@@ -2,8 +2,8 @@
   <div class="grid-margin-container">
     <div id="pay">
       <div class="nav-grid">
-        <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'pay' }}">Pay</router-link>
-        <router-link class="nav-link nav-item" :to="{ name: 'pay', params: { display: 'history' }}">History</router-link>
+        <router-link class="nav-link nav-item" to="pay">Pay</router-link>
+        <router-link class="nav-link nav-item" to="chargeHistory">History</router-link>
         <h2>Balance: {{"$" + AccountStore.account.balance/100}}</h2>
       </div>
 
@@ -185,6 +185,7 @@ export default {
               source: _this.sourceToConfirm,
               token: localStorage.getItem("token"),
               amount: _this.value,
+              rate: _this.rate,
               saveCard: _this.saveCard,
               isNew: true,
             }
@@ -208,6 +209,7 @@ export default {
               source: _this.sourceToConfirm,
               token: localStorage.getItem("token"),
               amount: this.value,
+              rate: this.rate,
               saveCard: true,
               isNew: false
             }
