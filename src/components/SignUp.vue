@@ -117,13 +117,6 @@ export default {
   grid-auto-columns: auto auto;
   margin-bottom: 20vh;
 }
-.form-field {
-  font-size: 1.2em;
-  padding: 7px;
-  border-style: solid;
-  border-radius: 5px;
-  border-color: #cccccc;
-}
 .wide-input {
   grid-column: span 2;
 }

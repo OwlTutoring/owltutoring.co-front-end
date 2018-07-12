@@ -215,4 +215,12 @@ footer {
   text-align: center;
   padding: 2em;
 }
+.form-field {
+  font-size: 1.2em;
+  padding: 7px;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: #cccccc;
+  border-width: 2px;
+}
 </style>

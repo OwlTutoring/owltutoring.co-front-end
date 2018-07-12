@@ -5,7 +5,7 @@
 
     Thank you for your intrest in being an Owl Tutor. After you submit this profile someone at Owl Tutoring will review your qualifications and assuming you are qualified you will be contacted and your profile will be visible on our website. We will then work to connect you with students you are qualified to teach. In a tutor we are looking for high school and college students who are knowledgeable and able to teach a variety of topics at Elementary, Middle school or High School levels. This means you can teach whatever you want and are qualified to teach from algebra or world history to violin or photography. Tutoring sessions typical occur in public places like a library. Tutors can work as many hours that are available to them but can also can have fewer students if they are busy. If you have any questions please text <a href="sms://2248149291">(224) 814-9291</a>
     <h3 class="input-title">How did you find out about Owl Tutoring?</h3>
-    <input  type="text" placeholder="Jim Bob told me I would make a great Owl Tutor" class="form-field" v-model="howSource" id="howSource">
+    <input  type="text" placeholder="Jim Bob told me I would make a great Owl Tutor" class="line-input form-field" v-model="howSource" id="howSource">
     
     <h3 class="input-title">Refferal Code</h3>
     <p class="input-description">
@@ -17,7 +17,7 @@
     <p class="input-description">
       please write a paragraph about who you are and what you know. If you are a high school student you can list what relevant classes you have taken and what qualifications you have related to them. Essentially, you should explain why you are qualified to teach what you would like to teach. This will be part of your profile on our website.
     </p>
-    <input placeholder="A paragraph description of information related to your Academic knowledge and teaching abilities" type="text" class="form-field" v-model="bio" id="bio">
+    <textarea placeholder="A paragraph description of information related to your Academic knowledge and teaching abilities" class="form-field paragraph-input" v-model="bio" id="bio"></textarea>
     
     <h3 class="input-title">Subjects</h3>
     <p class="input-description">
@@ -29,7 +29,7 @@
     <p class="input-description">
       This is a short list that you beleive best describes what you are most qualified to teach. It will be one of the first things students see when searching for a tutor. It should be a comma seperated list starting with what you think you would like to focus your tutoring on.
     </p>
-    <input  type="text" placeholder="" class="form-field" v-model="subjectsDesc" id="subjectsDesc">,
+    <input  type="text" placeholder="" class="form-field line-input" v-model="subjectsDesc" id="subjectsDesc">
     
     <h3 class="input-title">Grade</h3>
     <p class="input-description">
@@ -55,26 +55,26 @@
     </select>
 
     <h3 class="input-title">Zip Code</h3>
-    <input  type="number" placeholder="60061" class="form-field" v-model="zipCode" id="zipCode">,
+    <input  type="number" placeholder="60061" class="form-field" v-model="zipCode" id="zipCode">
     
     <h3 class="input-title">Experience</h3>
     <p class="input-description">
       Write a short description of your what experience you have. (Ex. John has helped friends and family study for test and do homework all of his life. He has been a private tutor for 2 years.) This will also be part of your public profile 
     </p>
-    <input  type="text" placeholder="Describe what experience you have" class="form-field" v-model="experience" id="experience">,
+    <textarea placeholder="Describe what experience you have" class="form-field paragraph-input" v-model="experience" id="experience"></textarea>
     
     
     <h3 class="input-title">Short Bio</h3>
     <p class="input-description">
       Write a one line description of yourself. This is what clients will first see along with where you're located and what you teach when looking for a tutor    
     </p>
-    <input  type="text" placeholder="One Sentenece describing yourself" class="form-field" v-model="shortBio" id="shortBio">,
+    <input  type="text" placeholder="One Sentenece describing yourself" class="line-input form-field" v-model="shortBio" id="shortBio">
     
     <h3 class="input-title">Other Info</h3>
     <p class="input-description">
       please write any other information you would like us to know here. This information will not be part of your public profile.
     </p>
-    <input  type="text" placeholder="any other information" class="form-field" v-model="otherInfo" id="otherInfo">,
+    <textarea type="text" placeholder="any other information" class="paragraph-input form-field" v-model="otherInfo" id="otherInfo"></textarea>
     
     <h3 class="input-title">Resume</h3>
     <p class="input-description">
@@ -246,5 +246,13 @@ li {
 #tutor-profile {
   grid-column-start: 2;
   grid-column-end: 3;
+  padding: 3vw;
+}
+.paragraph-input {
+  width: 100%;
+  height: 10em;
+}
+.line-input {
+  width: 100%;
 }
 </style>
