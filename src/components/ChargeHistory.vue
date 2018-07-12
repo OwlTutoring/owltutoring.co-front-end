@@ -7,8 +7,9 @@
       <h2>Balance: {{"$" + AccountStore.account.balance/100}}</h2>
     </div>
     <h1>Charge History</h1>
-    <div v-if="AccountStore.account != null" >
+    <div class="list-charge-container" v-if="AccountStore.account != null" >
       <list-charge v-for="charge in charges" :charge="charge" :key="charge.id"/>
+      <div class="contact"> Questions or concerns? text <a href="sms://2248149291">(224) 814-9291</a></div>
     </div>
     <div v-else>
       Please Login
@@ -28,7 +29,7 @@ import Vue from "vue";
 
 Vue.component("list-charge", {
   props: ["charge"],
-  template: "<div>{{dateString}} {{lessonString}} {{charge.source.card.brand}} ---- ---- ---- {{charge.source.card.last4}} {{charge.source.card.exp_month}}/{{charge.source.card.exp_year.toString().substring(2,4)}} ${{charge.amount/100}}</div>",
+  template: "<div class='charge-container'><div class='charge-date'>{{dateString}}</div> <div class='charge-lessons'>{{lessonString}}</div> <div class='charge-card'>{{charge.source.card.brand}} ---- ---- ---- {{charge.source.card.last4}} {{charge.source.card.exp_month}}/{{charge.source.card.exp_year.toString().substring(2,4)}}</div> <div class='charge-amount'>${{charge.amount/100}}</div></div>",
   computed: {
     dateString: function() {
       var date = new Date(this.charge.created*1000);
@@ -77,7 +78,7 @@ export default {
     
   }
 };
-</script>
+</script scoped>
 
 <style>
 ul {
@@ -88,6 +89,11 @@ li {
 }
 .container {
   grid-column: 2 / 2;
+  margin-bottom: 10vh;
+}
+.list-charge-container {
+  border-top-style: solid;
+  border-color:  #CCCCCC;
 }
 .ui-grid {
   display: grid;
@@ -100,6 +106,31 @@ li {
   font-size: 1.2em;
 }
 .list-message {
+  text-align: center;
+}
+.charge-date {
+  display: block;
+}
+.charge-amount {
+  text-align: right;
+  display: block;
+  float:right;
+}
+.charge-lessons {
+  display: block;
+}
+.charge-card {
+  display: block;
+}
+.charge-container {
+  display: flex;
+  justify-content: space-between;
+  padding:.5em 0;
+  border-bottom-style:solid;
+  border-color: #CCCCCC;
+}
+.contact {
+  padding: 5vh 0;
   text-align: center;
 }
 </style>
