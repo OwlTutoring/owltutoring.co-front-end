@@ -11,7 +11,7 @@
     <h4 class="levels">{{levelsList}}</h4>
     <h4 class="town">{{tutor.town + ", " + tutor.usState}}</h4>
     <div class= "more-info-grid" v-if="expanded">
-      <h4 class="phone">Phone: <a :href= "'sms:' + tutor.phone">{{tutor.phone}}</a></h4>
+      <h4 class="phone">Phone: <a :href= "'sms:' + tutor.phone">{{formatedPhone}}</a></h4>
       <h4 class="email">Email: <a :href= "'mailto:' + tutor.email">{{tutor.email}}</a></h4>
       <p class="experience"><b>Experience:</b> {{tutor.experience}}</p>
       <p class="bio"><b>Bio:</b> {{tutor.bio}}</p>
@@ -38,6 +38,10 @@ export default {
     },
     levelsList: function() {
       return creatListString(this.tutor.levels);
+    },
+    formatedPhone: function() {
+      var phoneString = this.tutor.phone;
+      return phoneString.length == "10" ? "(" + phoneString.substring(0,3) + ") " + phoneString.substring(3,6) + "-" + phoneString.substring(6,10) : phoneString.substring(0, 1) + " (" + phoneString.substring(1,4) + ") " + phoneString.substring(4,7) + "-" + phoneString.substring(7,11); 
     }
   },
   methods: {

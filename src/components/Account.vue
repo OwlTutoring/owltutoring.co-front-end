@@ -3,7 +3,7 @@
   <h1>Account</h1>
   <div v-if="AccountStore.account != null" >
     <h1>{{AccountStore.account.firstName}} {{AccountStore.account.lastName}}</h1>
-    <h4>Phone: {{AccountStore.account.phone}}</h4>
+    <h4>Phone: {{formatedPhone}}</h4>
     <h4>Email: {{AccountStore.account.email}}</h4>
     <h4>Balance: {{"$" + AccountStore.account.balance/100}}</h4>
     <router-link class= "" to="changePassword">Change Password</router-link>
@@ -37,6 +37,12 @@ export default {
     console.log(AccountStore);
     if (AccountStore.data.account == null) {
       AccountStore.methods.refreshAccount();
+    }
+  },
+  computed: {
+    formatedPhone: function() {
+      var phoneString = AccountStore.data.account.phone;
+      return phoneString.length == "10" ? "(" + phoneString.substring(0,3) + ") " + phoneString.substring(3,6) + "-" + phoneString.substring(6,10) : phoneString.substring(0, 1) + " (" + phoneString.substring(1,4) + ") " + phoneString.substring(4,7) + "-" + phoneString.substring(7,11); 
     }
   }
 };

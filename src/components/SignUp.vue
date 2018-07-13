@@ -18,7 +18,7 @@
     <input  placeholder="First name" class="form-field" v-model="firstName" id="firstName">
     <input placeholder="Last name" class="form-field" v-model="lastName" id="lastName">
     <input placeholder="Email" class="form-field wide-input" v-model="email" id="email">
-    <input placeholder="Phone (000) 000-0000" class="form-field wide-input" v-model="phone" id="phone">
+    <input placeholder="Phone (000) 000-0000" class="form-field wide-input" v-model="phone" id="phone" type="phone">
     <input placeholder="Password" class="form-field wide-input" v-model="password" id="password" type="password">
     <input placeholder="Confirm password" class="form-field wide-input" v-model="confirmPassword" id="confirmPassword" type="password">
     <div class="wide-input" v-if="isParent && accountType == 'Client'">
@@ -71,6 +71,9 @@ export default {
       this.students.push("");
     },
     signUp: function() {
+      function parsePhone(numberString) {
+        numberString.replace(/\D/g,'');
+      }
       var _this = this;
       if(this.password != _this.confirmPassword) {
         MessageStore.methods.showMessage("Error, Passwords don't match", true);
@@ -78,6 +81,10 @@ export default {
       }
       if(_this.accountType == "none") {
         MessageStore.methods.showMessage("please select an account type", true);
+        return;
+      }
+      if(_this.phone.replace(/\D/g,'').length < 10 || _this.phone.replace(/\D/g,'').length > 11) {
+        MessageStore.methods.showMessage("please enter a valid phone number", true);
         return;
       }
       axios
@@ -89,7 +96,7 @@ export default {
             password: _this.password,
             firstName: _this.firstName,
             lastName: _this.lastName,
-            phone: _this.phone,
+            phone: _this.phone.replace(/\D/g,''),
             isParent: _this.isParent,
             students: _this.getStudentInputs(),
           }
