@@ -45,7 +45,7 @@ export default {
       email: "",
       phone: "",
       accountType: null,
-      isParent: false,
+      isParent: null,
       students: [""],
       password: "",
       confirmPassword: "",
@@ -71,10 +71,14 @@ export default {
       this.students.push("");
     },
     signUp: function() {
+      var _this = this;
       function parsePhone(numberString) {
         numberString.replace(/\D/g,'');
       }
-      var _this = this;
+      if(this.isParent == null) {
+        MessageStore.methods.showMessage("Error, Please Select if you are a parent or student", true);
+        return;
+      }
       if(this.password != _this.confirmPassword) {
         MessageStore.methods.showMessage("Error, Passwords don't match", true);
         return;

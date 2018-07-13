@@ -19,9 +19,9 @@
         </div>
         <div class="nav-grid" v-else>
           <router-link class= "nav-item nav-link" to="/">Home</router-link>
-          <router-link class= "nav-item nav-link" to="Tutors">Tutors</router-link>
-          <router-link class= "nav-item nav-link" to="SignUp">Sign Up</router-link>
-          <router-link class= "nav-item nav-link" to="login">Login</router-link>
+          <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
+          <router-link class= "nav-item nav-link" to="/SignUp">Sign Up</router-link>
+          <router-link class= "nav-item nav-link" to="/login">Login</router-link>
         </div>
       </div>
       <router-view/>
