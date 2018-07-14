@@ -1,13 +1,11 @@
 <template>
   <div class ="grid-container">
     <div class="login-box">
-      <h1>Login</h1>
-      <h4 id="message"></h4>
-      <input class="form-field" placeholder="Email" id="email"><br>
-      <input class="form-field" placeholder="Password" type="password" id="password"><br>
-      <button class="color-button" v-on:click="login()">Login</button><br>
+      <h1>Vertify Email</h1>
+      Check your email {{AccountStore.account.email}} and click the link to vertify your email.
+      <button class="color-button" v-on:click="resendEmail()">Resend Vertification Email</button><br>
+      <button v-if="AccountStore.account == null" class="color-button" v-on:click="login()">Login</button><br>
       <router-link to="signUp">Sign Up</router-link>
-      <router-link to="forgotPassword">Forgot Password?</router-link>
     </div>
   </div>
 </template>
@@ -18,34 +16,59 @@ import MessageStore from "../stores/MessageStore";
 import axios from "axios";
 export default {
   data: function() {
-    return {};
+    return {
+      AccountStore: AccountStore.data,
+    };
+  },
+  props: {
+    token: {
+      type: String,
+      default: null
+    }
   },
   created: function() {
-    document.title = "Login - Owl Tutoring";
+    document.title = "Vertify Email - Owl Tutoring";
     var _this = this;
-  },
-  methods: {
-    login: function() {
-      axios
-        .post(
-          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/login",
-          {
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
-          }
-        )
+    if(this.$route.query.key && this.$route.query.email) {
+        axios
+        .get(
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/vertifyEmail?email=" + this.$route.query.email + "&key=" + this.$route.query.key,
+        {
+          token: localStorage.getItem("token"),
+        })
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
-          AccountStore.methods.login(response.data.token);
-          document.getElementById("message").innerHTML = response.data.message;
+          MessageStore.methods.showMessage(response.data.message, false);
+          MessageStore.methods.showMessage("Email Vertified", false);
+          _this.$router.push({ path: "/" }); 
+        })
+        .catch(function(e) {
+          console.log(e);
+          MessageStore.methods.showMessage(e.response.data.message, true);
+        });
+      }
+    if(AccountStore.data.account != null && AccountStore.data.account.emailVertified) {
+      MessageStore.methods.showMessage("Email Vertified", false);
+      _this.$router.push({ path: "/" });
+    }
+  },
+  methods: {
+    resendEmail: function() {
+      axios
+        .post(
+          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/resendEmailVertification",
+        {
+          token: localStorage.getItem("token"),
+        })
+        .then(function(response) {
+          // JSON responses are automatically parsed.
+          console.log(response);
           MessageStore.methods.showMessage(response.data.message, false);
         })
         .catch(function(e) {
           console.log(e);
-          document.getElementById("message").innerHTML = e.response.data.message;
           MessageStore.methods.showMessage(e.response.data.message, true);
-          //this.errors.push(e)
         });
     }
   }

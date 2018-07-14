@@ -37,6 +37,7 @@
 <script>
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
+import AccountStore from "../stores/AccountStore";
 export default {
   data: function() {
     return {
@@ -75,7 +76,7 @@ export default {
       function parsePhone(numberString) {
         numberString.replace(/\D/g,'');
       }
-      if(this.isParent == null) {
+      if(this.isParent == null && this.accountType == "Client") {
         MessageStore.methods.showMessage("Error, Please Select if you are a parent or student", true);
         return;
       }
@@ -108,7 +109,9 @@ export default {
         .then(function(response) {
           // JSON responses are automatically parsed.
           console.log(response);
+          AccountStore.methods.login(response.data.token);
           MessageStore.methods.showMessage(response.data.message, false);
+          _this.$router.push({ path: "VertifyEmail" });
         })
         .catch(function(e) {
           console.log(e);

@@ -13,7 +13,7 @@ import TutorProfile from '@/components/TutorProfile'
 import ForgotPassword from '@/components/ForgotPassword'
 import ChangePassword from '@/components/ChangePassword'
 import ChargeHistory from '@/components/ChargeHistory'
-
+import VertifyEmail from '@/components/VertifyEmail'
 Vue.use(Router)
 
 export default new Router({
@@ -78,6 +78,11 @@ export default new Router({
       path: '/chargeHistory',
       name: 'chargeHistory',
       component: ChargeHistory
+    },
+    {
+      path: '/vertifyEmail:token?',
+      name: 'vertifyEmail',
+      component: VertifyEmail
     }
   ]
 })

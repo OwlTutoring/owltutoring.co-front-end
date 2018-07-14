@@ -9,6 +9,7 @@
     <h1>Charge History</h1>
     <div class="list-charge-container" v-if="AccountStore.account != null" >
       <list-charge v-for="charge in charges" :charge="charge" :key="charge.id"/>
+      <div v-if="charges.length == 0">No previous charges</div>
       <div class="contact"> Questions or concerns? text <a href="sms://2248149291">(224) 814-9291</a></div>
     </div>
     <div v-else>
