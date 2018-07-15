@@ -21,7 +21,10 @@ export default {
     };
   },
   props: {
-    
+    nextPage: {
+      type: String,
+      default: null
+    }
   },
   created: function() {
     document.title = "Vertify Email - Owl Tutoring";
@@ -38,7 +41,8 @@ export default {
           console.log(response);
           MessageStore.methods.showMessage(response.data.message, false);
           MessageStore.methods.showMessage("Email Vertified", false);
-          _this.$router.push({ path: "/" }); 
+          console.log(_this.nextPage);
+          _this.$router.push({ path: "/" + (_this.nextPage != null ? _this.nextPage : "") + (_this.nextPage.toLowerCase() == "sessions" ? "?addNew=true" : "") });
         })
         .catch(function(e) {
           console.log(e);
@@ -47,11 +51,12 @@ export default {
       }
     if(AccountStore.data.account != null && AccountStore.data.account.emailVertified) {
       MessageStore.methods.showMessage("Email Vertified", false);
-      _this.$router.push({ path: "/" });
+      _this.$router.push({ path: "/" + (_this.nextPage != null ? _this.nextPage : "") + (_this.nextPage.toLowerCase() == "sessions" ? "?addNew=true" : "") });
     }
   },
   methods: {
     resendEmail: function() {
+      var _this = this;
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/resendEmailVertification",

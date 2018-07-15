@@ -84,7 +84,8 @@ export default new Router({
     {
       path: '/vertifyEmail/:nextPage?',
       name: 'vertifyEmail',
-      component: VertifyEmail
+      component: VertifyEmail,
+      props: true,
     }
   ]
 })

@@ -49,7 +49,7 @@ export default {
           document.getElementById("message").innerHTML = response.data.message;
           MessageStore.methods.showMessage(response.data.message, false);
           console.log("/" + (_this.nextPage != null ? _this.nextPage : ""));
-          _this.$router.push({ path: "/" + (_this.nextPage != null ? _this.nextPage : "") + (_this.nextPage="sessions" ? "?addNew=true":"") });
+          _this.$router.push({ path: "/" + (_this.nextPage != null ? _this.nextPage : "") + (_this.nextPage == "sessions" ? "?addNew=true" : "") });
         })
         .catch(function(e) {
           console.log(e);

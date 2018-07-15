@@ -119,7 +119,7 @@ export default {
           console.log(response);
           AccountStore.methods.login(response.data.token);
           MessageStore.methods.showMessage(response.data.message, false);
-          _this.$router.push({ path: "VertifyEmail" });
+          _this.$router.push({ path: "/VertifyEmail" + (_this.nextPage ? "/" + _this.nextPage : "")});
         })
         .catch(function(e) {
           console.log(e);
