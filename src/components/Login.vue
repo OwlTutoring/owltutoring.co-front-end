@@ -17,6 +17,12 @@ import AccountStore from "../stores/AccountStore";
 import MessageStore from "../stores/MessageStore";
 import axios from "axios";
 export default {
+  props: {
+    nextPage: {
+      type: String,
+      default: null
+    }
+  },
   data: function() {
     return {};
   },
@@ -26,12 +32,14 @@ export default {
   },
   methods: {
     login: function() {
+      var _this = this;
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/login",
           {
             email: document.getElementById("email").value,
-            password: document.getElementById("password").value
+            password: document.getElementById("password").value,
+            connectAccountID: _this.$route.query.connectAccountID
           }
         )
         .then(function(response) {
@@ -40,6 +48,8 @@ export default {
           AccountStore.methods.login(response.data.token);
           document.getElementById("message").innerHTML = response.data.message;
           MessageStore.methods.showMessage(response.data.message, false);
+          console.log("/" + (_this.nextPage != null ? _this.nextPage : ""));
+          _this.$router.push({ path: "/" + (_this.nextPage != null ? _this.nextPage : "") });
         })
         .catch(function(e) {
           console.log(e);

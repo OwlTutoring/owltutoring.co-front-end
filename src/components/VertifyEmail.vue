@@ -21,10 +21,7 @@ export default {
     };
   },
   props: {
-    token: {
-      type: String,
-      default: null
-    }
+    
   },
   created: function() {
     document.title = "Vertify Email - Owl Tutoring";
@@ -60,6 +57,7 @@ export default {
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/resendEmailVertification",
         {
           token: localStorage.getItem("token"),
+          nextPage: _this.nextPage
         })
         .then(function(response) {
           // JSON responses are automatically parsed.

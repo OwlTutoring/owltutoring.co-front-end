@@ -39,14 +39,16 @@ export default new Router({
       component: Account
     },
     {
-      path: '/login',
+      path: '/login/:nextPage?',
       name: 'Login',
-      component: Login
+      component: Login,
+      props: true,
     },
     {
-      path: '/signup',
+      path: '/signup/:nextPage?',
       name: 'SignUp',
-      component: SignUp
+      component: SignUp,
+      props: true
     },
     {
       path: '/sessions/:display?',
@@ -80,7 +82,7 @@ export default new Router({
       component: ChargeHistory
     },
     {
-      path: '/vertifyEmail:token?',
+      path: '/vertifyEmail/:nextPage?',
       name: 'vertifyEmail',
       component: VertifyEmail
     }

@@ -39,6 +39,12 @@ import axios from "axios";
 import MessageStore from "../stores/MessageStore";
 import AccountStore from "../stores/AccountStore";
 export default {
+  props: {
+    nextPage: {
+      type: String,
+      default: null
+    }
+  },
   data: function() {
     return {
       firstName: "",
@@ -104,6 +110,8 @@ export default {
             phone: _this.phone.replace(/\D/g,''),
             isParent: _this.isParent,
             students: _this.getStudentInputs(),
+            connectAccountID: _this.$route.query.connectAccountID,
+            nextPage: _this.nextPage,
           }
         )
         .then(function(response) {
