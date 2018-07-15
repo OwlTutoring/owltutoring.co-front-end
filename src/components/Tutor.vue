@@ -18,21 +18,34 @@
     </div>
     <button class ="button-one light-button" v-on:click="toggleMore()"><div v-if="!expanded">more info</div><div v-else>less info</div></button><br>
     <button class="button-two color-button" v-on:click="chosseTutor()">Schedule a Lesson</button>
+    <div v-if="showLoginSignup" id="popup-window-back">
+      <div id="popup-window">
+        <h2>Login or SignUp to continue</h2>
+        <router-link class="color-button" :to="'signUp/Sessions' + nextParams">Sign Up</router-link>
+        <router-link class="color-button" :to="'login/Sessions' + nextParams">Login</router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
+import AccountStore from "../stores/AccountStore";
 export default {
   props: ["tutor"],
   name: "Tutor",
   data: function() {
     return {
-      expanded: false
+      expanded: false,
+      AccountStore: AccountStore.data,
+      showLoginSignup: false,
     };
   },
   computed: {
+    nextParams: function() {
+      return "?connectAccountID=" + this.tutor.ID;
+    },
     subjectList: function() {
       return creatListString(this.tutor.subjects);
     },
@@ -47,25 +60,33 @@ export default {
   methods: {
     chosseTutor: function() {
       var _this = this;
-      axios
-        .post(
-          "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/connectAccounts",
-          {
-            token: localStorage.getItem("token"),
-            otherID: this.tutor.ID,
-          }
-        )
-        .then(function(response) {
-          // JSON responses are automatically parsed.
-          console.log(response);
-          _this.$router.push({ path: 'Sessions', query: { addNew: true }});
 
-        })
-        .catch(function(e) {
-          console.log(e);
-          MessageStore.methods.showMessage(e.response.data.message, true);
-          //this.errors.push(e)
-        });
+      // if logged in
+      if(AccountStore.data.account != null) {
+
+        //conect account and redirect to sessions
+        axios
+          .post(
+            "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/connectAccounts",
+            {
+              token: localStorage.getItem("token"),
+              otherID: this.tutor.ID,
+            }
+          )
+          .then(function(response) {
+            // JSON responses are automatically parsed.
+            console.log(response);
+            _this.$router.push({ path: 'Sessions', query: { addNew: true }});
+
+          })
+          .catch(function(e) {
+            console.log(e);
+            MessageStore.methods.showMessage(e.response.data.message, true);
+            //this.errors.push(e)
+          });
+      } else {
+        this.showLoginSignup = true;
+      }
     },
     toggleMore: function() {
       console.log(this.expanded);
@@ -179,5 +200,28 @@ function creatListString(list) {
 .button-two {
   grid-column: 4 / 5;
   grid-row: 5 / 5;
+}
+#popup-window {
+  font-size: 1em;
+  text-align: center;
+  border-style: solid;
+  display: block;
+  margin: auto;
+  width:fit-content;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  border-color: #cccccc;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#popup-window-back {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: #EEEEEE;
+  top: 0;
+  left: 0;
+  padding-top: 50vh;
 }
 </style>
