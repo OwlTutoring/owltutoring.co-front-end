@@ -7,7 +7,7 @@
       </div>
       <div class="head">
         <div class="title-container">
-          <img class="logo" src="../static/owl.png">
+          <img class="logo" src="https://github.com/Owltutoring/WebsiteImages/blob/master/owl.png?raw=true">
           <h1 class="title">Owl Tutoring</h1>
         </div>
         <div class="nav-grid" v-if="AccountStore.account != null">
@@ -26,7 +26,11 @@
       </div>
       <router-view/>
     </div>
-    <footer>Owl Tutoring {{year}}</footer>
+    <footer>
+      <div><a href="mailto:general@owltutoring.co">general@owltutoring.co</a></div>
+      <div>Owl Tutoring {{year}}</div>
+      <div> text <a href="sms://2248149291">(224) 814-9291</a></div>
+    </footer>
   </div>
 </template>
 
@@ -101,7 +105,7 @@ h2 {
   border-color: #ffb219;
   border-width: 0.1em;
   border-style: solid;
-  
+  display: inline-block;
 }
 .plain-button {
   font-family: 'Montserrat', sans-serif;
@@ -215,6 +219,8 @@ footer {
   background-color: black;
   text-align: center;
   padding: 2em;
+  display:flex;
+  justify-content: space-around;
 }
 .form-field {
   font-size: 1.2em;
