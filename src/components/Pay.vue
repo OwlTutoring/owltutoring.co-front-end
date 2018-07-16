@@ -194,6 +194,7 @@ export default {
             // JSON responses are automatically parsed.
             console.log(response);
             MessageStore.methods.showMessage(response.data.message, false);
+            _this.$router.push({ name: "payReceipt", params: {charge: response.data.charge}});
           })
           .catch(function(e) {
             console.log(e);
@@ -217,7 +218,8 @@ export default {
           .then(function(response) {
             // JSON responses are automatically parsed.
             console.log(response);
-            //MessageStore.methods.showMessage(response.data.message);
+            MessageStore.methods.showMessage(response.data.message);
+            _this.$router.push({ name: "payReceipt", params: {charge: response.data.charge}});
           })
           .catch(function(e) {
             console.log(e);

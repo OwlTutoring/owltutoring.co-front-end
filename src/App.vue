@@ -170,6 +170,7 @@ h2 {
   text-align: center;
   color: white;
   animation: popInOut 3.1s ease-in-out backwards 1;
+  z-index: 5;
 }
 .errorAlert {
   background-color: tomato;

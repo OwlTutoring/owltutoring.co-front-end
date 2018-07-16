@@ -86,6 +86,11 @@ export default {
         MessageStore.methods.showMessage("Error, Please Select if you are a parent or student", true);
         return;
       }
+      
+      //TODO: add more restrictions
+      if(this.password.length < 6) {
+        MessageStore.methods.showMessage("Password must be at least 6 charachters",true);
+      }
       if(this.password != _this.confirmPassword) {
         MessageStore.methods.showMessage("Error, Passwords don't match", true);
         return;

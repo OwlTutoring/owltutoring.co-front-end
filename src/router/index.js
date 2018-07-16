@@ -14,6 +14,8 @@ import ForgotPassword from '@/components/ForgotPassword'
 import ChangePassword from '@/components/ChangePassword'
 import ChargeHistory from '@/components/ChargeHistory'
 import VertifyEmail from '@/components/VertifyEmail'
+import PayReceipt from '@/components/PayReceipt'
+
 Vue.use(Router)
 
 export default new Router({
@@ -86,6 +88,12 @@ export default new Router({
       name: 'vertifyEmail',
       component: VertifyEmail,
       props: true,
+    },
+    {
+      path: '/payReceipt',
+      name: 'payReceipt',
+      component: PayReceipt,
+      props: true
     }
   ]
 })

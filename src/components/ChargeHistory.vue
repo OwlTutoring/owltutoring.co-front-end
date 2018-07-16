@@ -23,7 +23,6 @@
 
 <script>
 import axios from "axios";
-console.log("waha");
 import MessageStore from "../stores/MessageStore";
 import AccountStore from "../stores/AccountStore";
 import Vue from "vue";
