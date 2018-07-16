@@ -87,6 +87,7 @@ export default {
       AccountStore.methods.refreshAccount();
     }
     if(!AccountStore.data.account.emailVertified) {
+      console.log("Account not vertified");
       _this.$router.push({ path: "/VertifyEmail/Sessions"});
     }
     axios

@@ -42,6 +42,10 @@ export default {
           MessageStore.methods.showMessage(response.data.message, false);
           MessageStore.methods.showMessage("Email Vertified", false);
           console.log(_this.nextPage);
+          AccountStore.methods.refreshAccount();
+          if(AccountStore.data.account != null && !AccountStore.data.account.emailVertified) {
+            AccountStore.data.account.emailVertified = true;
+          }
           _this.$router.push({ path: "/" + (_this.nextPage != null ? _this.nextPage : "") + (_this.nextPage.toLowerCase() == "sessions" ? "?addNew=true" : "") });
         })
         .catch(function(e) {
