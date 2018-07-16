@@ -9,6 +9,11 @@
     <router-link class= "" to="changePassword">Change Password</router-link>
     <br>
     <br>
+    <div v-if="!AccountStore.account.emailVertified">
+      <router-link class= "color-button" to="VertifyEmail">Vertify Email</router-link>
+      <br>
+      <br>
+    </div>
     <div v-if="AccountStore.account.accountType == 'Tutor'">
       <router-link class= "color-button" to="tutorProfile">Edit Tutor Profile</router-link>
     </div>

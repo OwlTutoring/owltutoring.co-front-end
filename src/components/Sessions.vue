@@ -86,6 +86,9 @@ export default {
     if (AccountStore.data.account == null) {
       AccountStore.methods.refreshAccount();
     }
+    if(!AccountStore.data.account.emailVertified) {
+      _this.$router.push({ path: "/VertifyEmail/Sessions"});
+    }
     axios
       .post(
         "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getSessions",

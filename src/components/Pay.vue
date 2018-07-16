@@ -101,6 +101,9 @@ export default {
     };
   },
   created: function() {
+    if(!AccountStore.data.account.emailVertified) {
+      this.$router.push({ path: "/VertifyEmail/Pay"});
+    }
     document.title = "Pay - Owl Tutoring";
     this.getSources();
   },

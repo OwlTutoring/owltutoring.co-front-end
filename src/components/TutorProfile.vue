@@ -95,6 +95,7 @@
 <script>
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
+import AccountStore from "../stores/AccountStore";
 import Vue from "vue";
 import SubjectTypesStore from "../stores/SubjectTypesStore";
 
@@ -125,6 +126,9 @@ export default {
   },
   created: function() {
     var _this = this;
+    if(!AccountStore.data.account.emailVertified) {
+      _this.$router.push({ path: "/VertifyEmail/TutorProfile"});
+    }
     axios
       .post(
         "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getTutorProfile",
