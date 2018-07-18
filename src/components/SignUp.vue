@@ -90,6 +90,7 @@ export default {
       //TODO: add more restrictions
       if(this.password.length < 6) {
         MessageStore.methods.showMessage("Password must be at least 6 charachters",true);
+        return;
       }
       if(this.password != _this.confirmPassword) {
         MessageStore.methods.showMessage("Error, Passwords don't match", true);
