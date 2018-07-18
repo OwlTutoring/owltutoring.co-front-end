@@ -229,7 +229,7 @@ export default {
             experience:_this.experience,
             shortBio:_this.shortBio,
             otherInfo:_this.otherInfo,
-            subjects: _this.getSubjectDataString(),
+            subjects: _this.getSubjectDataString().toLowerCase(),
             token: localStorage.getItem("token"),
             done: done,
           }

@@ -18,8 +18,9 @@ const SubjectTypesStore = {
                   {
                     subject: "Intermediate",
                     subList: [
-                      {sub},
-                      {}
+                      {subject: "Reading"},
+                      {subject: "Writing"},
+                      {subject: "Grammer"},
                     ]
                   }
                 ]

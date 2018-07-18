@@ -43,7 +43,7 @@ export default {
         querys.push("distance=" + this.distanceVal);
       }
       if(this.subjectVal != null && this.subjectVal != "") {
-        querys.push("subject=" + this.subjectVal);
+        querys.push("subject=" + this.subjectVal.toLowerCase());
       }
       var queryString = "";
       for(var i = 0; i < querys.length; i ++) {

@@ -19,6 +19,8 @@
     <input placeholder="Last name" class="form-field" v-model="lastName" id="lastName">
     <input placeholder="Email" class="form-field wide-input" v-model="email" id="email">
     <input placeholder="Phone (000) 000-0000" class="form-field wide-input" v-model="phone" id="phone" type="phone">
+    <label for="text-notifications" class="checkbox-desc wide-input"><input type="checkbox" v-model="textNotifications" id="text-notifications"> Receive text message session reminders</label>
+    <label for="email-notifications" class="checkbox-desc wide-input"><input type="checkbox" v-model="emailNotifications" id="email-notifications"> Receive email session reminders</label>
     <input placeholder="Password" class="form-field wide-input" v-model="password" id="password" type="password">
     <input placeholder="Confirm password" class="form-field wide-input" v-model="confirmPassword" id="confirmPassword" type="password">
     <div class="wide-input" v-if="isParent && accountType == 'Client'">
@@ -57,6 +59,8 @@ export default {
       password: "",
       confirmPassword: "",
       accountType: null,
+      textNotifications: true,
+      emailNotifications: true,
     };
   },
   created: function() {
@@ -117,7 +121,9 @@ export default {
             isParent: _this.isParent,
             students: _this.getStudentInputs(),
             connectAccountID: _this.$route.query.connectAccountID,
-            nextPage: _this.nextPage,
+            nextPage: (_this.accountType == "Tutor" ? "tutorProfile" : _this.nextPage),
+            emailNotifications: _this.emailNotifications,
+            textNotifications: _this.textNotifications
           }
         )
         .then(function(response) {
@@ -192,5 +198,8 @@ export default {
 }
 #parent-select {
   display: block;
+}
+.checkbox-desc {
+  text-align: left;
 }
 </style>
