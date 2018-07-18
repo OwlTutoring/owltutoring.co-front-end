@@ -4,7 +4,7 @@
       <h1>Login</h1>
       <h4 id="message"></h4>
       <input class="form-field" placeholder="Email" id="email"><br>
-      <input class="form-field" placeholder="Password" type="password" id="password"><br>
+      <input class="form-field" placeholder="Password" type="password" id="password" @keyup.enter="login"><br>
       <button class="color-button" v-on:click="login()">Login</button><br>
       <router-link to="signUp">Sign Up</router-link>
       <router-link to="forgotPassword">Forgot Password?</router-link>
