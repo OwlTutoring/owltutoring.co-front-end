@@ -1,15 +1,15 @@
 <template>
   <div class="tutor-grid">
-    <img class="profile-image" :src="tutor.imageLink">
-    <div class="line-one-grid">
+    <img v-on:click="moreInfo()" class="profile-image" :src="tutor.imageLink">
+    <div v-on:click="moreInfo()" class="line-one-grid">
       <h1 class="name">{{tutor.firstName}} {{tutor.lastName}}</h1>
       <h3 class="grade">{{tutor.grade}}th Grade</h3>
       <h3 class="rate">${{tutor.rate}}</h3>
     </div>
-    <div class="short-bio">{{tutor.shortBio}}</div>
-    <h4 class="subjects">{{tutor.subjectsDesc}}</h4>
-    <h4 class="levels">{{levelsList}}</h4>
-    <h4 class="town">{{tutor.town + ", " + tutor.usState}}</h4>
+    <div v-on:click="moreInfo()"class="short-bio">{{tutor.shortBio}}</div>
+    <h4 v-on:click="moreInfo()" class="subjects">{{tutor.subjectsDesc}}</h4>
+    <h4 v-on:click="moreInfo()" class="levels">{{levelsList}}</h4>
+    <h4 v-on:click="moreInfo()" class="town">{{tutor.town + ", " + tutor.usState}}</h4>
     <div class= "more-info-grid" v-if="expanded">
       <h4 class="phone">Phone: <a :href= "'sms:' + tutor.phone">{{formatedPhone}}</a></h4>
       <h4 class="email">Email: <a :href= "'mailto:' + tutor.email">{{tutor.email}}</a></h4>
@@ -87,6 +87,9 @@ export default {
       } else {
         this.showLoginSignup = true;
       }
+    },
+    moreInfo: function() {
+      this.expanded = true;
     },
     toggleMore: function() {
       console.log(this.expanded);

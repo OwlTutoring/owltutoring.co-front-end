@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <head>
+      <title>Owltutoring</title>
+    </head>
     <div id="content">
       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,8e 00" rel="stylesheet">
       <div :class="['alert', { errorAlert: messageStore.isError }]" v-if="messageStore.show">

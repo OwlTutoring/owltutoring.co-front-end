@@ -18,12 +18,13 @@ import PayReceipt from '@/components/PayReceipt'
 
 Vue.use(Router)
 
+
 export default new Router({
   routes: [
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
     },
     {
       path: '/Tutors/',
