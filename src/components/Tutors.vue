@@ -13,6 +13,8 @@
 import Tutor from './Tutor.vue';
 import TutorSearch from './TutorSearch.vue'
 import axios from "axios";
+import LoadingStateStore from "../stores/LoadingStateStore";
+
 export default {
   components: {
     Tutor,
@@ -28,7 +30,7 @@ export default {
   },
   methods: {
     getTutors: function() {
-      
+      LoadingStateStore.methods.addLoading();
       this.zipCode = this.$route.query.zipCode;
       
       this.tutorID = this.$route.query.tutorID;
@@ -69,9 +71,13 @@ export default {
           // JSON responses are automatically parsed.
           console.log(response);
           _this.tutors = response.data.tutors;
+          setTimeout(function() {
+          LoadingStateStore.methods.removeLoading();
+          }, 1000);
         })
         .catch(function(e) {
           console.log(e);
+          LoadingStateStore.methods.removeLoading();
           //this.errors.push(e)
         });
     }

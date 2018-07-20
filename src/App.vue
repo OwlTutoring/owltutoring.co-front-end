@@ -8,6 +8,27 @@
       <div :class="['alert', { errorAlert: messageStore.isError }]" v-if="messageStore.show">
         {{messageStore.message}}
       </div>
+      <div v-if="LoadingStateStore.loading > 0" id="loading-book">      
+        <div class="page" id="page-a">
+        </div>
+        <div class="page" id="page-b">
+        </div>
+        <div class="page" id="page-c">
+        </div>
+        <div class="page" id="page-d">
+        </div>
+        <div class="page" id="page-e">
+        </div>
+        <div class="cover" id="cover-a">
+        </div>
+        <div class="cover"id="cover-b">
+        </div>
+        <div id="binding">
+        </div>
+        <div id="loading">
+        Loading <div class="dot" id="dot-a">.</div><div class="dot" id="dot-b">.</div><div class="dot" id="dot-c">.</div>
+        </div>
+      </div>
       <div class="head">
         <div class="title-container">
           <img class="logo" src="https://github.com/Owltutoring/WebsiteImages/blob/master/owl.png?raw=true">
@@ -40,6 +61,7 @@
 <script>
 import AccountStore from "./stores/AccountStore";
 import MessageStore from "./stores/MessageStore";
+import LoadingStateStore from "./stores/LoadingStateStore";
 
 export default {
   name: "app",
@@ -47,6 +69,7 @@ export default {
     return {
       AccountStore: AccountStore.data,
       messageStore: MessageStore.data,
+      LoadingStateStore: LoadingStateStore.data,
       year: new Date().getFullYear()
     };
   },
@@ -56,8 +79,8 @@ export default {
     }
   },
   created: function() {
+    LoadingStateStore.methods.removeLoading();
     AccountStore.methods.refreshAccount();
-    
   }
 };
 </script>
@@ -232,5 +255,156 @@ footer {
   border-radius: 5px;
   border-color: #cccccc;
   border-width: 2px;
+}
+
+
+/*Loading animation */
+#loading-book {
+  background-color: white;
+  display: block;
+  position: fixed;
+  z-index: 5;
+  width: 100vw;
+  height: 100vh;
+}
+#loading {
+  position: absolute;
+  display: block;
+  width: 100vw;
+  transform: translate(0, calc(51vh + 1em));
+  text-align: center;
+  animation: quick-hide 3s ease-in-out forwards infinite;
+  animation-delay: 1.8s;
+}
+#binding {
+  width: 1vh;
+  height: 1vh;
+  border-radius: .5vh;
+  display: block;
+  background-color: orange;
+  position: absolute;
+  transform: translate(calc(50vw - .5vh), 50vh);
+  transform-origin: center center;
+}
+.dot {
+  display: inline;
+  animation: dot 1s ease-in-out alternate infinite;
+}
+#dot-a {
+  animation-delay: 0s;
+}
+#dot-b {
+  animation-delay: .3s;
+}
+#dot-c {
+  animation-delay: .6s;
+}
+.cover {
+  width: 10vh;
+  height: 1vh;
+  background-color: orange;
+  display: block;
+  position: absolute;
+  border-radius: .5vh;
+  transform: translate(calc(50vw - 10vh), 50vh);
+}
+#cover-a {
+  transform: translate(calc(50vw - 10vh), 50vh) rotate(180deg);
+  transform-origin: center right;
+  animation: rotate-cover-a 3s ease-in-out forwards infinite;
+    animation-delay: 1.8s;
+}
+#cover-b {
+  transform: translate(calc(50vw - 10vh), 50vh) rotate(0deg);
+  transform-origin: center right;
+  animation: rotate-cover-b 3s ease-in-out forwards infinite;
+  animation-delay: 1.8s;
+}
+.page {
+  width: 9vh;
+  height: .5vh;
+  background-color: black;
+  position: absolute;
+  transform-origin: center right;
+  transform: translate(calc(50vw - 9vh), 50vh);
+  animation: rotate-page 3s ease-in-out forwards infinite;
+}
+#page-a {
+  animation-delay: .3s;
+}
+#page-b {
+  animation-delay: .6s;
+}
+#page-c {
+  animation-delay: .9s;
+}
+#page-d {
+  animation-delay: 1.2s;
+}
+#page-e {
+  animation-delay: 1.5s;
+}
+@keyframes rotate-page {
+  40% {
+    transform: translate(calc(50vw - 9vh), 50vh) rotate(179deg);
+    background-color: black;
+  }
+  41% {
+    background-color: transparent;
+  }
+  100%{
+    background-color: transparent;
+  }
+}
+
+@keyframes rotate-cover-a {
+  
+  40% {
+    transform: translate(calc(50vw - 10vh), 50vh) rotate(180deg); 
+  }
+  50% {
+    transform: translate(calc(50vw - 10vh), 50vh) rotate(360deg);
+  }
+  80% {
+    transform: translate(calc(50vw - 10vh), 50vh) rotate(540deg);
+  }
+  100% {
+    transform: translate(calc(50vw - 10vh), 50vh) rotate(540deg);
+  }
+}
+
+@keyframes rotate-cover-b {
+  40% {
+    transform: translate(calc(50vw - 10vh), 50vh) rotate(180deg); 
+  }
+  50% {
+    transform: translate(calc(50vw - 10vh), 50vh) rotate(360deg);
+  }
+  100% {
+    transform: translate(calc(50vw - 10vh), 50vh) rotate(360deg);
+  }
+}
+
+@keyframes dot {
+  to {
+    color: white;
+  }
+}
+@keyframes quick-hide {
+  30% {
+    color: inherit;
+  }
+  45% {
+    color: white;
+  }
+  50% {
+    color: white;
+  }
+  55% {
+    color: white;
+  }
+  70% {
+    color: inherit;
+  }
 }
 </style>

@@ -65,6 +65,7 @@ export default {
       if(AccountStore.data.account != null) {
 
         //conect account and redirect to sessions
+        LoadingStateStore.methods.addLoading();
         axios
           .post(
             "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/connectAccounts",
@@ -77,11 +78,13 @@ export default {
             // JSON responses are automatically parsed.
             console.log(response);
             _this.$router.push({ path: 'Sessions', query: { addNew: true }});
+            LoadingStateStore.methods.removeLoading();
 
           })
           .catch(function(e) {
             console.log(e);
             MessageStore.methods.showMessage(e.response.data.message, true);
+            LoadingStateStore.methods.removeLoading();
             //this.errors.push(e)
           });
       } else {
