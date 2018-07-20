@@ -8,27 +8,29 @@
       <div :class="['alert', { errorAlert: messageStore.isError }]" v-if="messageStore.show">
         {{messageStore.message}}
       </div>
-      <div v-if="LoadingStateStore.loading > 0" id="loading-book">      
-        <div class="page" id="page-a">
+      <transition name="fade">
+        <div v-if="LoadingStateStore.loading > 0" id="loading-book">      
+          <div class="page" id="page-a">
+          </div>
+          <div class="page" id="page-b">
+          </div>
+          <div class="page" id="page-c">
+          </div>
+          <div class="page" id="page-d">
+          </div>
+          <div class="page" id="page-e">
+          </div>
+          <div class="cover" id="cover-a">
+          </div>
+          <div class="cover"id="cover-b">
+          </div>
+          <div id="binding">
+          </div>
+          <div id="loading">
+          Loading <div class="dot" id="dot-a">.</div><div class="dot" id="dot-b">.</div><div class="dot" id="dot-c">.</div>
+          </div>
         </div>
-        <div class="page" id="page-b">
-        </div>
-        <div class="page" id="page-c">
-        </div>
-        <div class="page" id="page-d">
-        </div>
-        <div class="page" id="page-e">
-        </div>
-        <div class="cover" id="cover-a">
-        </div>
-        <div class="cover"id="cover-b">
-        </div>
-        <div id="binding">
-        </div>
-        <div id="loading">
-        Loading <div class="dot" id="dot-a">.</div><div class="dot" id="dot-b">.</div><div class="dot" id="dot-c">.</div>
-        </div>
-      </div>
+      </transition>
       <div class="head">
         <div class="title-container">
           <img class="logo" src="https://github.com/Owltutoring/WebsiteImages/blob/master/owl.png?raw=true">
@@ -406,5 +408,12 @@ footer {
   70% {
     color: inherit;
   }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
