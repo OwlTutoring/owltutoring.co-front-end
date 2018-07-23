@@ -13,6 +13,7 @@
 <script>
 import AccountStore from "../stores/AccountStore";
 import MessageStore from "../stores/MessageStore";
+import LoadingStateStore from "../stores/LoadingStateStore";
 import axios from "axios";
 export default {
   data: function() {
@@ -30,13 +31,15 @@ export default {
     document.title = "Vertify Email - Owl Tutoring";
     var _this = this;
     if(this.$route.query.key && this.$route.query.email) {
-        axios
+      LoadingStateStore.methods.addLoading();
+      axios
         .get(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/vertifyEmail?email=" + this.$route.query.email + "&key=" + this.$route.query.key,
         {
           token: localStorage.getItem("token"),
         })
         .then(function(response) {
+          LoadingStateStore.methods.removeLoading();
           // JSON responses are automatically parsed.
           console.log(response);
           MessageStore.methods.showMessage(response.data.message, false);
@@ -49,6 +52,7 @@ export default {
           _this.$router.push({ path: "/" + (_this.nextPage != null ? _this.nextPage : "") + ((_this.nextPage != null && _this.nextPage.toLowerCase() == "sessions") ? "?addNew=true" : "") });
         })
         .catch(function(e) {
+          LoadingStateStore.methods.removeLoading();
           console.log(e);
           MessageStore.methods.showMessage(e.response.data.message, true);
         });
@@ -61,6 +65,7 @@ export default {
   methods: {
     resendEmail: function() {
       var _this = this;
+      LoadingStateStore.methods.addLoading();
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/resendEmailVertification",
@@ -69,11 +74,13 @@ export default {
           nextPage: _this.nextPage
         })
         .then(function(response) {
+          LoadingStateStore.methods.removeLoading();
           // JSON responses are automatically parsed.
           console.log(response);
           MessageStore.methods.showMessage(response.data.message, false);
         })
         .catch(function(e) {
+          LoadingStateStore.methods.removeLoading();
           console.log(e);
           MessageStore.methods.showMessage(e.response.data.message, true);
         });

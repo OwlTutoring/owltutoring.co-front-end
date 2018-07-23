@@ -40,6 +40,7 @@
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
 import AccountStore from "../stores/AccountStore";
+import LoadingStateStore from "../stores/LoadingStateStore";
 export default {
   props: {
     nextPage: {
@@ -108,6 +109,7 @@ export default {
         MessageStore.methods.showMessage("please enter a valid phone number", true);
         return;
       }
+      LoadingStateStore.methods.addLoading();
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/signUp",
@@ -132,10 +134,12 @@ export default {
           AccountStore.methods.login(response.data.token);
           MessageStore.methods.showMessage(response.data.message, false);
           _this.$router.push({ path: "/VertifyEmail" + (_this.nextPage ? "/" + _this.nextPage : "")});
+          LoadingStateStore.methods.removeLoading();
         })
         .catch(function(e) {
           console.log(e);
           MessageStore.methods.showMessage(e.response.data.message, true);
+          LoadingStateStore.methods.removeLoading();
           //this.errors.push(e)
         });
     }

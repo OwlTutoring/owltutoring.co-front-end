@@ -62,6 +62,7 @@
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
 import AccountStore from "../stores/AccountStore";
+import LoadingStateStore from "../stores/LoadingStateStore";
 
 // Create a Stripe client.
 var stripe = Stripe("pk_test_gheuGNTfHiHL1ULiFHNPxlzm");
@@ -159,8 +160,9 @@ export default {
             email: _this.AccountStore.account.email
           }
         };
-
+        LoadingStateStore.methods.addLoading();
         stripe.createSource(_this.card, ownerInfo).then(function(result) {
+          LoadingStateStore.methods.removeLoading();
           if (result.error) {
             // Inform the user if there was an error.
             MessageStore.methods.showMessage(result.error.message, true);
@@ -179,6 +181,7 @@ export default {
       }
     },
     submitPayment: function() {
+      LoadingStateStore.methods.addLoading();
       var _this = this;
       if (_this.selectedSource == "new") {
         axios
@@ -197,11 +200,13 @@ export default {
             // JSON responses are automatically parsed.
             console.log(response);
             MessageStore.methods.showMessage(response.data.message, false);
+            LoadingStateStore.methods.removeLoading();
             _this.$router.push({ name: "payReceipt", params: {charge: response.data.charge}});
           })
           .catch(function(e) {
             console.log(e);
             MessageStore.methods.showMessage(e.response.data.message, true);
+            LoadingStateStore.methods.removeLoading();
             //this.errors.push(e)
           });
       } else {
@@ -222,17 +227,20 @@ export default {
             // JSON responses are automatically parsed.
             console.log(response);
             MessageStore.methods.showMessage(response.data.message);
+            LoadingStateStore.methods.removeLoading();
             _this.$router.push({ name: "payReceipt", params: {charge: response.data.charge}});
           })
           .catch(function(e) {
             console.log(e);
             MessageStore.methods.showMessage(e.response.data.message, true);
+            LoadingStateStore.methods.removeLoading();
             //this.errors.push(e)
           });
       }
     },
     getSources: function() {
       var _this = this;
+      LoadingStateStore.methods.addLoading();
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/savedPayOptions",
@@ -241,6 +249,7 @@ export default {
           }
         )
         .then(function(response) {
+          LoadingStateStore.methods.removeLoading();
           // JSON responses are automatically parsed.
           console.log(response);
           //MessageStore.methods.showMessage(response.data.message);
@@ -251,6 +260,7 @@ export default {
           console.log(_this.selectedSource);
         })
         .catch(function(e) {
+          LoadingStateStore.methods.removeLoading();
           console.log(e);
           MessageStore.methods.showMessage(e.response.data.message, true);
           //this.errors.push(e)
@@ -261,6 +271,7 @@ export default {
     },
     deleteCard: function(sourceID) {
       var _this = this;
+      LoadingStateStore.methods.addLoading();
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/deleteCard",
@@ -270,12 +281,14 @@ export default {
           }
         )
         .then(function(response) {
+          LoadingStateStore.methods.removeLoading();
           // JSON responses are automatically parsed.
           console.log(response);
           MessageStore.methods.showMessage(response.data.message, false);
           _this.sources = response.data.sources;
         })
         .catch(function(e) {
+          LoadingStateStore.methods.removeLoading();
           console.log(e);
           MessageStore.methods.showMessage(e.response.data.message, true);
           //this.errors.push(e)

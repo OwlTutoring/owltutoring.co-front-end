@@ -90,12 +90,14 @@ export default {
       console.log("Account not vertified");
       _this.$router.push({ path: "/VertifyEmail/Sessions"});
     }
+    LoadingStateStore.methods.addLoading();
     axios
       .post(
         "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getSessions",
         { token: localStorage.getItem("token") }
       )
       .then(function(response) {
+        LoadingStateStore.methods.removeLoading();
         // JSON responses are automatically parsed.
         console.log(response);
         function compare(a, b) {
@@ -108,6 +110,7 @@ export default {
           .sort(compare);
       })
       .catch(function(e) {
+        LoadingStateStore.methods.removeLoading();
         console.log(e);
         MessageStore.methods.showMessage(e.response.data.message, true);
         //this.errors.push(e)
@@ -117,12 +120,14 @@ export default {
     refresh: function() {
       var _this = this;
       console.log("refresh sessions");
+      LoadingStateStore.methods.addLoading();
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getSessions",
           { token: localStorage.getItem("token") }
         )
         .then(function(response) {
+          LoadingStateStore.methods.removeLoading();
           // JSON responses are automatically parsed.
           console.log(response);
           function compare(a, b) {
@@ -134,6 +139,7 @@ export default {
           console.log(_this.sessions);
         })
         .catch(function(e) {
+          LoadingStateStore.methods.removeLoading();
           console.log(e);
           MessageStore.methods.showMessage(e.response.data.message, true);
           //this.errors.push(e)

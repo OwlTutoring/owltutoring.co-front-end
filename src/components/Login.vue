@@ -15,6 +15,7 @@
 <script>
 import AccountStore from "../stores/AccountStore";
 import MessageStore from "../stores/MessageStore";
+import LoadingStateStore from "../stores/LoadingStateStore";
 import axios from "axios";
 export default {
   props: {
@@ -33,6 +34,7 @@ export default {
   methods: {
     login: function() {
       var _this = this;
+      LoadingStateStore.methods.addLoading();
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/login",
@@ -48,6 +50,7 @@ export default {
           AccountStore.methods.login(response.data.token);
           document.getElementById("message").innerHTML = response.data.message;
           MessageStore.methods.showMessage(response.data.message, false);
+          LoadingStateStore.methods.removeLoading();
           console.log("/" + (_this.nextPage != null ? _this.nextPage : ""));
           _this.$router.push({ path: "/" + (_this.nextPage != null ? _this.nextPage : "") + (_this.nextPage == "sessions" ? "?addNew=true" : "") });
         })
@@ -55,6 +58,7 @@ export default {
           console.log(e);
           document.getElementById("message").innerHTML = e.response.data.message;
           MessageStore.methods.showMessage(e.response.data.message, true);
+          LoadingStateStore.methods.removeLoading();
           //this.errors.push(e)
         });
     }

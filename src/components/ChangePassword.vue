@@ -13,6 +13,7 @@
 
 <script>
 import MessageStore from "../stores/MessageStore";
+import LoadingStateStore from "../stores/LoadingStateStore";
 import axios from "axios";
 export default {
   data: function() {
@@ -32,6 +33,7 @@ export default {
       if(this.password != this.confirmPassword) {
         this.message = "Error Passwords do not match";
       }
+      LoadingStateStore.methods.addLoading();
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/changePassword",
@@ -45,11 +47,13 @@ export default {
           console.log(response);
           _this.message = response.data.message;
           MessageStore.methods.showMessage(response.data.message, false);
+          LoadingStateStore.methods.removeLoading();
         })
         .catch(function(e) {
           console.log(e);
           _this.message = e.response.data.message;
           MessageStore.methods.showMessage(e.response.data.message, true);
+          LoadingStateStore.methods.removeLoading();
           //this.errors.push(e)
         });
     }

@@ -12,6 +12,7 @@
 
 <script>
 import MessageStore from "../stores/MessageStore";
+import LoadingStateStore from "../stores/LoadingStateStore"
 import axios from "axios";
 export default {
   data: function() {
@@ -26,6 +27,7 @@ export default {
   },
   methods: {
     sendEmail: function() {
+      LoadingStateStore.methods.addLoading();
       var _this = this;
       axios
         .post(
@@ -35,12 +37,14 @@ export default {
           }
         )
         .then(function(response) {
+          LoadingStateStore.methods.removeLoading();
           // JSON responses are automatically parsed.
           console.log(response);
           _this.message = response.data.message;
           MessageStore.methods.showMessage(response.data.message, false);
         })
         .catch(function(e) {
+          LoadingStateStore.methods.removeLoading();
           console.log(e);
           _this.message = e.response.data.message;
           MessageStore.methods.showMessage(e.response.data.message, true);

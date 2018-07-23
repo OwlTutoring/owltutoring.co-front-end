@@ -25,6 +25,7 @@
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
 import AccountStore from "../stores/AccountStore";
+import LoadingStateStore from "../stores/LoadingStateStore"
 import Vue from "vue";
 
 Vue.component("list-charge", {
@@ -57,6 +58,7 @@ export default {
     if (AccountStore.data.account == null) {
       AccountStore.methods.refreshAccount();
     }
+    LoadingStateStore.methods.addLoading();
     axios
       .post(
         "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/chargeHistory",
@@ -66,11 +68,12 @@ export default {
         // JSON responses are automatically parsed.
         console.log(response);
         _this.charges = response.data.charges.data
-
+        LoadingStateStore.methods.removeLoading();
       })
       .catch(function(e) {
         console.log(e);
         MessageStore.methods.showMessage(e.response.data.message, true);
+        LoadingStateStore.methods.removeLoading();
         //this.errors.push(e)
       });
   },

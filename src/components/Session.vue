@@ -84,6 +84,7 @@
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
 import AccountStore from "../stores/AccountStore";
+import LoadingStateStore from "../stores/LoadingStateStore";
 export default {
   props: {
     session: {
@@ -128,6 +129,7 @@ export default {
     };
   },
   created: function() {
+    LoadingStateStore.methods.addLoading();
     var _this = this;
     if (AccountStore.data.account == null) {
       AccountStore.methods.refreshAccount();
@@ -142,12 +144,14 @@ export default {
           }
         )
         .then(function(response) {
+          LoadingStateStore.methods.removeLoading();
           // JSON responses are automatically parsed.
           console.log(response.data);
           _this.relatedAccounts = response.data.accounts;
           _this.otherAccount = _this.relatedAccounts[0];
         })
         .catch(function(e) {
+          LoadingStateStore.methods.removeLoading();
           console.log(e);
           //this.errors.push(e)
         });
@@ -310,6 +314,7 @@ export default {
   },
   methods: {
     confirmLesson: function() {
+      LoadingStateStore.methods.addLoading();
       var _this = this;
       axios
         .post(
@@ -320,6 +325,7 @@ export default {
           }
         )
         .then(function(response) {
+          LoadingStateStore.methods.removeLoading();
           // JSON responses are automatically parsed.
           console.log(response);
           MessageStore.methods.showMessage(response.data.message, false);
@@ -328,6 +334,7 @@ export default {
           _this.editing = false;
         })
         .catch(function(e) {
+          LoadingStateStore.methods.removeLoading();
           console.log(e);
           MessageStore.methods.showMessage(e.response.data.message,true);
           //this.errors.push(e)
@@ -336,6 +343,7 @@ export default {
     changeCancelState: function(state) {
       var _this = this;
       console.log(this.session.ID);
+        LoadingStateStore.methods.addLoading();
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/editSession",
@@ -346,6 +354,7 @@ export default {
           }
         )
         .then(function(response) {
+          LoadingStateStore.methods.removeLoading();
           // JSON responses are automatically parsed.
           console.log(response);
           MessageStore.methods.showMessage(response.data.message, false);
@@ -354,6 +363,7 @@ export default {
           _this.editing = false;
         })
         .catch(function(e) {
+          LoadingStateStore.methods.removeLoading();
           console.log(e);
           MessageStore.methods.showMessage(e.response.data.message,true);
           //this.errors.push(e)
@@ -393,12 +403,14 @@ export default {
       var params = this.getParams();
       params["sessionID"] = this.session.ID;
       console.log(params);
+      LoadingStateStore.methods.addLoading();
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/editSession",
           params
         )
         .then(function(response) {
+          LoadingStateStore.methods.removeLoading();
           // JSON responses are automatically parsed.
           console.log(response);
           MessageStore.methods.showMessage(response.data.message, false);
@@ -407,6 +419,7 @@ export default {
           _this.editing = false;
         })
         .catch(function(e) {
+          LoadingStateStore.methods.removeLoading();
           console.log(e);
           MessageStore.methods.showMessage(e.response.data.message,true);
           //this.errors.push(e)
@@ -418,12 +431,14 @@ export default {
       var params = this.getParams();
       params["otherID"] = this.otherAccount.ID.N;
       console.log(params);
+      LoadingStateStore.methods.addLoading();
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/createSession",
           params
         )
         .then(function(response) {
+          LoadingStateStore.methods.removeLoading();
           // JSON responses are automatically parsed.
           console.log(response);
           MessageStore.methods.showMessage(response.data.message, false);
@@ -431,6 +446,7 @@ export default {
           _this.$emit("refresh");
         })
         .catch(function(e) {
+          LoadingStateStore.methods.removeLoading();
           console.log(e);
           MessageStore.methods.showMessage(e.response.data.message,true);
           //this.errors.push(e)
