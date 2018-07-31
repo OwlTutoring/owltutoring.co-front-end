@@ -1,40 +1,261 @@
-Math
-  Elementry
+Mathematics
+  Elementary
   Pre Algebra
-  Algebra
-  Algebra 2
+  Algebra 1
+  Algebra 2 - including trigonometry
   Geometry
   Pre Calculus
   AP Calculus AB
   AP Calculus BC
-English
-  Elementry;
+  AP Statistics
+Applied Mathematics
+  Computer Programming - Python & Java
+  AP Computer Science A
+  AP Computer Science Principles 
+  Mobile App Development and Programming - is this a new class
+  PLTW Introduction to Engineering Design
+  PLTW Principles of Engineering Honors
+  PLTW Digital Electronics Honors
+  Architecture
+  PLTW Civil Engineering and Architecture Honors
+  PLTW Engineering Design and Development Honors
+  Web Development
+  Game Development
+English/Language Arts
+  Elementary
   Intermediate
-  High School
+  High School - including AP Language and Literature
+  Journalism
+  Acting
+  College Essay Writing
 Social Studies
-  Elementry
+  Elementary
   Intermediate
   World History
+  AP World History
   Geography
-  European
+  AP Human Geography
+  European History
+  AP United States History
   Government
-  Physcology
+  AP Government/AP Comparative Government
+  Psychology
+  AP Psychology
+  Sociology (Honors)
+  Philosophy (Honors)
+  Constitutional Law
+  AP Microeconomics
+  AP Macroeconomics
+  World Religions
+  Native World Cultures
+  Global Relations
+  Political Thought and Its Literature
+Applied Science
+  Introduction to Business
+  Business Applications and Technology 1
+  Business Applications and Technology 2
+  Accounting 1
+  Accounting 2 Honors
+  Advanced Accounting Honors
+  Marketing
+  Entrepreneurship
+  Business Law
+  Investment Management
+  Personal Finance
+  Entrepreneurial Tactics Accelerated
 Science
-  Elementry
+  Elementary
+  Intermediate
   Chemistry
+  AP Chemistry
   Biology
-  Phyisics
-Languages
-  Spanish French Etc.
-    Elementry
-    1
-    2
-    3
-    4 ? AP
-    5 AP
-Music
-  Instruements
-    Level
+  AP Biology
+  Human Anatomy and Physiology
+  Physics
+  AP Physics 1
+  AP Physics 2
+  AP Physics C
+  AP Environmental Science
+  Earth Science
+World Languages
+  Spanish
+    Elementary
+    Intermediate
+    Spanish 1
+    Spanish 2
+    Spanish 3
+    Spanish 4
+    AP Spanish 5 Language and Culture
+    AP Spanish 6 Literature and Culture
+  French
+    Elementary
+    Intermediate
+    French 1
+    French 2
+    French 3
+    French 4
+    AP French 5
+  Chinese 
+    Elementary
+    Intermediate
+    Chinese 1
+    Chinese 2
+    AP Chinese
+  German
+    Elementary
+    Intermediate
+    German 1
+    German 2
+    German 3
+    AP German
+  Hebrew
+    Elementary
+    Intermediate
+    Hebrew 1
+    Hebrew 2
+    Hebrew 3
+    Hebrew 4
+  Latin
+    Elementary
+    Intermediate
+    Latin 1
+    Latin 2
+    Latin 3
+    AP Latin Vergil
+  Italian
+    Elementary
+    Intermediate
+    High School/AP
+  Japanese
+    Elementary
+    Intermediate
+    High School/AP
+Fine Arts - Music
+  Orchestra 
+    Violin
       Beginner
       Intermediate
       Advanced
+    Cello
+      Beginner
+      Intermediate
+      Advanced
+    Viola
+      Beginner
+      Intermediate
+      Advanced
+    Bass 
+      Beginner 
+      Intermediate 
+      Advanced
+    Harp
+      Beginner
+      Intermediate
+      Advanced
+  Band
+    Trumpet 
+      Beginner
+      Intermediate
+      Advanced
+    Trombone
+      Beginner
+      Intermediate
+      Advanced
+    French Horn 
+      Beginner
+      Intermediate
+      Advanced
+    Saxophone
+      Beginner
+      Intermediate
+      Advanced
+    Oboe
+      Beginner
+      Intermediate
+      Advanced
+    Bassoon 
+      Beginner
+      Intermediate
+      Advanced
+    Clarinet
+      Beginner
+      Intermediate
+      Advanced
+    Bass Clarinet
+      Beginner
+      Intermediate
+      Advanced
+    Baritone
+      Beginner
+      Intermediate
+      Advanced   
+    Tuba
+      Beginner
+      Intermediate
+      Advanced
+    Flute
+      Beginner
+      Intermediate
+      Advanced
+    Piccolo
+      Beginner
+      Intermediate
+      Advanced
+    Percussion
+      Beginner
+      Intermediate
+      Advanced
+    Piano
+      Beginner
+      Intermediate
+      Advanced
+  Acoustic/Electric Guitar
+    Beginner
+    Intermediate
+    Advanced
+  Bass Guitar
+    Beginner
+    Intermediate
+    Advanced
+  Chorus - vocal lessons
+  Music Theory - including AP
+  Indian Classical Carnatic Music
+Fine Arts - Art
+  Drawing
+  Painting
+  Studio Art
+  Computer Art
+  Ceramics
+  Sculpture
+  Metals and Jewelry
+  AP Art: Drawing, 2D and 3D design
+  Photography - including AP Photography & Digital Design
+  AP Art History
+Standardized Testing
+  ACT
+    Plan
+    Explore
+  PSAT/SAT
+  SAT Subject Tests
+    SAT Subject Test Literature 
+    SAT Subject Test United States History
+    SAT Subject Test World History 
+    SAT Subject Test in Mathematics Level 1
+    SAT Subject Test in Mathematics Level 2
+    SAT Subject Test in Biology E/M
+    SAT Subject Test in Chemistry 
+    SAT Subject Test in Physics 
+    SAT Subject Test in Physics 
+    SAT Subject Test in Chinese with Listening 
+    SAT Subject Test in French
+    SAT Subject Test in French with Listening 
+    SAT Subject Test in German
+    SAT Subject Test in German with Listening 
+    SAT Subject Test in Modern Hebrew
+    SAT Subject Test in Italian  
+    SAT Subject Test in Japanese with Listening 
+    SAT Subject Test in Korean with Listening
+    SAT Subject Test in Latin
+    SAT Subject Test in Spanish
+    SAT Subject Test in Spanish with Listening    
+    
