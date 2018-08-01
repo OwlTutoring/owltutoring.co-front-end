@@ -56,7 +56,9 @@ export default {
           console.log(e);
           MessageStore.methods.showMessage(e.response.data.message, true);
         });
-      }
+      } else {
+      	AccountStore.methods.refreshAccount();
+	}
     if(AccountStore.data.account != null && AccountStore.data.account.emailVertified) {
       MessageStore.methods.showMessage("Email Vertified", false);
       _this.$router.push({ path: "/" + (_this.nextPage != null ? _this.nextPage : "") + (_this.nextPage.toLowerCase() == "sessions" ? "?addNew=true" : "") });

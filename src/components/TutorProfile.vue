@@ -101,7 +101,7 @@ import SubjectTypesStore from "../stores/SubjectTypesStore";
 
 Vue.component("subject-select", {
   props: ["subjectObj", "selectedSubjects", "parent"],
-  template: "<div><div v-for=\"subject in subjectObj.subList\"><input type=\"checkbox\" :id=\"subject.subject\" :value=\"subject.subject\" v-model=\"selectedSubjects[parent +':'+ subject.subject]\"><label :for=\"subject.subject\">{{subject.subject}}</label><div class=\"sub-list\" v-if=\"subject.subList != null && selectedSubjects[parent +':'+ subject.subject]\"><subject-select :subjectObj=\"subject\" :selectedSubjects=\"selectedSubjects\" :parent=\"parent +':'+ subject.subject\"/></div></div></div>"
+  template: "<div><div v-for=\"subject in subjectObj.sublist\"><input type=\"checkbox\" :id=\"parent + subject.subject\" :value=\"subject.subject\" v-model=\"selectedSubjects[parent +':'+ subject.subject]\"><label :for=\"parent + subject.subject\">{{subject.subject}}</label><div class=\"sub-list\" v-if=\"subject.sublist != null && selectedSubjects[parent +':'+ subject.subject]\"><subject-select :subjectObj=\"subject\" :selectedSubjects=\"selectedSubjects\" :parent=\"parent +':'+ subject.subject\"/></div></div></div>"
 });
 
 export default {
