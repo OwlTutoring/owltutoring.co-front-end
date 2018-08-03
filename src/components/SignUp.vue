@@ -91,7 +91,11 @@ export default {
         MessageStore.methods.showMessage("Error, Please Select if you are a parent or student", true);
         return;
       }
-      
+      if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email))) {
+        MessageStore.methods.showMessage("Error, Invalid Email", true);
+        return;
+      }
+
       //TODO: add more restrictions
       if(this.password.length < 6) {
         MessageStore.methods.showMessage("Password must be at least 6 charachters",true);
