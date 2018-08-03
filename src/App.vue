@@ -22,7 +22,7 @@
           </div>
           <div class="cover" id="cover-a">
           </div>
-          <div class="cover"id="cover-b">
+          <div class="cover" id="cover-b">
           </div>
           <div id="binding">
           </div>
@@ -40,6 +40,7 @@
           <router-link class= "nav-item nav-link" to="/">Home</router-link>
           <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
           <router-link class= "nav-item nav-link" to="/account">Account</router-link>
+          <router-link v-if="AccountStore.account.accountType == 'Tutor'" class= "nav-item nav-link" to="/tutorProfile">Profile</router-link>
           <router-link class= "nav-item nav-link" to="/sessions">Sessions</router-link>
           <button class= "nav-item color-button" v-on:click="logout()">logout</button>  
         </div>
@@ -201,7 +202,7 @@ h2 {
   margin-right: 50%;
   text-align: center;
   color: white;
-  animation: popInOut 3.1s ease-in-out backwards 1;
+  animation: popInOut 5.1s ease-in-out backwards 1;
   z-index: 5;
 }
 .errorAlert {

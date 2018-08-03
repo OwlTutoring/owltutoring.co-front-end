@@ -96,6 +96,7 @@
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
 import AccountStore from "../stores/AccountStore";
+import LoadingStateStore from "../stores/LoadingStateStore";
 import Vue from "vue";
 import SubjectTypesStore from "../stores/SubjectTypesStore";
 
@@ -129,6 +130,7 @@ export default {
     if(!AccountStore.data.account.emailVertified) {
       _this.$router.push({ path: "/VertifyEmail/TutorProfile"});
     }
+    LoadingStateStore.methods.addLoading();
     axios
       .post(
         "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getTutorProfile",
@@ -153,11 +155,13 @@ export default {
         _this.experience = response.data.experience == "NULL" ? "" : response.data.experience;
         _this.shortBio = response.data.shortBio == "NULL" ? "" : response.data.shortBio;
         _this.otherInfo = response.data.otherInfo == "NULL" ? "" : response.data.otherInfo;
+        LoadingStateStore.methods.removeLoading();
         
       })
       .catch(function(e) {
         console.log(e);
         MessageStore.methods.showMessage(e.response.data.message, true);
+        LoadingStateStore.methods.removeLoading();
         //this.errors.push(e)
       });
   },

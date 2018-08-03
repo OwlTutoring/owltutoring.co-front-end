@@ -16,7 +16,7 @@ const accountStore = {
       accountStore.methods.refreshAccount();
       console.log("logged IN!");
     },
-    refreshAccount: function () {
+    refreshAccount: function (callback) {
       if(!localStorage.getItem("token")) {
         accountStore.data.account = null;
         return;
@@ -32,6 +32,9 @@ const accountStore = {
           // JSON responses are automatically parsed.
           console.log(response);
           accountStore.data.account = response.data;
+          if(callback) {
+            callback();
+          }
         })
         .catch(function (e) {
           LoadingStateStore.methods.removeLoading();

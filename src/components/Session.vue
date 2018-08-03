@@ -129,13 +129,13 @@ export default {
     };
   },
   created: function() {
-    LoadingStateStore.methods.addLoading();
     var _this = this;
     if (AccountStore.data.account == null) {
       AccountStore.methods.refreshAccount();
     }
     if (this.session.isnew) {
       this.editing = true;
+      LoadingStateStore.methods.addLoading();
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/getRelatedAccountInfo",

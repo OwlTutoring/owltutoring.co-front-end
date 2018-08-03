@@ -32,6 +32,8 @@ import Session from "./Session.vue";
 import axios from "axios";
 import MessageStore from "../stores/MessageStore";
 import AccountStore from "../stores/AccountStore";
+import LoadingStateStore from "../stores/LoadingStateStore";
+
 export default {
   props: {
     display: {
@@ -84,11 +86,12 @@ export default {
     document.title = "Sessions - Owl Tutoring";
     var _this = this;
     if (AccountStore.data.account == null) {
-      AccountStore.methods.refreshAccount();
-    }
-    if(!AccountStore.data.account.emailVertified) {
-      console.log("Account not vertified");
-      _this.$router.push({ path: "/VertifyEmail/Sessions"});
+      AccountStore.methods.refreshAccount(function() {
+        if(AccountStore.data.account && !AccountStore.data.account.emailVertified) {
+          console.log("Account not vertified");
+          _this.$router.push({ path: "/VertifyEmail/Sessions"});
+        }
+      });
     }
     LoadingStateStore.methods.addLoading();
     axios

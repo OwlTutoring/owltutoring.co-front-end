@@ -15,7 +15,7 @@ const MessageStore = {
             setTimeout( function() {
                 console.log("timeout end");
                 MessageStore.data.show = false;
-            }, 3000);
+            }, 5000);
         }
     },
 };
