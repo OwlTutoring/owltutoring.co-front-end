@@ -49,7 +49,7 @@ subject: "AP Computer Science A",
 subject: "AP Computer Science Principles",
 },
 {
-subject: "Mobile App Development and Programming - is this a new class",
+subject: "Mobile App Development and Programming",
 },
 {
 subject: "PLTW Introduction to Engineering Design",

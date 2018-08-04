@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <head>
-      <title>Owltutoring</title>
+      <title>Owl Tutoring</title>
     </head>
     <div id="content">
       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,8e 00" rel="stylesheet">
@@ -31,10 +31,10 @@
           </div>
         </div>
       </transition>
-      <div class="head">
+      <div class="head" id="head">
         <div class="title-container">
-          <img class="logo" src="https://github.com/Owltutoring/WebsiteImages/blob/master/owl.png?raw=true">
-          <h1 class="title">Owl Tutoring</h1>
+          <img class="logo" id="nav-logo" src="https://github.com/Owltutoring/WebsiteImages/blob/master/owl.png?raw=true">
+          <h1 class="title" id="nav-title">Owl Tutoring</h1>
         </div>
         <div class="nav-grid" v-if="AccountStore.account != null">
           <router-link class= "nav-item nav-link" to="/">Home</router-link>
@@ -66,6 +66,22 @@ import AccountStore from "./stores/AccountStore";
 import MessageStore from "./stores/MessageStore";
 import LoadingStateStore from "./stores/LoadingStateStore";
 
+window.onscroll = function() {
+  console.log("scroll");
+  const distanceY = window.pageYOffset || document.documentElement.scrollTop;
+  if(distanceY > 70) {
+    document.getElementById("nav-logo").classList.add("small-logo");
+    document.getElementById("head").classList.add("shrunk-head");
+    document.getElementById("nav-title").classList.add("shrunk-title");
+  } 
+  if(distanceY < 20) {
+    document.getElementById("nav-logo").classList.remove("small-logo");
+    document.getElementById("head").classList.remove("shrunk-head");
+    document.getElementById("nav-title").classList.remove("shrunk-title");
+  }
+  
+}
+
 export default {
   name: "app",
   data: function() {
@@ -96,6 +112,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin: 0;
+  font-size: 2vh;
 }
 .grid-margin-container {
   display: grid;
@@ -176,6 +193,8 @@ h2 {
   align-items: stretch;
   flex-direction: row;
   justify-content: space-around;
+  
+  
 }
 .nav-item {
   display: flex;
@@ -208,9 +227,27 @@ h2 {
 .errorAlert {
   background-color: tomato;
 }
+#nav-title {
+  
+}
+.shrunk-title {
+  display: none;
+  width: 0;
+}
+#nav-logo {
+  -webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-ms-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+}
 .logo {
   width:5em;
   height:5em;
+}
+.small-logo {
+  width:3em;
+  height:3em;
 }
 input {
   font-family: 'Montserrat', sans-serif;
@@ -242,6 +279,22 @@ a {
   padding: 1em;
   padding-bottom: 1.5em;
   margin: 0;
+  z-index: 6;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+    top: 0;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: auto;
+  -webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-ms-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+.shrunk-head {
+  grid-template-rows: auto;
+  grid-template-columns: min-content auto;
 }
 footer {
   color: white;
@@ -266,7 +319,7 @@ footer {
   background-color: white;
   display: block;
   position: fixed;
-  z-index: 5;
+  z-index: 3;
   width: 100vw;
   height: 100vh;
 }
