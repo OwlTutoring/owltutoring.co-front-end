@@ -42,7 +42,8 @@
           <router-link class= "nav-item nav-link" to="/">Home</router-link>
           <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
           <router-link class= "nav-item nav-link" to="/account">Account</router-link>
-          <router-link v-if="AccountStore.account.accountType == 'Tutor'" class= "nav-item nav-link" to="/tutorProfile">Profile</router-link>
+          <router-link v-if="AccountStore.account.accountType == 'Tutor' && !AccountStore.account.done" class= "nav-item nav-link" to="/tutorProfile">Apply</router-link>
+          <router-link v-if="AccountStore.account.accountType == 'Tutor' && AccountStore.account.done" class= "nav-item nav-link" to="/tutorProfile">Profile</router-link>
           <router-link class= "nav-item nav-link" to="/sessions">Sessions</router-link>
           <button class= "nav-item color-button" v-on:click="logout()">logout</button>  
         </div>
