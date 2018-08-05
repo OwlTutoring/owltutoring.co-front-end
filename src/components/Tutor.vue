@@ -12,7 +12,7 @@
     <div class= "more-info-grid" v-if="expanded">
       <h4 class="phone">Phone: <a :href= "'sms:' + tutor.phone">{{formatedPhone}}</a></h4>
       <h4 class="email">Email: <a :href= "'mailto:' + tutor.email">{{tutor.email}}</a></h4>
-      <tutor-subjects :subjects="subjectList" parent="*"/>
+      <tutor-subjects class ="subjects-container" :subjectObj="subjectOptions" :selectedSubjects="subjectList" parent="*"/>
       <p class="experience"><b>Experience:</b> {{tutor.experience}}</p>
       <p class="bio"><b>Bio:</b> {{tutor.bio}}</p>
     </div>
@@ -34,10 +34,11 @@ import MessageStore from "../stores/MessageStore";
 import AccountStore from "../stores/AccountStore";
 import LoadingStateStore from "../stores/LoadingStateStore";
 import Vue from "vue";
+import SubjectTypesStore from "../stores/SubjectTypesStore";
 
 Vue.component("tutor-subjects", {
-  props: [ "subjects", "parent"],
-  template: "<div><div v-for=\"subject in subjects.sublist\"><div >{{subject.subject}}</div><div class=\"sub-list\" v-if=\"subject.sublist != null && selectedSubjects[parent +':'+ subject.subject]\"><subject-select :subjects=\"subjects\" :parent=\"parent +':'+ subject.subject\"/></div></div></div>"
+  props: ["subjectObj", "selectedSubjects", "parent"],
+  template: "<div ><div v-for=\"subject in subjectObj.sublist\">  <div v-if=\"selectedSubjects[parent +':'+ subject.subject.toLowerCase()]\">{{subject.subject}}</div>  <tutor-subjects class=\"indent-list\" v-if=\"subject.sublist != null && selectedSubjects[parent +':'+ subject.subject.toLowerCase()]\" :subjectObj=\"subject\" :selectedSubjects=\"selectedSubjects\" :parent=\"parent +':'+ subject.subject.toLowerCase()\"/></div></div>",
 });
 
 export default {
@@ -48,6 +49,7 @@ export default {
       expanded: false,
       AccountStore: AccountStore.data,
       showLoginSignup: false,
+      subjectOptions: SubjectTypesStore.data.subjects,
     };
   },
   computed: {
@@ -249,5 +251,9 @@ function creatListString(list) {
   top: 0;
   left: 0;
   padding-top: 50vh;
+}
+.subjects-container {
+  column-count: 3;
+  grid-column: 1 / 3;
 }
 </style>
