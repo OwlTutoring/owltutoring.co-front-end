@@ -3,7 +3,7 @@
     <head>
       <title>Owl Tutoring</title>
     </head>
-    <div id="content">
+    <div id="content" v-on:click="showPopUp = false">
       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,8e 00" rel="stylesheet">
       <div :class="['alert', { errorAlert: messageStore.isError }]" v-if="messageStore.show">
         {{messageStore.message}}
@@ -51,6 +51,9 @@
           <router-link class= "nav-item nav-link" to="/login">Login</router-link>
         </div>
       </div>
+      <div class="popUp" v-if="showPopUp">
+        Welcome to the new Owl Tutoring website! With our new site we hope to provide you a better experience. We are currently transitioning from our old site. If you are a customer looking to pay or schedule a lesson please use our old website <a href="https://owltutoring.squarespace.com">owltutoring.squarespace.com</a> for the moment. If you are looking to sign up as a tutor please do so on this site. Thank You for your patience.<br> -The Owl Tutoring Dev Team.
+      </div>
       <router-view/>
     </div>
     <footer>
@@ -89,7 +92,8 @@ export default {
       AccountStore: AccountStore.data,
       messageStore: MessageStore.data,
       LoadingStateStore: LoadingStateStore.data,
-      year: new Date().getFullYear()
+      year: new Date().getFullYear(),
+      showPopUp: true
     };
   },
   methods: {
@@ -469,5 +473,13 @@ footer {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+.popUp {
+  position: absolute;
+  top: 0;
+  background-color: white;
+  z-index: 20;
+  font-size: 2em;
+  padding: 2em;
 }
 </style>
