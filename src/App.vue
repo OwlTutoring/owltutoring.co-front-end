@@ -73,7 +73,6 @@ import MessageStore from "./stores/MessageStore";
 import LoadingStateStore from "./stores/LoadingStateStore";
 
 window.onscroll = function() {
-  console.log("scroll");
   const distanceY = window.pageYOffset || document.documentElement.scrollTop;
   if(distanceY > 70) {
     document.getElementById("nav-logo").classList.add("small-logo");

@@ -8,11 +8,11 @@
     </div>
     <div v-on:click="moreInfo()" class="short-bio">{{tutor.shortBio}}</div>
     <h4 v-on:click="moreInfo()" class="subjects">{{tutor.subjectsDesc}}</h4>
-    <h4 v-on:click="moreInfo()" class="levels">{{levelsList}}</h4>
     <h4 v-on:click="moreInfo()" class="town">{{tutor.town + ", " + tutor.usState}}</h4>
     <div class= "more-info-grid" v-if="expanded">
       <h4 class="phone">Phone: <a :href= "'sms:' + tutor.phone">{{formatedPhone}}</a></h4>
       <h4 class="email">Email: <a :href= "'mailto:' + tutor.email">{{tutor.email}}</a></h4>
+      <tutor-subjects :subjects="subjectList" parent="*"/>
       <p class="experience"><b>Experience:</b> {{tutor.experience}}</p>
       <p class="bio"><b>Bio:</b> {{tutor.bio}}</p>
     </div>
@@ -33,6 +33,13 @@ import axios from "axios";
 import MessageStore from "../stores/MessageStore";
 import AccountStore from "../stores/AccountStore";
 import LoadingStateStore from "../stores/LoadingStateStore";
+import Vue from "vue";
+
+Vue.component("tutor-subjects", {
+  props: [ "subjects", "parent"],
+  template: "<div><div v-for=\"subject in subjects.sublist\"><div >{{subject.subject}}</div><div class=\"sub-list\" v-if=\"subject.sublist != null && selectedSubjects[parent +':'+ subject.subject]\"><subject-select :subjects=\"subjects\" :parent=\"parent +':'+ subject.subject\"/></div></div></div>"
+});
+
 export default {
   props: ["tutor"],
   name: "Tutor",
@@ -48,10 +55,7 @@ export default {
       return "?connectAccountID=" + this.tutor.ID;
     },
     subjectList: function() {
-      return creatListString(this.tutor.subjects);
-    },
-    levelsList: function() {
-      return creatListString(this.tutor.levels);
+      return this.parseSubjectDataString(this.tutor.subjects);
     },
     formatedPhone: function() {
       var phoneString = this.tutor.phone;
@@ -59,6 +63,21 @@ export default {
     }
   },
   methods: {
+    parseSubjectDataString: function(string) {
+      var newSubjects ={};
+      if (string == null) {
+        console.log("no subjects");
+        return {};
+      }
+      var array = string.split(",");
+      for (var entry in array) {
+        if (array[entry] != "") {
+          newSubjects[array[entry]] = true;
+        }
+      }
+      console.log(newSubjects);
+      return newSubjects;
+    },
     chosseTutor: function() {
       var _this = this;
 

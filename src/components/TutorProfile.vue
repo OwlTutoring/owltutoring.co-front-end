@@ -102,7 +102,7 @@ import SubjectTypesStore from "../stores/SubjectTypesStore";
 
 Vue.component("subject-select", {
   props: ["subjectObj", "selectedSubjects", "parent"],
-  template: "<div><div v-for=\"subject in subjectObj.sublist\"><input type=\"checkbox\" :id=\"parent + subject.subject\" :value=\"subject.subject\" v-model=\"selectedSubjects[parent +':'+ subject.subject]\"><label :for=\"parent + subject.subject\">{{subject.subject}}</label><div class=\"sub-list\" v-if=\"subject.sublist != null && selectedSubjects[parent +':'+ subject.subject]\"><subject-select :subjectObj=\"subject\" :selectedSubjects=\"selectedSubjects\" :parent=\"parent +':'+ subject.subject\"/></div></div></div>"
+  template: "<div><div v-for=\"subject in subjectObj.sublist\"><input type=\"checkbox\" :id=\"parent + subject.subject\"  v-model=\"selectedSubjects[parent +':'+ subject.subject.toLowerCase()]\"><label :for=\"parent + subject.subject.toLowerCase()\">{{subject.subject}}</label><div class=\"sub-list\" v-if=\"subject.sublist != null && selectedSubjects[parent +':'+ subject.subject.toLowerCase()]\"><subject-select :subjectObj=\"subject\" :selectedSubjects=\"selectedSubjects\" :parent=\"parent +':'+ subject.subject.toLowerCase()\"/></div></div></div>"
 });
 
 export default {
@@ -127,8 +127,13 @@ export default {
   },
   created: function() {
     var _this = this;
-    if(!AccountStore.data.account.emailVertified) {
-      _this.$router.push({ path: "/VertifyEmail/TutorProfile"});
+    if (AccountStore.data.account == null) {
+      AccountStore.methods.refreshAccount(function() {
+        if(AccountStore.data.account && !AccountStore.data.account.emailVertified) {
+          console.log("Account not vertified");
+          _this.$router.push({ path: "/VertifyEmail/Sessions"});
+        }
+      });
     }
     LoadingStateStore.methods.addLoading();
     axios
@@ -182,7 +187,10 @@ export default {
       return newSubjects;
     },
     getSubjectDataString: function() {
+
       console.log(this.selectedSubjects);
+      
+      // Clear hidden value that were previously selected
       for (var subject in this.selectedSubjects) {
         if (
           this.selectedSubjects.hasOwnProperty(subject) &&
