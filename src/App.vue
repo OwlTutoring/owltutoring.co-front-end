@@ -32,10 +32,12 @@
         </div>
       </transition>
       <div class="head" id="head">
+        <router-link class="title-link" to="/">
         <div class="title-container">
           <img class="logo" id="nav-logo" src="https://github.com/Owltutoring/WebsiteImages/blob/master/owl.png?raw=true">
           <h1 class="title" id="nav-title">Owl Tutoring</h1>
         </div>
+        </router-link>
         <div class="nav-grid" v-if="AccountStore.account != null">
           <router-link class= "nav-item nav-link" to="/">Home</router-link>
           <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
@@ -232,7 +234,7 @@ h2 {
   background-color: tomato;
 }
 #nav-title {
-  
+
 }
 .shrunk-title {
   display: none;
@@ -260,7 +262,10 @@ a {
   color: inherit;
 }
 .title-container {
-  display:flex;
+  display: flex;
+}
+.title-link {
+  text-decoration: none;
 }
 @keyframes popInOut {
   100% {
