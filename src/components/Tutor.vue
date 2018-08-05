@@ -4,7 +4,7 @@
     <div v-on:click="moreInfo()" class="line-one-grid">
       <h1 class="name">{{tutor.firstName}} {{tutor.lastName}}</h1>
       <h3 class="grade">{{tutor.grade}}th Grade</h3>
-      <h3 class="rate">${{tutor.rate}}</h3>
+      <h3 class="rate">${{tutor.rate}}/hr</h3>
     </div>
     <div v-on:click="moreInfo()"class="short-bio">{{tutor.shortBio}}</div>
     <h4 v-on:click="moreInfo()" class="subjects">{{tutor.subjectsDesc}}</h4>
