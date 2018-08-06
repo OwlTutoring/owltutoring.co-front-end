@@ -159,6 +159,7 @@ export default {
   grid-auto-columns: auto auto;
   margin-bottom: 20vh;
 }
+
 .wide-input {
   grid-column: span 2;
 }
@@ -209,5 +210,19 @@ export default {
 }
 .checkbox-desc {
   text-align: left;
+}
+@media only screen and (max-device-width: 480px) {
+  .signup-grid {
+    grid-auto-columns: auto;
+  }
+  #lastName {
+    grid-column: 1 /1;
+  }
+  .wide-input {
+    grid-column: span 1;
+  }
+  .remove-button {
+    grid-column: 1 / 1;
+  }
 }
 </style>

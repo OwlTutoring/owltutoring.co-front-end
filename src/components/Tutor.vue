@@ -164,6 +164,7 @@ function creatListString(list) {
   width: 20vw;
   grid-column: 1 / 2;
   grid-row: 1 / 4;
+  display: block;
 }
 .line-one-grid {
   grid-column: 2 / 5;
@@ -190,10 +191,6 @@ function creatListString(list) {
 }
 .subjects {
   grid-column: 2 / 5;
-  grid-row: 3 / 3;
-}
-.levels {
-  grid-column: 4 / 5;
   grid-row: 3 / 3;
 }
 
@@ -255,5 +252,80 @@ function creatListString(list) {
 .subjects-container {
   column-count: 3;
   grid-column: 1 / 3;
+}
+@media only screen and (max-device-width: 480px) {
+  .tutor-grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 1em; 
+  }
+  .profile-image {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    width: 90vw;
+  }
+  .line-one-grid {
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template-columns: auto;
+    grid-row: 2 / span 1;
+  }
+  .name {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+  }
+  .grade {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+  }
+  .rate {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+  }
+  .short-bio {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+  }
+  .subjects {
+    grid-column: 1 / span 1;
+    grid-row: 4 / span 1;
+  }
+
+  .more-info-grid {
+    grid-column: 1 / span 1;
+    display: grid;
+    grid-template-columns: auto;
+    grid-row: 6 / span 1;
+  }
+  .phone {
+    grid-column: 1 / 1;
+  }
+  .email {
+    grid-column: 1 / span 1;
+  }
+  .experience {
+    grid-column: 1 / span 1;
+  }
+  .bio {
+    grid-column: 1 / span 1;
+  }
+
+  .town {
+    grid-column: 1 / span 1;
+    grid-row: 5 / span 1;
+    margin: .1em;
+  }
+  .button-one {
+    grid-column: 1 / span 1;
+    grid-row: 7 / span 1;
+  }
+  .button-two {
+    grid-column: 1 / span 1;
+    grid-row: 8 / span 1;
+  }
+  .subjects-container {
+  column-count: 1;
+  grid-column: 1 / span 1;
+}
 }
 </style>

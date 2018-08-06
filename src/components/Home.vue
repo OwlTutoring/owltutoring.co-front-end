@@ -21,7 +21,7 @@
       <img class="college-three college-image" src="https://github.com/Owltutoring/WebsiteImages/blob/master/northwestern.gif?raw=true">
       <img class="college-four college-image" src="https://github.com/Owltutoring/WebsiteImages/blob/master/cornell.png?raw=true">
     </div>
-    <h1>Personal and Relateable</h1>
+    <h1>Personal and Relatable</h1>
     <div class="centered-margin-text"> Owl Tutoring provides student tutors who previously took the same classes as their students, allowing them to better understand how their students can effectively learn.</div>
     <br>
     <br>
