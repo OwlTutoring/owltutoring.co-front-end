@@ -3,7 +3,7 @@
     <input class="search-input" placeholder="Subject" v-model="subjectVal" id="subject">
     <input class="search-input" placeholder="Zip Code" v-model="zipCodeVal" id="zipCode">
     <input class="search-input" type="number" placeholder="distance" v-model="distanceVal"  min="1" max="5" id="distance"><div class="miles-desc">miles away</div>
-    <router-link class= "color-button" :to="'Tutors'+ requestString">Find Tutors</router-link>
+    <router-link class= "color-button" id="search-button" :to="'Tutors'+ requestString">Find Tutors</router-link>
   </form>
 </template>
 
@@ -83,5 +83,25 @@ export default {
 .miles-desc {
   text-align: left;
   display: inline;
+}
+@media only screen and (max-device-width: 480px) {
+  .tutor-search {
+    display: grid;
+  }
+  .search-input {
+    grid-column: 1 / span 2;
+    font-size: 1.7em;
+  }
+  #distance {
+    grid-column: 1 / span 1;
+  }
+  .miles-desc {
+    grid-column: 2 / span 1;
+    font-size: 1.7em;
+  }
+  #search-button {
+    grid-column: 1 / span 2;
+    font-size: 1.7em;
+  }
 }
 </style>

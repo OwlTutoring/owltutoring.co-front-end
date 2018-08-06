@@ -489,4 +489,9 @@ footer {
   margin: 1em;
 }
 .indent-list { padding-left: 1em;   }
+@media only screen and (max-device-width: 480px) {
+  #app {
+  font-size: 2vh;
+}
+}
 </style>
