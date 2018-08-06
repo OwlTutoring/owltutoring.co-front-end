@@ -486,6 +486,7 @@ footer {
   z-index: 20;
   font-size: 2em;
   padding: 2em;
+  margin: 1em;
 }
 .indent-list { padding-left: 1em;   }
 </style>
