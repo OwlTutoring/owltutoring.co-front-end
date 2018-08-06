@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-on:ma>
     <head>
       <title>Owl Tutoring</title>
     </head>
@@ -32,27 +32,31 @@
         </div>
       </transition>
       <div class="head" id="head">
+        
+          <div class="box-shadow-menu" v-on:click="toggleMenu()"></div>
         <router-link class="title-link" to="/">
         <div class="title-container">
           <img class="logo" id="nav-logo" src="https://github.com/Owltutoring/WebsiteImages/blob/master/owl.png?raw=true">
-          <h1 class="title" id="nav-title">Owl Tutoring</h1>
+          <h1 class="title" id="nav-title">Owl Tutoring</h1> 
         </div>
         </router-link>
-        <div class="nav-grid" v-if="AccountStore.account != null">
+         
+        <div class="nav-grid" v-if="AccountStore.account != null && showMenu" v-on:click="adjustSize()">
           <router-link class= "nav-item nav-link" to="/">Home</router-link>
           <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
           <router-link class= "nav-item nav-link" to="/account">Account</router-link>
           <router-link v-if="AccountStore.account.accountType == 'Tutor' && !AccountStore.account.done" class= "nav-item nav-link" to="/tutorProfile">Apply</router-link>
           <router-link v-if="AccountStore.account.accountType == 'Tutor' && AccountStore.account.done" class= "nav-item nav-link" to="/tutorProfile">Profile</router-link>
           <router-link class= "nav-item nav-link" to="/sessions">Sessions</router-link>
-          <button class= "nav-item color-button" v-on:click="logout()">logout</button>  
+          <button class= "nav-item color-button" v-on:click="logout()">logout</button> 
         </div>
-        <div class="nav-grid" v-else>
+        <div class="nav-grid" v-else-if="showMenu" v-on:click="adjustSize()">
           <router-link class= "nav-item nav-link" to="/">Home</router-link>
           <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
           <router-link class= "nav-item nav-link" to="/SignUp">Sign Up</router-link>
           <router-link class= "nav-item nav-link" to="/login">Login</router-link>
         </div>
+          
       </div>
       <div class="popUp" v-if="showPopUp">
         Welcome to the new Owl Tutoring website! With our new site we hope to provide you a better experience. We are currently transitioning from our old site. If you are a customer looking to pay or schedule a lesson please use our old website <a href="https://owltutoring.squarespace.com">owltutoring.squarespace.com</a> for the moment. If you are looking to sign up as a tutor please do so on this site. Thank You for your patience.<br> -The Owl Tutoring Dev Team.
@@ -87,6 +91,7 @@ window.onscroll = function() {
   
 }
 
+
 export default {
   name: "app",
   data: function() {
@@ -95,17 +100,37 @@ export default {
       messageStore: MessageStore.data,
       LoadingStateStore: LoadingStateStore.data,
       year: new Date().getFullYear(),
-      showPopUp: true
+      showPopUp: true,
+      showMenu: true,
     };
   },
   methods: {
+    toggleMenu: function() {
+      console.log(this.showMenu);
+      if(this.showMenu) {
+        this.showMenu = false;
+      } else {
+        this.showMenu = true;
+      }
+    },
     logout: function() {
       AccountStore.methods.logout();
-    }
+    },
+    adjustSize() {
+      console.log("adjust");
+      if (window.matchMedia("(max-device-width: 480px)").matches) {
+        this.showMenu = false;
+      } else {
+        this.showMenu = true;
+      }
+    },
   },
   created: function() {
     LoadingStateStore.methods.removeLoading();
     AccountStore.methods.refreshAccount();
+
+    this.adjustSize() // Call listener function at run time
+    window.matchMedia("(max-device-width: 480px)").addListener(this.adjustSize) // Attach listener function on state changes
   }
 };
 </script>
@@ -199,9 +224,8 @@ h2 {
   align-items: stretch;
   flex-direction: row;
   justify-content: space-around;
-  
-  
 }
+
 .nav-item {
   display: flex;
   align-items: center;
@@ -228,7 +252,7 @@ h2 {
   text-align: center;
   color: white;
   animation: popInOut 5.1s ease-in-out backwards 1;
-  z-index: 5;
+  z-index: 50;
 }
 .errorAlert {
   background-color: tomato;
@@ -250,6 +274,7 @@ h2 {
 .logo {
   width:5em;
   height:5em;
+  z-index: 5;
 }
 .small-logo {
   width:3em;
@@ -485,13 +510,54 @@ footer {
   background-color: white;
   z-index: 20;
   font-size: 2em;
-  padding: 2em;
-  margin: 1em;
+  padding: 1vw;
+  margin: 1vw;
 }
-.indent-list { padding-left: 1em;   }
+.indent-list { 
+  padding-left: 1em;   
+}
+.box-shadow-menu {
+  display: none;
+}
 @media only screen and (max-device-width: 480px) {
-  #app {
-  font-size: 2vh;
-}
+  .nav-grid {
+    flex-direction: column;
+    align-items:flex-end;
+    font-size: 2em;
+    padding-top: 3em;
+    position: absolute;
+    background-color: black;
+    width: 95vw;
+    padding-right: 5vw;
+    padding-bottom: 5vw;
+    z-index: 0;
+    
+  }
+  .head {
+    grid-auto-columns: auto auto;
+  }
+  .box-shadow-menu {
+    display: block;
+    position: absolute;
+    top: 1.5em;
+    right: 5vw;
+    width: 3em;
+    height: 3em;
+    z-index: 1;
+  }
+  .box-shadow-menu:before {
+    content: "";
+    position: absolute;
+    width: 3em;
+    height: 0.4em;
+    background: white;
+    box-shadow: 
+      0 0.9em 0 0 white,
+      0 1.8em 0 0 white;
+  }
+  .alert {
+    width: 90%;
+    margin-left: 2.5%;
+  }
 }
 </style>
