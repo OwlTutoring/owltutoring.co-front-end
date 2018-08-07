@@ -41,20 +41,20 @@
         </div>
         </router-link>
          
-        <div class="nav-grid" v-if="AccountStore.account != null && showMenu" v-on:click="adjustSize()">
-          <router-link class= "nav-item nav-link" to="/">Home</router-link>
-          <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
-          <router-link class= "nav-item nav-link" to="/account">Account</router-link>
-          <router-link v-if="AccountStore.account.accountType == 'Tutor' && !AccountStore.account.done" class= "nav-item nav-link" to="/tutorProfile">Apply</router-link>
-          <router-link v-if="AccountStore.account.accountType == 'Tutor' && AccountStore.account.done" class= "nav-item nav-link" to="/tutorProfile">Profile</router-link>
-          <router-link class= "nav-item nav-link" to="/sessions">Sessions</router-link>
-          <button class= "nav-item color-button" v-on:click="logout()">logout</button> 
+        <div class="nav-grid menu-grid" v-if="AccountStore.account != null && showMenu" v-on:click="adjustSize()">
+          <router-link class= "nav-item menu-item nav-link" to="/">Home</router-link>
+          <router-link class= "nav-item menu-item nav-link" to="/Tutors">Tutors</router-link>
+          <router-link class= "nav-item menu-item nav-link" to="/account">Account</router-link>
+          <router-link v-if="AccountStore.account.accountType == 'Tutor' && !AccountStore.account.done" class= "nav-item menu-item nav-link" to="/tutorProfile">Apply</router-link>
+          <router-link v-if="AccountStore.account.accountType == 'Tutor' && AccountStore.account.done" class= "nav-item menu-item nav-link" to="/tutorProfile">Profile</router-link>
+          <router-link class= "nav-item menu-item nav-link" to="/sessions">Sessions</router-link>
+          <button class= "nav-item menu-item color-button" v-on:click="logout()">logout</button> 
         </div>
-        <div class="nav-grid" v-else-if="showMenu" v-on:click="adjustSize()">
-          <router-link class= "nav-item nav-link" to="/">Home</router-link>
-          <router-link class= "nav-item nav-link" to="/Tutors">Tutors</router-link>
-          <router-link class= "nav-item nav-link" to="/SignUp">Sign Up</router-link>
-          <router-link class= "nav-item nav-link" to="/login">Login</router-link>
+        <div class="nav-grid menu-grid" v-else-if="showMenu" v-on:click="adjustSize()">
+          <router-link class= "nav-item menu-item nav-link" to="/">Home</router-link>
+          <router-link class= "nav-item menu-item nav-link" to="/Tutors">Tutors</router-link>
+          <router-link class= "nav-item menu-item nav-link" to="/SignUp">Sign Up</router-link>
+          <router-link class= "nav-item menu-item nav-link" to="/login">Login</router-link>
         </div>
           
       </div>
@@ -520,7 +520,7 @@ footer {
   display: none;
 }
 @media only screen and (max-device-width: 480px) {
-  .nav-grid {
+  .menu-grid {
     flex-direction: column;
     align-items:flex-end;
     font-size: 2em;
@@ -558,6 +558,9 @@ footer {
   .alert {
     width: 90%;
     margin-left: 2.5%;
+  }
+  .grid-margin-container {
+    grid-auto-columns: 5vw auto 5vw;
   }
 }
 </style>

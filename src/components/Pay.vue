@@ -41,7 +41,7 @@
           Save Card <input class="form-field" v-model="saveCard" type="checkbox">
         </div>
       </div>
-      <button @click="showConfirmation()" class="color-button">Continue to Confirmation</button>
+      <button @click="showConfirmation()" class="color-button continue-button">Continue to Confirmation</button>
       <div v-if="viewConfirmation" id="confirm-back">
         <div id="confirm-window">
           <h2>
@@ -65,7 +65,7 @@ import AccountStore from "../stores/AccountStore";
 import LoadingStateStore from "../stores/LoadingStateStore";
 
 // Create a Stripe client.
-var stripe = Stripe("pk_test_gheuGNTfHiHL1ULiFHNPxlzm");
+var stripe = Stripe("pk_test_gheuGNTfHiHL1ULiFHNPxlzm"); //pk_live_ewXOSu5rmNjJR9lMA13bLDsy");
 
 // Create an instance of Elements.
 var elements = stripe.elements();
@@ -85,10 +85,8 @@ export default {
         style: {
           base: {
             color: "#32325d",
-            lineHeight: "18px",
             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
             fontSmoothing: "antialiased",
-            fontSize: "16px",
             "::placeholder": {
               color: "#aab7c4"
             }
@@ -412,5 +410,32 @@ export default {
   border-color: #cccccc;
   top: 50%;
   transform: translateY(-50%);
+}
+@media only screen and (max-device-width: 480px),  only screen and (max-width: 480px){
+  #pay-row-one {
+    grid-auto-columns: auto;
+    grid-auto-rows: repeat(auto, 3);
+    text-align: center;
+    grid-gap: 1em;
+  }
+  #center-message {
+    grid-column: 1 /1;
+    text-align: center;
+  }
+  #cost {
+    grid-column: 1 /1;
+    text-align: center;
+  }
+  #pay {
+    font-size: 1em;
+  }
+  .StripeElement {
+    font-size: 3em;
+  }
+  .continue-button {
+    margin-top: 1em;
+    width: 100%;
+    font-size: 1.2em;
+  }
 }
 </style>
