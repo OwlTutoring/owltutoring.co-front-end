@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-on:ma>
+  <div id="app">
     <head>
       <title>Owl Tutoring</title>
     </head>
@@ -118,7 +118,7 @@ export default {
     },
     adjustSize() {
       console.log("adjust");
-      if (window.matchMedia("(max-device-width: 480px)").matches) {
+      if (window.matchMedia("(max-device-width: 480px)").matches || window.matchMedia("(max-width: 480px)").matches) {
         this.showMenu = false;
       } else {
         this.showMenu = true;
@@ -131,6 +131,7 @@ export default {
 
     this.adjustSize() // Call listener function at run time
     window.matchMedia("(max-device-width: 480px)").addListener(this.adjustSize) // Attach listener function on state changes
+    window.matchMedia("(max-width: 480px)").addListener(this.adjustSize)
   }
 };
 </script>
@@ -519,7 +520,7 @@ footer {
 .box-shadow-menu {
   display: none;
 }
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-device-width: 480px), only screen and (max-width: 480px) {
   .menu-grid {
     flex-direction: column;
     align-items:flex-end;

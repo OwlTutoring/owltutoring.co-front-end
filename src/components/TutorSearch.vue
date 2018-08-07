@@ -84,7 +84,7 @@ export default {
   text-align: left;
   display: inline;
 }
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-device-width: 480px),  only screen and (max-width: 480px) {
   .tutor-search {
     display: grid;
   }

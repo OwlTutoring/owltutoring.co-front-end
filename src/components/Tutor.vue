@@ -253,7 +253,7 @@ function creatListString(list) {
   column-count: 3;
   grid-column: 1 / 3;
 }
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-device-width: 480px),  only screen and (max-width: 480px) {
   .tutor-grid {
     display: grid;
     grid-template-columns: auto;
