@@ -116,7 +116,7 @@ export default {
     logout: function() {
       AccountStore.methods.logout();
     },
-    adjustSize() {
+    adjustSize: function() {
       console.log("adjust");
       if (window.matchMedia("(max-device-width: 480px)").matches || window.matchMedia("(max-width: 480px)").matches) {
         this.showMenu = false;

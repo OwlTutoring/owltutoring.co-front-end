@@ -610,4 +610,54 @@ export default {
 #year {
   width: 4.5em;
 }
+
+@media only screen and (max-device-width: 480px),  only screen and (max-width: 480px) {
+
+.session-container-row-1 {
+  grid-auto-columns: auto;
+  grid-auto-rows: auto auto auto auto;
+}
+.session-container-row-2 {
+  grid-auto-columns: auto;
+  grid-auto-rows: auto auto auto auto;
+}
+.time {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+}
+.date {
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+  text-align: left;
+}
+.location {
+  grid-column: 1 / span 1;
+  grid-row: 3 / span 1;
+}
+.length {
+  grid-column: 1 / span 1;
+  grid-row: 4 / span 1;
+  text-align: left;
+}
+.button-one {
+  grid-column: 1 / span 1;
+  grid-row: 3 / span 1;
+}
+.button-two {
+  grid-column: 1 / span 1;
+  grid-row: 4 / span 1;
+}
+.button-three {
+  grid-column: 1 / span 1;
+  grid-row: 5 / span 1;
+}
+.name {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+}
+.studentName {
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+}
+}
 </style>

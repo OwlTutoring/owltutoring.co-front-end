@@ -164,13 +164,7 @@ export default {
 };
 </script>
 
-<style>
-ul {
-  padding: 0;
-}
-li {
-  list-style: none;
-}
+<style scoped>
 .sessions-container {
   grid-column: 2 / 2;
 }
@@ -186,5 +180,10 @@ li {
 }
 .list-message {
   text-align: center;
+}
+@media only screen and (max-device-width: 480px),  only screen and (max-width: 480px) {
+  .ui-grid {
+    grid-template-columns: auto;
+  }
 }
 </style>
