@@ -6,6 +6,13 @@
       <h3 class="grade">{{tutor.grade}}th Grade</h3>
       <h3 class="rate">${{tutor.rate}}/hr</h3>
     </div>
+    <div>
+      <h3>dateCreated: {{tutor.dateCreated}}</h3>
+      <h3>refferalSource: {{tutor.refferalSource}}</h3>
+      <h3>refferalCode: {{tutor.refferalCode}}</h3>
+      <h3>other info: {{tutor.otherInfo}}</h3>
+      <h3>done: {{tutor.done}}</h3>
+    </div>
     <div v-on:click="moreInfo()" class="short-bio">{{tutor.shortBio}}</div>
     <h4 v-on:click="moreInfo()" class="subjects">{{tutor.subjectsDesc}}</h4>
     <h4 v-on:click="moreInfo()" class="town">{{tutor.town + ", " + tutor.usState}}</h4>
