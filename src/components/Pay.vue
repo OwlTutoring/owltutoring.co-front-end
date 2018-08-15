@@ -65,7 +65,7 @@ import AccountStore from "../stores/AccountStore";
 import LoadingStateStore from "../stores/LoadingStateStore";
 
 // Create a Stripe client.
-var stripe = Stripe("pk_test_gheuGNTfHiHL1ULiFHNPxlzm"); //pk_live_ewXOSu5rmNjJR9lMA13bLDsy");
+var stripe = Stripe("pk_live_ewXOSu5rmNjJR9lMA13bLDsy"); //pk_live_ewXOSu5rmNjJR9lMA13bLDsy");
 
 // Create an instance of Elements.
 var elements = stripe.elements();

@@ -15,6 +15,7 @@ import ChangePassword from '@/components/ChangePassword'
 import ChargeHistory from '@/components/ChargeHistory'
 import VertifyEmail from '@/components/VertifyEmail'
 import PayReceipt from '@/components/PayReceipt'
+import TutorsApplications from '@/components/TutorsApplications'
 
 Vue.use(Router)
 
@@ -95,6 +96,11 @@ export default new Router({
       name: 'payReceipt',
       component: PayReceipt,
       props: true
+    },
+    {
+      path: '/TutorsApplications/',
+      name: 'TutorsApplications',
+      component: TutorsApplications,
     }
   ]
 })
