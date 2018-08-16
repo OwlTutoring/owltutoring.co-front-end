@@ -18,7 +18,7 @@
     <h4 v-on:click="moreInfo()" class="town">{{tutor.town + ", " + tutor.usState}}</h4>
     <div class= "more-info-grid" v-if="expanded">
       <h4 class="phone">Phone: <a :href= "'sms:' + tutor.phone">{{formatedPhone}}</a></h4>
-      <h4 class="email">Email: <a :href= "'mailto:' + tutor.email">{{tutor.email}}</a></h4>
+      <h4 class="email">Email: <a :href= "'mailto:' + tutor.email + '?subject=Tutor Application&body=Hi ' + tutor.firstName + ',%0D%0A We see that you have created an account but not yet compleated your applcation and/or sent us your profile photo. You can compleate your application to become a tutor at https://owltutoring.co/#/TutorProfie and send your profile photo to general@owltutoring.co.%0D%0A%0D%0AThank you for your intrest in Owl Tutoring, we hope to hear back from you soon.%0D%0A%0D%0ABest Regards,%0D%0AOwl Tutoring'">{{tutor.email}}</a></h4>
       <tutor-subjects class ="subjects-container" :subjectObj="subjectOptions" :selectedSubjects="subjectList" parent="*"/>
       <p class="experience"><b>Experience:</b> {{tutor.experience}}</p>
       <p class="bio"><b>Bio:</b> {{tutor.bio}}</p>
