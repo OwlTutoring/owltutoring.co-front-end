@@ -85,6 +85,8 @@
     <p class="input-description">
       Please also email a photo to be used for your public profile to <a href="mailto:general@owltutoring.co">general@owltutoring.co</a>    
     </p>
+    <input v-model="profileSent" type="checkbox" id="profileSent"><label for="profileSent">I emailed my profile photo.</label><br>
+    <br>
     <button class="plain-button" v-on:click="update(false)">Save Changes</button>
     <button class="color-button" v-on:click="update(true)">Submit Profile</button>
   </div>
@@ -123,6 +125,7 @@ export default {
       otherInfo:"",
       selectedSubjects: {},
       subjectOptions: SubjectTypesStore.data.subjects,
+      profileSent: false,
     };
   },
   created: function() {
@@ -224,7 +227,9 @@ export default {
       var _this = this;
       console.log(this.selectedSubjects);
       this.getSubjectDataString();
-
+      if(done && !this.profileSent) {
+        MessageStore.methods.showMessage("Please confirm that you have emailed your profile photo", true);
+      }
       axios
         .post(
           "https://z9yqr69kvh.execute-api.us-west-2.amazonaws.com/dev/updateTutorProfile",
