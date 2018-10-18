@@ -9,7 +9,7 @@
       <router-link class="nav-link nav-item" :to="{ name: 'sessions', params: { display: 'canceled' }}">Canceled</router-link>
       </div>
       <div class="ui-grid">
-        <div class="balance">{{Math.round(parseFloat(AccountStore.account.balance)/2500*100)/100 }} Lessons Credits</div>
+        <div class="balance"><div v-if="AccountStore.account.accountType == 'Client'">{{Math.round(parseFloat(AccountStore.account.balance)/2500*100)/100 }} Lessons Credits</div><div v-else>You are a tutor.</div></div>
         <router-link class="moreLessons plain-button" to="pay">Buy More Lessons</router-link>
         <button class="makeSession color-button" @click="makeSession()">New Session</button>
       </div>

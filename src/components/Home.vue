@@ -9,12 +9,12 @@
     <div id="why-container">
       <div id="why">
         <h1>Why Owl Tutoring?</h1>
-        Owl Tutoring provides a unique tutoring experience focused on providing trained, qualified, and experienced tutors who can realate too and mentor their students. Owl Tutoring strives to provide these services at a competitive and affordable rate.
+        Owl Tutoring provides a unique tutoring experience focused on providing trained, qualified, and experienced tutors who can relate too and mentor their students. Owl Tutoring strives to provide these services at a competitive and affordable rate.
       </div>
       <div id="why-image"></div>
     </div>
     <h1>Qualified and Trained Tutors</h1>
-    Our tutors are well rounded and highly inteligent individuals. Many of our Highschool student tutors end up attending prestigious universities after graduation.
+    Our tutors are well rounded and highly intelligent individuals. Many of our High school student tutors end up attending prestigious universities after graduation.
     <div class="college-container">
       <img class="college-one college-image" src="https://github.com/Owltutoring/WebsiteImages/blob/master/stanford.png?raw=true">
       <img class="college-two college-image" src="https://github.com/Owltutoring/WebsiteImages/blob/master/harvard.jpg?raw=true">
@@ -31,7 +31,7 @@
     <br>
     <br>
     <h1>Become a Tutor</h1>
-    <div class="centered-margin-text">SignUp and submit your profile for review by our team to become an Owl Tutor <router-link class="" to="signup/tutorProfile">Become a Tutor</router-link></div>
+    <div class="centered-margin-text">Sign up and submit your profile for review by our team to become an Owl Tutor <router-link class="" to="signup/tutorProfile">Become a Tutor</router-link></div>
     <br>
     <br>
     <br>

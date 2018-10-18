@@ -3,37 +3,57 @@
   <div id="tutor-profile">
     <h1>Tutor Profile</h1>
 
-    Thank you for your intrest in being an Owl Tutor. After you submit this profile someone at Owl Tutoring will review your qualifications and assuming you are qualified you will be contacted and your profile will be visible on our website. We will then work to connect you with students you are qualified to teach. In a tutor we are looking for high school and college students who are knowledgeable and able to teach a variety of topics at Elementary, Middle school or High School levels. This means you can teach whatever you want and are qualified to teach from algebra or world history to violin or photography. Tutoring sessions typical occur in public places like a library. Tutors can work as many hours that are available to them but can also can have fewer students if they are busy. <br>If you have any questions please text <a href="sms://2248149291">(224) 814-9291</a><br>You can submit this profile before it is compleate to save your responses.<br>If your profile is already live, changes you make will be active imeadiatly.
+    Thank you for your interest in being an Owl Tutor. After you submit this profile,
+     someone at Owl Tutoring will review your qualifications. Assuming you are qualified,
+     you will be contacted and your profile will be visible on our website.
+     We will then work to connect you with students you are qualified to teach. 
+     We are looking for high school and college students who are knowledgeable 
+     and able to teach a variety of topics at Elementary, Junior High or High School levels. 
+     This means you should be able to teach a wide spectrum of subjects from algebra to world 
+     history to violin to photography. Tutoring sessions typically occur in public places like 
+     a library, but sometimes can be held at either your or the client’s house. Tutors can work 
+     as many hours that are available to them but can also can have fewer students if they are 
+     busy. <br>If you have any questions please text <a href="sms://2248149291">(224) 814-9291</a><br>
+     You can submit this profile before it is compleate to save your responses.<br>
+     If your profile is already live, changes you make will be active imeadiatly.
     <h3 class="input-title">How did you find out about Owl Tutoring?</h3>
     <input type="text" placeholder="Jim Bob told me I would make a great Owl Tutor" class="line-input form-field" v-model="refferalSource" id="refferalSource">
-    
-    <h3 class="input-title">Refferal Code</h3>
+
+    <h3 class="input-title">Refferral Code</h3>
     <p class="input-description">
-      If you heard about owl tutoring from someone else and they gave you a code provide it here
+      If you heard about Owl Tutoring from someone else and they gave you a code provide it here
     </p>
     <input placeholder="code" type="text" class="form-field" v-model="refferalCode" id="refferalCode"> 
 
     <h3 class="input-title">Biography</h3>
     <p class="input-description">
-      please write a paragraph about who you are and what you know. If you are a high school student you can list what relevant classes you have taken and what qualifications you have related to them. Essentially, you should explain why you are qualified to teach what you would like to teach. This will be part of your profile on our website.
+      Please write a paragraph about who you are and what you know. If you are a high school student, 
+      you can list which relevant classes you have taken and which qualifications you have related to
+       them. Essentially, you should explain why you are qualified to teach what you would like to
+        teach. This will be part of your profile on our website.
     </p>
     <textarea placeholder="A paragraph description of information related to your Academic knowledge and teaching abilities" class="form-field paragraph-input" v-model="bio" id="bio"></textarea>
     
     <h3 class="input-title">Subjects</h3>
     <p class="input-description">
-      Select all applicable subjects and their sub categories. this information will be used to provide students with accurate and detailed search results. It will also be displayed as a comprehensive list of what you are qualified to teach.
+      Select all applicable subjects and their sub categories. this information will be used 
+      to provide students with accurate and detailed search results. It will also be displayed 
+      as a comprehensive list of what you are qualified to teach.
     </p>
     <subject-select :subjectObj="subjectOptions" :selectedSubjects="selectedSubjects" parent="*"/>
     
     <h3 class="input-title">Subject Description</h3>
     <p class="input-description">
-      This is a short list that you beleive best describes what you are most qualified to teach. It will be one of the first things students see when searching for a tutor. It should be a comma seperated list starting with what you think you would like to focus your tutoring on.
+      This is a short list that you believe best describes what you are most qualified to teach. 
+      It will be one of the first things students see when searching for a tutor. It should be a 
+      comma separated list starting with what you think you would like to focus your tutoring on.
     </p>
     <input  type="text" placeholder="" class="form-field line-input" v-model="subjectsDesc" id="subjectsDesc">
     
     <h3 class="input-title">Grade</h3>
     <p class="input-description">
-      Enter a number. If you are a college student enter a number coresponding to what year in school you are. for example, a freshman in college would enter 13
+      Enter a number. If you are a college student enter a number corresponding to what year in 
+      school you are. For example, a freshman in college would enter 13.
     </p>
     <input  type="number" placeholder="11" class="form-field" v-model="grade" id="grade">
     
@@ -45,7 +65,7 @@
   
     <h3 class="input-title">Town</h3>
     <p class="input-description">
-      The town you will be tutoring in
+      Which town do you prefer to tutor in?
     </p>
     <input  type="text" placeholder="Vernon Hills" class="form-field" v-model="town" id="town">
     
@@ -59,20 +79,24 @@
     
     <h3 class="input-title">Experience</h3>
     <p class="input-description">
-      Write a short description of your what experience you have. (Ex. John has helped friends and family study for test and do homework all of his life. He has been a private tutor for 2 years.) This will also be part of your public profile 
+      Write a short description of your what experience you have in third person. 
+      (Ex. John has helped friends and family study for tests and do homework all of his life.
+       He has been a private tutor for 2 years.) This will also be part of your public profile.
     </p>
     <textarea placeholder="Describe what experience you have" class="form-field paragraph-input" v-model="experience" id="experience"></textarea>
     
     
     <h3 class="input-title">Short Bio</h3>
     <p class="input-description">
-      Write a one line description of yourself. This is what clients will first see along with where you're located and what you teach when looking for a tutor    
+      Write a one line description of yourself in the third person. This is what clients will 
+      first see along with where you're located and what you teach when looking for a tutor. 
     </p>
     <input  type="text" placeholder="One Sentenece describing yourself" class="line-input form-field" v-model="shortBio" id="shortBio">
     
     <h3 class="input-title">Other Info</h3>
     <p class="input-description">
-      please write any other information you would like us to know here. This information will not be part of your public profile.
+      Please write any other information you would like us to know here. This information will 
+      <u>not</u> be part of your public profile.
     </p>
     <textarea type="text" placeholder="any other information" class="paragraph-input form-field" v-model="otherInfo" id="otherInfo"></textarea>
     

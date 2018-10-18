@@ -38,12 +38,12 @@
           <option v-for="(account, i)  in relatedAccounts"  :value="account">{{account.firstName.S}} {{account.lastName.S}}</option>
           <option v-if="AccountStore.account.accountType == 'Client'" value="findMore">Find more Tutors</option>
         </select>
-        <div v-if="otherAccount != null && AccountStore.account.accountType =='Tutor' && otherAccount.students.L.length > 1">
+        <div v-if="otherAccount != null && AccountStore.account.accountType =='Tutor'">
         <select  class="name" v-model="studentName" id="student">
           <option v-for="(student, i) in otherAccount.students.L"  :value="student.S">{{student.S}}</option>
         </select>
         </div>
-        <div v-if="AccountStore.account.accountType =='Client' && AccountStore.account.students.L.length > 1">
+        <div v-if="AccountStore.account.accountType =='Client'">
         <select  class="name" v-model="studentName" id="student">
           <option v-for="(student, i) in AccountStore.account.students.L"  :value="student.S">{{student.S}}</option>
         </select>

@@ -58,9 +58,11 @@
         </div>
           
       </div>
+      <!--
       <div class="popUp" v-if="showPopUp">
         Welcome to the new Owl Tutoring website! With our new site we hope to provide you a better experience. We are currently transitioning from our old site. If you are a customer looking to pay or schedule a lesson please use our old website <a href="https://owltutoring.squarespace.com">owltutoring.squarespace.com</a> for the moment. If you are looking to sign up as a tutor please do so on this site. Thank You for your patience.<br> -The Owl Tutoring Dev Team.
       </div>
+      -->
       <router-view/>
     </div>
     <footer>
